@@ -23,10 +23,21 @@ const Navbar = styled.nav`
     box-shadow: 0 2px 2px rgba(150, 150, 150, 0.3);
 `;
 
+export const BackgroundColor = styled.div`
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 3;
+`;
+
 const initialOpenState = {
     notification: false,
     mail: false,
     more: false,
+    getMail: false,
 }
 
 function openReducer(state, action) {
@@ -36,6 +47,8 @@ function openReducer(state, action) {
         case 'MAIL':
             return state = action.open;
         case 'MORE':
+            return state = action.open;
+        case 'GETMAIL':
             return state = action.open;
         default:
             throw new Error(`Unhandled action type: ${ action.type }`)
@@ -49,6 +62,9 @@ function Header() {
     const [state, dispatch] = useReducer(openReducer, initialOpenState);
     return (
         <NavbarContainer>
+            {
+                state.getMail && <Mail state={ state } dispatch={ dispatch } />
+            }
             <Navbar>
                 <p className="logo">FANTIMATE</p>
                 <div className="menuContainer">
@@ -67,7 +83,7 @@ function Header() {
                 state.notification && <Notifications />
             }
             {
-                state.mail && <Mails />
+                state.mail && <Mails state={ state } dispatch={ dispatch } />
             }
             {
                 state.more && <MoreMenus />
@@ -170,7 +186,12 @@ function Notifications() {
     )
 }
 
-function Mails() {
+function Mails({ state, dispatch }) {
+
+    const openGetMail = (e) => {
+        dispatch({ type: 'GETMAIL', open: { ...initialOpenState, getMail: !state.getMail }})
+    }
+
     return (
         <div className="mailsContainer">
             <section className="section mails">
@@ -178,13 +199,13 @@ function Mails() {
                     <b>전체 쪽지 목록</b>
                     <ul className="ul mail-ul">
                         <p className="getMailDate">2021-06-01</p>
-                        <li>
+                        <li onClick={ openGetMail }>
                             <p className="getMailById">user</p>
                             님으로부터 쪽지를 받았습니다.
                             <p className="getMailByTime">2021-06-01</p>
                             <p className="isOpenMail">안 읽음</p>
                         </li>
-                        <li>
+                        <li onClick={ openGetMail }>
                             <p className="getMailById">user</p>
                             님으로부터 쪽지를 받았습니다.
                             <p className="getMailByTime">2021-06-01</p>
@@ -194,6 +215,28 @@ function Mails() {
                 </div> 
             </section>
         </div>
+    )
+}
+
+function Mail({ state, dispatch }) {
+    const closeGetMail = (e) => {
+        dispatch({ type: 'GETMAIL', open: { ...initialOpenState, getMail: !state.getMail }})
+    }
+
+    return (
+        <BackgroundColor>
+            <section className="getMailContainer">
+                <div className="getMailByUserInformation">
+                    <p className="getMailByUserId">FROM. <span>user</span></p>
+                </div>
+                <p className="getMailTitle">안녕하세요 메세지제목</p>
+                <div className="getMailContent">한번 보내봤습니다 메세지 내용</div>
+                <div className="mailButtonController">
+                    <button id="sendMailBtn">답장하기</button>
+                    <button id="closeMailBtn" onClick={ closeGetMail }>취소하기</button>
+                </div>
+            </section>
+        </BackgroundColor>
     )
 }
 

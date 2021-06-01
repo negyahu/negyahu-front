@@ -1,11 +1,19 @@
 import React from 'react';
+import { Route } from 'react-router-dom';
+
 import './App.scss';
 import Header from './components/Header';
+import Main from './components/main/Main';
 
 
 function App() {
   return (
-    <Header />
+    <>
+      <Header />
+      <Route exact path="/">
+        <Main />
+      </Route>
+    </>
   );
 }
 

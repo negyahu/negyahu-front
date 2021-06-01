@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router';
 
 function Main() {
     return (
@@ -14,4 +15,4 @@ function Artists() {
     )
 }
 
-export default Main;
+export default withRouter(Main);
