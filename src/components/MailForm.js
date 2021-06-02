@@ -3,8 +3,8 @@ import { BackgroundColor, initialOpenState } from './Header';
 import '../scss/SendMail.scss';
 
 function SendMail({ state, dispatch }) {
-    const closeSendMail = (e) => {
-        dispatch({ type: 'SENDMAIL', open: { ...initialOpenState, sendMail: !state.sendMail }})
+    const closeMailForm = () => {
+        dispatch({ type: 'SENDMAIL', open: { ...initialOpenState, mailForm: !state.mailForm }})
     }
     return (
         <BackgroundColor>
@@ -16,9 +16,9 @@ function SendMail({ state, dispatch }) {
                     <input type="text" className="sendMailTitle" placeholder="제목을 입력하세요" />
                     <textarea className="sendMailContent" placeholder="내용을 입력하세요"></textarea>
                 </div>
-                <div class="sendMailButtonContainer">
+                <div className="sendMailButtonContainer">
                     <button type="button" id="sendMailBtn">보내기</button>
-                    <button type="button" id="closeMailBtn" onClick={ closeSendMail }>취소하기</button>
+                    <button type="button" id="closeMailBtn" onClick={ closeMailForm }>취소하기</button>
                 </div>
             </form>
         </BackgroundColor>

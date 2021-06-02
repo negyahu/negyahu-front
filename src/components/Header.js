@@ -4,7 +4,8 @@ import { FaTrash } from 'react-icons/fa';
 
 import '../scss/Header.scss';
 import { IconContext } from 'react-icons/lib';
-import SendMail from './SendMail';
+import MailForm from './MailForm';
+import { Link, withRouter } from 'react-router-dom';
 
 const NavbarContainer = styled.header`
     width: 100%;
@@ -40,6 +41,7 @@ export const initialOpenState = {
     more: false,
     getMail: false,
     sendMail: false,
+    mailForm: false,
 }
 
 function openReducer(state, action) {
@@ -54,6 +56,8 @@ function openReducer(state, action) {
             return state = action.open;
         case 'SENDMAIL':
             return state = action.open;
+        case 'MAILFORM':
+            return state = action.open;
         default:
             throw new Error(`Unhandled action type: ${ action.type }`)
     }
@@ -61,7 +65,7 @@ function openReducer(state, action) {
 
 
 
-function Header() {
+function Header(props) {
     const [login, setLogin] = useState(true);
     const [state, dispatch] = useReducer(openReducer, initialOpenState);
     return (
@@ -70,10 +74,12 @@ function Header() {
                 state.getMail && <Mail state={ state } dispatch={ dispatch } />
             }
             {
-                state.sendMail && <SendMail state={ state } dispatch={ dispatch } />
+                state.mailForm && <MailForm state={ state } dispatch={ dispatch } />
             }
             <Navbar>
-                <p className="logo">FANTIMATE</p>
+                <p className="logo" onClick={() => {
+                    props.history.push({ pathname: "/" })
+                }}>FANTIMATE</p>
                 <div className="menuContainer">
                     {
                         login 
@@ -195,33 +201,87 @@ function Notifications() {
 
 function Mails({ state, dispatch }) {
 
-    const openGetMail = (e) => {
-        dispatch({ type: 'GETMAIL', open: { ...initialOpenState, getMail: !state.getMail }})
+    const openMailCategory = (category) => {
+        let bTags = document.getElementsByTagName("b");
+        for (let i = 0; i < bTags.length; i++) {
+            bTags[i].style.color = "lightgray";
+        }
+        switch (category) {
+            case '받은 쪽지':
+                bTags[0].style.color = "#000000";
+                return <GetMails state={ state } dispatch={ dispatch } />
+            case '보낸 쪽지':
+                bTags[1].style.color = "#000000";
+                return <SendMails state={ state } dispatch={ dispatch } />
+            default:
+                throw new Error(`Not Found category: ${ category }`);
+        }
     }
+
+    const [category, setCategory] = useState(null);
 
     return (
         <div className="mailsContainer">
             <section className="section mails">
                 <div className="mail">
-                    <b>전체 쪽지 목록</b>
-                    <ul className="ul mail-ul">
-                        <p className="getMailDate">2021-06-01</p>
-                        <li onClick={ openGetMail }>
-                            <p className="getMailById">user</p>
-                            님으로부터 쪽지를 받았습니다.
-                            <p className="getMailByTime">2021-06-01</p>
-                            <p className="isOpenMail">안 읽음</p>
-                        </li>
-                        <li onClick={ openGetMail }>
-                            <p className="getMailById">user</p>
-                            님으로부터 쪽지를 받았습니다.
-                            <p className="getMailByTime">2021-06-01</p>
-                            <p className="isOpenMail">1시간 전</p>
-                        </li>
-                    </ul>
-                </div> 
+                    <div className="mailCategory">
+                        <b onClick={() => {
+                            setCategory(openMailCategory("받은 쪽지"));
+                        }}>받은 쪽지 목록</b>
+                        <b onClick={() => {
+                            setCategory(openMailCategory("보낸 쪽지"));
+                        }}>보낸 쪽지 목록</b>
+                    </div>
+                    {
+                        category ? category : <GetMails state={ state } dispatch={ dispatch } />
+                    }
+                </div>
             </section>
         </div>
+    )
+}
+
+function GetMails({ state, dispatch }) {
+    const openGetMail = () => {
+        dispatch({ type: 'GETMAIL', open: { ...initialOpenState, getMail: !state.getMail }})
+    }
+    return (
+        <ul className="ul mail-ul">
+            <p className="getMailDate">2021-06-01</p>
+            <li onClick={ openGetMail }>
+                <p className="getMailById">user</p>
+                <span>님으로부터 쪽지를 받았습니다</span>
+                <p className="getMailByTime">1시간 전</p>
+                <p className="isOpenMail">안 읽음</p>
+            </li>
+            <li onClick={ openGetMail }>
+                <p className="getMailById">user</p>
+                <span>님으로부터 쪽지를 받았습니다</span>
+                <p className="getMailByTime">2시간 전</p>
+                <p className="isOpenMail">읽음</p>
+            </li>
+        </ul>
+    )
+}
+
+function SendMails({ state, dispatch }) {
+    const openGetMail = () => {
+        dispatch({ type: 'GETMAIL', open: { ...initialOpenState, getMail: !state.getMail }})
+    }
+    return (
+        <ul className="ul mail-ul">
+            <p className="getMailDate">2021-06-01</p>
+            <li onClick={ openGetMail }>
+                <p className="getMailById">user</p>
+                <span>님에게 쪽지를 보냈습니다</span>
+                <p className="isOpenMail">안 읽음</p>
+            </li>
+            <li onClick={ openGetMail }>
+                <p className="getMailById">user</p>
+                <span>님에게 쪽지를 보냈습니다</span>
+                <p className="isOpenMail">읽음</p>
+            </li>
+        </ul>
     )
 }
 
@@ -229,8 +289,8 @@ function Mail({ state, dispatch }) {
     const closeGetMail = () => {
         dispatch({ type: 'GETMAIL', open: { ...initialOpenState, getMail: !state.getMail }})
     }
-    const openSendMail = () => {
-        dispatch({ type: 'SENDMAIL', open: { ...initialOpenState, sendMail: !state.sendMail }})
+    const openMailForm = () => {
+        dispatch({ type: 'MAILFORM', open: { ...initialOpenState, mailForm: !state.mailForm }})
     }
 
     return (
@@ -242,7 +302,7 @@ function Mail({ state, dispatch }) {
                 <p className="getMailTitle">안녕하세요 메세지제목</p>
                 <div className="getMailContent">한번 보내봤습니다 메세지 내용</div>
                 <div className="mailButtonController">
-                    <button id="sendMailBtn" onClick={ openSendMail }>답장하기</button>
+                    <button id="mailFormBtn" onClick={ openMailForm }>답장하기</button>
                     <button id="closeMailBtn" onClick={ closeGetMail }>취소하기</button>
                 </div>
             </section>
@@ -266,4 +326,4 @@ function MoreMenus() {
     )
 }
 
-export default Header;
+export default withRouter(Header);

@@ -20,17 +20,6 @@
     justify-content: flex-end;
     align-items: center
 }
-.main-nav-search {
-    outline: none;
-    border: none;
-    border-radius: 10px;
-    height: 35px;
-    background: #ebebeb;
-    width: 80%;
-    max-width: 600px;
-    padding: 0 10px;
-    box-sizing: border-box;
-}
 
 // navbar Icons
 .navIcon {
@@ -206,19 +195,30 @@
 .mail {
     @extend .notification;
     margin-right: 100px;
-    b {
-        padding: 40px;
-        display: inline-block;
-        color: #000000;
-        font-style: normal;
-        font-weight: bold;
-        font-size: 22px;
-        box-sizing: border-box;
-    }
-    p {
-        padding: 0;
+    .mailCategory {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        height: 100px;
+        b {
+            padding: 40px;
+            display: inline-block;
+            color: lightgray;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 22px;
+            box-sizing: border-box;
+            cursor: pointer;
+            &:first-of-type {
+                color: #000000;
+            }
+        }
     }
     .mail-ul {
+        p {
+            padding: 0;
+        }
         .getMailDate {
             padding-left:20px;
             color: #000000;
@@ -242,6 +242,10 @@
                 margin-right: 25px;
                 font-weight: bold;
                 color: #000000;
+            }
+            span {
+                display: inline-block;
+                margin-right: 10px;
             }
             .getMailByTime {
                 display: inline-block;

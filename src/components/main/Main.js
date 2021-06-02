@@ -1,17 +1,31 @@
 import React from 'react';
 import { withRouter } from 'react-router';
+import styled from 'styled-components';
+import '../../scss/Main.scss';
 
 function Main() {
     return (
-        <section className="main-section">
-            <Artists />
+        <section className="mainContainer">
+            <div className="artistsContainer">
+                <Artist />
+                <Artist />
+                <Artist />
+                <Artist />
+                <Artist />
+                <Artist />
+                <Artist />
+                <Artist />
+            </div>
         </section>
     );
 }
 
-function Artists() {
+
+function Artist() {
     return (
-        <div className="main-artists"></div>
+        <div className="artistContainer">
+
+        </div>
     )
 }
 

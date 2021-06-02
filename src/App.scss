@@ -15,3 +15,7 @@ body::-webkit-scrollbar-thumb {
   border-radius: 5px;
   border: 2px solid transparent;
 }
+
+div {
+  box-sizing: border-box;
+}
