@@ -1,26 +1,25 @@
 import React from 'react';
-import { BackgroundColor } from './Header';
+import { BackgroundColor, initialOpenState } from './Header';
+import '../scss/SendMail.scss';
 
-function SendMail() {
+function SendMail({ state, dispatch }) {
+    const closeSendMail = (e) => {
+        dispatch({ type: 'SENDMAIL', open: { ...initialOpenState, sendMail: !state.sendMail }})
+    }
     return (
         <BackgroundColor>
-            <form className="form-send-message">
-                <section className="send-message-section">
-                    <div className="message-info">
-                        <p className="message-id">TO. <span class="to-id"></span></p>
-                    </div>
-                    <div className="message-input-section">
-                        <input type="hidden" className="ref-id" name="refId" value="" />
-                        <input type="hidden" className="mess-send-id" name="messSendId" value="" />
-                        <input type="hidden" className="mess-rec-id" name="messRecId" value="" />
-                        <input type="text" className="message-input-title" name="messTitle" placeholder="제목을 입력하세요" />
-                        <textarea className="message-write" placeholder="내용을 입력하세요" name="messContent"></textarea>
-                    </div>
-                    <div class="message-btn-section">
-                        <button type="button" id="sendBtn">보내기</button>
-                        <button type="button" id="closeBtn">취소하기</button>
-                    </div>
-                </section>
+            <form className="sendMailContainer">
+                <div className="sendMailByUserInformation">
+                    <p className="sendMailByUserId">TO. <span>user</span></p>
+                </div>
+                <div className="sendMailInputContainer">
+                    <input type="text" className="sendMailTitle" placeholder="제목을 입력하세요" />
+                    <textarea className="sendMailContent" placeholder="내용을 입력하세요"></textarea>
+                </div>
+                <div class="sendMailButtonContainer">
+                    <button type="button" id="sendMailBtn">보내기</button>
+                    <button type="button" id="closeMailBtn" onClick={ closeSendMail }>취소하기</button>
+                </div>
             </form>
         </BackgroundColor>
     );

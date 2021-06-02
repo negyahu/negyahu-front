@@ -1,2 +1,88 @@
-@import '../scss/App.scss';
+@import '../App.scss';
 
+// get mail
+.sendMailContainer {
+    width: 600px;  
+    position: fixed;    
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fbf6f6;
+    box-sizing: border-box;
+    overflow-y: auto;
+    .sendMailByUserInformation {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-left: 25px;
+        .sendMailByUserId {
+            font-style: normal;
+            font-weight: 550;
+            font-size: 25px;
+            color:#000000;
+            margin-left: 20px;
+            margin-top: 50px;
+            span {
+                font-style: normal;
+                font-size: 22px;
+                color:#000000;
+            }
+        }
+    }
+    .sendMailInputContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .sendMailTitle {
+            width: 500px;
+            height: 40px;
+            font-size: 20px;
+            font-style: normal;
+            font-weight: normal;
+            line-height: 43px;
+            color: #000000;
+            border: 1px solid #ACACAC;
+            outline: none;
+            padding-left: 10px;
+        }
+        .sendMailContent {
+            margin-top: 10px;
+            resize: none;
+            color: #ACACAC;
+            border: 1px solid #ACACAC;
+            width: 500px;
+            height: 220px;
+            font-size: 20px;
+            font-style: normal;
+            font-weight: normal;
+            line-height: 30px;
+            color: #000000;
+            outline: none;
+            padding-left: 10px;
+        }
+    }
+    .sendMailButtonContainer {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        margin: 40px;
+        // margin-bottom: 100px;
+        button {
+            width: 150px;
+            height: 50px;
+            background: #F4D4D4;
+            font-style: normal;
+            font-size: 22px;
+            line-height: 43px;
+            text-align: center;
+            color: #5C5F78;
+            border: 1px solid #F4D4D4;
+        }
+        #closeMailBtn {
+            background: #5C5F78;
+            color: #FFFFFF;
+            border: 1px solid #5C5F78;
+            margin-left: 20px;
+        }
+    }
+}

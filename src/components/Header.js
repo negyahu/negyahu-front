@@ -4,6 +4,7 @@ import { FaTrash } from 'react-icons/fa';
 
 import '../scss/Header.scss';
 import { IconContext } from 'react-icons/lib';
+import SendMail from './SendMail';
 
 const NavbarContainer = styled.header`
     width: 100%;
@@ -33,11 +34,12 @@ export const BackgroundColor = styled.div`
     z-index: 3;
 `;
 
-const initialOpenState = {
+export const initialOpenState = {
     notification: false,
     mail: false,
     more: false,
     getMail: false,
+    sendMail: false,
 }
 
 function openReducer(state, action) {
@@ -49,6 +51,8 @@ function openReducer(state, action) {
         case 'MORE':
             return state = action.open;
         case 'GETMAIL':
+            return state = action.open;
+        case 'SENDMAIL':
             return state = action.open;
         default:
             throw new Error(`Unhandled action type: ${ action.type }`)
@@ -64,6 +68,9 @@ function Header() {
         <NavbarContainer>
             {
                 state.getMail && <Mail state={ state } dispatch={ dispatch } />
+            }
+            {
+                state.sendMail && <SendMail state={ state } dispatch={ dispatch } />
             }
             <Navbar>
                 <p className="logo">FANTIMATE</p>
@@ -219,8 +226,11 @@ function Mails({ state, dispatch }) {
 }
 
 function Mail({ state, dispatch }) {
-    const closeGetMail = (e) => {
+    const closeGetMail = () => {
         dispatch({ type: 'GETMAIL', open: { ...initialOpenState, getMail: !state.getMail }})
+    }
+    const openSendMail = () => {
+        dispatch({ type: 'SENDMAIL', open: { ...initialOpenState, sendMail: !state.sendMail }})
     }
 
     return (
@@ -232,7 +242,7 @@ function Mail({ state, dispatch }) {
                 <p className="getMailTitle">안녕하세요 메세지제목</p>
                 <div className="getMailContent">한번 보내봤습니다 메세지 내용</div>
                 <div className="mailButtonController">
-                    <button id="sendMailBtn">답장하기</button>
+                    <button id="sendMailBtn" onClick={ openSendMail }>답장하기</button>
                     <button id="closeMailBtn" onClick={ closeGetMail }>취소하기</button>
                 </div>
             </section>
