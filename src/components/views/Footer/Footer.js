@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Join() {
+function Footer() {
     return (
         <div>
             
@@ -8,4 +8,4 @@ function Join() {
     );
 }
 
-export default Join;
+export default Footer;

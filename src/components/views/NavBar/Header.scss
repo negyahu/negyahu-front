@@ -1,4 +1,4 @@
-@import '../App.scss';
+@import '../../../App.scss';
 
 @mixin resetUl($up: 0, $side: 20px, $down: 20px) {
     padding: $up $side $down;
@@ -408,7 +408,7 @@
 
 
 /* 로그인 회원가입 */
-button[id*="loginBtn"]{
+.headerLoginBtn {
     outline: none;
     width: 100px;
     height: 37px;
@@ -420,11 +420,11 @@ button[id*="loginBtn"]{
     line-height: 24px;
     text-align: center;
     color: #FFFFFF;
-    margin-right: 10px;
+    margin-right: 15px;
     outline: none;
- 
+    cursor: pointer;
 }
-button[id*="joinBtn"]{
+.headerJoinBtn {
     outline: none;
     width: 110px;
     height: 37px;
@@ -437,6 +437,7 @@ button[id*="joinBtn"]{
     text-align: center;
     color: #E5D2D2;
     outline: none;
+    cursor: pointer;
 }
 
 

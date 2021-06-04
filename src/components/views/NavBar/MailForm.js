@@ -1,8 +1,8 @@
 import React from 'react';
 import { BackgroundColor, initialOpenState } from './Header';
-import '../scss/SendMail.scss';
+import './MailForm.scss';
 
-function SendMail({ state, dispatch }) {
+function MailForm({ state, dispatch }) {
     const closeMailForm = () => {
         dispatch({ type: 'SENDMAIL', open: { ...initialOpenState, mailForm: !state.mailForm }})
     }
@@ -25,4 +25,4 @@ function SendMail({ state, dispatch }) {
     );
 }
 
-export default SendMail;
+export default MailForm;

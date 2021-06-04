@@ -1,7 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router';
-import styled from 'styled-components';
-import '../../scss/Main.scss';
+import './Main.scss';
 
 function Main() {
     return (

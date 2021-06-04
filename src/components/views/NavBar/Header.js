@@ -2,10 +2,10 @@ import React, { useReducer, useState } from 'react';
 import styled from 'styled-components';
 import { FaTrash } from 'react-icons/fa';
 
-import '../scss/Header.scss';
+import './Header.scss';
 import { IconContext } from 'react-icons/lib';
 import MailForm from './MailForm';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 const NavbarContainer = styled.header`
     width: 100%;
@@ -46,20 +46,13 @@ export const initialOpenState = {
 
 function openReducer(state, action) {
     switch (action.type) {
-        case 'NOTIFICATION':
-            return state = action.open;
-        case 'MAIL':
-            return state = action.open;
-        case 'MORE':
-            return state = action.open;
-        case 'GETMAIL':
-            return state = action.open;
-        case 'SENDMAIL':
-            return state = action.open;
-        case 'MAILFORM':
-            return state = action.open;
-        default:
-            throw new Error(`Unhandled action type: ${ action.type }`)
+        case 'NOTIFICATION': return state = action.open;
+        case 'MAIL': return state = action.open;
+        case 'MORE': return state = action.open;
+        case 'GETMAIL': return state = action.open;
+        case 'SENDMAIL': return state = action.open;
+        case 'MAILFORM': return state = action.open;
+        default: throw new Error(`Unhandled action type: ${ action.type }`)
     }
 }
 
@@ -88,7 +81,7 @@ function Header(props) {
                             <SearchArtist />
                             <LoginMenuIcons state={ state } dispatch={ dispatch } />
                         </> 
-                        : <NoneLoginMenuIcons />
+                        : <NoneLoginMenuIcons history={ props.history } />
                     }
                 </div>
             </Navbar>
@@ -145,11 +138,15 @@ function LoginMenuIcons({ state, dispatch }) {
     )
 }
 
-function NoneLoginMenuIcons() {
+function NoneLoginMenuIcons(props) {
     return (
         <>
-            <button id="loginBtn">로그인</button>
-            <button id="joinBtn">회원가입</button>
+            <button className="headerLoginBtn" onClick={() => {
+                props.history.push({ pathname: "/login" })
+            }}>로그인</button>
+            <button className="headerJoinBtn" onClick={() => {
+                props.history.push({ pathname: "/join" })
+            }}>회원가입</button>
         </>
     )
 }
@@ -200,7 +197,6 @@ function Notifications() {
 }
 
 function Mails({ state, dispatch }) {
-
     const openMailCategory = (category) => {
         let bTags = document.getElementsByTagName("b");
         for (let i = 0; i < bTags.length; i++) {

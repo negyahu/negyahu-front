@@ -1,0 +1,252 @@
+@import '../../../App.scss';
+
+.loginFormContainer {
+    max-width: 800px;
+    min-width: 500px;
+    height: auto;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .loginHeader {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        p {
+            font-style: normal;
+            &:first-of-type {
+                font-weight: 500;
+                font-size: 40px;
+                line-height: 70px;
+                color: black;
+            }
+            &:last-of-type {
+                font-weight: normal;
+                color:#000000;
+                font-size: 30px;
+                margin-top: -5px;
+            }
+        }
+    }
+    .accountInputContainer {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-content: center;
+        input {
+            width: 400px;
+            height: 60px;
+            font-size: 20px;
+            font-style: normal;
+            font-weight: normal;
+            line-height: 43px;
+            margin: 10px;
+            border: 1px solid #ACACAC;
+            outline: none;
+            padding-left: 10px;
+        }
+    }
+    .LoginButtonContainer {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        margin-top: 50px;
+        margin-bottom: 50px;
+        .loginBtn {
+            width: 150px;
+            height: 50px;
+            font-style: normal;
+            font-size: 22px;
+            line-height: 43px;
+            text-align: center;
+            color: #5C5F78;
+            border: 1px solid #F4D4D4;
+            background: #F4D4D4;
+            cursor: pointer;
+        }
+        .loginCloseBtn {
+            @extend .loginBtn;
+            background: #5C5F78;
+            color: #FFFFFF;
+            margin-left: 20px;
+        }
+    }
+    .accountFindButtonContainer {
+        display: flex;
+        justify-content: center;
+        p {
+            font-size: 20px;
+            margin: 15px 15px 40px;
+            text-decoration: none;
+            color: #5C5F78;
+            cursor:pointer;
+            &:hover {
+                color: #ec8c8c;
+            }
+        }
+    }
+    hr {
+        width: 450px;
+        color:#A7A6A6;
+        border: 1px solid #cecdcd;
+    }
+    .subTitle {
+        text-align: center;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 20px;
+        line-height: 43px;
+        color: #000000;
+        margin-top: 40px;
+    }
+    .subLoginButtonContainer {
+        display: flex;
+        justify-content: center;
+        img {
+            width: 65px;
+            height: 65px;
+            margin: 10px 15px;
+            cursor: pointer;
+        }
+    }
+    .linkToJoinBtn {
+        margin: 0;
+        margin-top: -10px;
+        padding: 20px 20px 40px;
+        box-sizing: border-box;
+        color: #f0a7a7;
+        cursor: pointer;
+        &:hover {
+            color: #ec8c8c;
+        }
+    }
+}
+
+.findAccountContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;    
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    width: 550px;
+    height: auto;
+    border: 1px soild red;
+    header {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        p {
+            font-style: normal;
+            &:first-of-type {
+                font-weight: 500;
+                font-size: 40px;
+                line-height: 70px;
+                color: black;
+            }
+            &:last-of-type {
+                font-weight: normal;
+                color:#000000;
+                font-size: 30px;
+                margin-top: -5px;
+            }
+        }
+    }
+    .findAccountInputContainer {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-content: center;
+        input {
+            width: 400px;
+            height: 60px;
+            font-size: 20px;
+            font-style: normal;
+            font-weight: normal;
+            line-height: 43px;
+            margin: 10px;
+            border: 1px solid #ACACAC;
+            outline: none;
+            padding-left: 10px;
+        }
+    }
+    .findAccountButtonContainer {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        margin-top: 50px;
+        margin-bottom: 50px;
+        button {
+            background: #F4D4D4;
+            width: 160px;
+            height: 50px;
+            font-style: normal;
+            font-size: 22px;
+            line-height: 43px;
+            text-align: center;
+            color: #5C5F78;
+            border: 1px solid #F4D4D4;
+            cursor: pointer;
+            &:last-of-type {
+                width: 150px;
+                height: 50px;
+                background: #5C5F78;
+                font-style: normal;
+                font-size: 22px;
+                line-height: 43px;
+                text-align: center;
+                color: #FFFFFF;
+                border: 1px solid #5C5F78;
+                margin-left: 20px;
+            }
+        }
+    }
+}
+
+.fountAccountContainer {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    display: block;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    width: 330px;
+    height: 200px;
+    padding: 20px 60px;
+    background-color: #fefefe;
+    border-radius: 3px;
+    z-index: 999;
+    div {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-family: Wemakeprice;
+        font-size: 20px;
+        text-align: center;
+        span {
+            font-family: Wemakeprice;
+            font-size: 28px;
+            color: #f1a5a5;
+            text-shadow: 1px 1px 1px #f1a5a5;
+        }
+    }
+    button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-family: Wemakeprice;
+        font-size: 23px;
+        text-shadow: 1px 1px 1px black;
+        background: none;
+        outline: none;
+        border: none;
+        cursor: pointer;
+    }
+}
