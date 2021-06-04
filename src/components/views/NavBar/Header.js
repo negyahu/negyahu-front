@@ -59,7 +59,7 @@ function openReducer(state, action) {
 
 
 function Header(props) {
-    const [login, setLogin] = useState(true);
+    const [login, setLogin] = useState(false);
     const [state, dispatch] = useReducer(openReducer, initialOpenState);
     return (
         <NavbarContainer>

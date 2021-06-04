@@ -1,0 +1,285 @@
+@import '../../../App.scss';
+
+.joinFormContainer {
+    max-width: 800px;
+    min-width: 500px;
+    height: auto;
+    box-sizing: border-box;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    header {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: center;
+        width: 500px;
+        padding: 0;
+        // background-color: #5C5F78;
+        p {
+            font-style: normal;
+            color:#000000;
+            &:first-of-type {
+                font-weight: 500;
+                font-size: 40px;
+                line-height: 70px;
+            }
+            &:last-of-type {
+                font-weight: 400;
+                font-size: 30px;
+                margin-top: -5px;
+            }
+        }
+    }
+    .joinButtonContainer {
+        display: flex;
+        justify-content: space-evenly;
+        margin: 50px 0;
+        width: 450px;
+        button {
+            width: 150px;
+            height: 50px;
+            font-style: normal;
+            font-size: 22px;
+            text-align: center;
+            border: none;
+        }
+        .nextBtn {
+            background: #F4D4D4;
+            color: #5C5F78;
+        }
+        .backBtn {
+            background: #5C5F78;
+            color: #FFFFFF;
+        }
+    }
+}
+
+.firstStepContainer {
+    width: 450px;
+    .title {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 23px;
+        line-height: 57px;
+        color: #000000;
+        margin: 0;
+        padding: 0;
+    }
+    .firstInputContainer {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        input {
+            width: 450px;
+            height: 60px;
+            font-size: 20px;
+            font-style: normal;
+            font-weight: normal;
+            line-height: 43px;
+            color: black;
+            margin: 10px 0;
+            border: 1px solid #ACACAC;
+            outline: none;
+            padding-left: 10px;
+            box-sizing: border-box;
+        }
+        .guide {
+            font-style: normal;
+            font-weight: normal;
+            font-size: 20px;
+            line-height: 29px;
+            color: #000000;
+            margin: 0;
+            margin-top: 35px;
+            padding: 0;
+            align-self: flex-start;
+        }
+    }
+}
+
+.secondStepContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    width: 450px;
+    .guide {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 23px;
+        line-height: 57px;
+        color: #000000;
+        margin: 0;
+        padding: 0;
+        align-self: flex-start;
+    }
+    .secondInputIdContainer {
+        width: 450px;
+        height: 60px;
+        box-sizing: border-box;
+        display: flex;
+        input {
+            width: 350px;
+            height: 100%;
+            font-size: 20px;
+            font-style: normal;
+            font-weight: normal;
+            color: black;
+            outline: none;
+            padding-left: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ACACAC;
+        }
+        button {
+            width: 100px;
+            height: 100%;
+            background: #F4D4D4;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 16px;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+            color: #5C5F78;
+            border: none;
+        }
+    }
+    .valid {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 18px;
+        line-height: 29px;
+        margin-top: 0;
+        color: #FC9C9C;
+        align-self: flex-start;
+    }
+    .guideInputPassword {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        color: #000000;
+        margin: 0;
+        padding: 0;
+    }
+    .secondInputPwdContainer {
+        width: 450px;
+        height: auto;
+        box-sizing: border-box;
+        position: relative;
+        input {
+            width: 450px;
+            height: 60px;
+            font-size: 20px;
+            font-style: normal;
+            font-weight: normal;
+            color: black;
+            margin: 10px 0;
+            border: 1px solid #ACACAC;
+            outline: none;
+            padding-left: 10px;
+            box-sizing: border-box;
+        }
+        .secondImageContainer {
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+        }
+    }
+}
+
+
+.thirdStepContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    width: 450px;
+    .guide {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 20px;
+        line-height: 29px;
+        color: #000000;
+        margin: 0;
+        margin-top: 35px;
+        padding: 0;
+        align-self: flex-start;
+    }
+    .termsContent {
+        width: 450px;
+        height: 200px;
+        font-size: 15px;
+        font-style: normal;
+        font-weight: normal;
+        line-height: 25px;
+        color: black;
+        margin: 10px 0;
+        border: 1px solid #ACACAC;
+        outline: none;
+        padding-left: 10px;
+        overflow: auto;
+    }
+    .thirdCheckBoxContainer {
+        display: flex;
+        input {
+            display: none;
+            &:checked ~ .checkBoxIcon {
+                border-color: #5C5F78;
+            }
+            &:checked ~ .checkBoxIcon::before {
+                height: 10px;
+                transition: all .35s ease;
+            }
+            &:checked ~ .checkBoxIcon::after {
+                height: 25px;
+                transition: all .35s ease .35s;
+            }
+        }
+        .checkBoxIcon {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background-color: transparent;
+            border: 2px solid #777777;
+            border-radius: 5px;
+            position: relative;
+            cursor: pointer;
+            &::before {
+                content: '';
+                display: inline-block;
+                width: 5px;
+                height: 0;
+                background-color: #5C5F78;
+                transform-origin: left top;
+                border-radius: 5px;
+                position: absolute;
+                top:9px;
+                left: 1px;
+                transform:rotate(-45deg);
+            }
+            &::after {
+                content: '';
+                display: inline-block;
+                width: 5px;
+                height: 0;
+                background-color: #5C5F78;
+                transform-origin: left top;
+                border-radius: 5px;
+                position: absolute;
+                top: 18px;
+                left: 10px;
+                transform:rotate(-135deg);
+            }
+
+        }
+        label {
+            padding-left: 10px;
+        }
+    }
+}

@@ -4,6 +4,7 @@
     max-width: 800px;
     min-width: 500px;
     height: auto;
+    box-sizing: border-box;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -15,15 +16,14 @@
         flex-direction: column;
         p {
             font-style: normal;
+            color: black;
             &:first-of-type {
                 font-weight: 500;
                 font-size: 40px;
                 line-height: 70px;
-                color: black;
             }
             &:last-of-type {
                 font-weight: normal;
-                color:#000000;
                 font-size: 30px;
                 margin-top: -5px;
             }
