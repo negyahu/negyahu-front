@@ -1,97 +1,285 @@
 /* eslint-disable */
+import axios from 'axios';
 import React, { useState } from 'react';
 import { BiHide, BiShow } from 'react-icons/bi';
 import { IconContext } from 'react-icons/lib';
+import { withRouter } from 'react-router';
 
 import './Join.scss';
 
 
-const userInformation = {
-    name: '',
-    email: '',
-    id: '',
-    password: '',
-}
-
-function Join() {
+function Join(props) {
     const [step, setStep] = useState(1);
+    const [Name, setName] = useState('');
+    const [Email, setEmail] = useState('');
+    const [Phone, setPhone] = useState('');
+    const [ID, setID] = useState('');
+    const [Password, setPassword] = useState('');
+    const [ConfirmPassword, setConfirmPassword] = useState('');
+    const [AcceptTherms, setAcceptTherms] = useState(false);
+    const [AcceptPrivacyPolicy, setAcceptPrivacyPolicy] = useState(false);
+
+    const onSubmitHandler = () => {
+        alert('가입됨!')
+
+        let body = {
+            name: Name,
+            email: Email,
+            phone: Phone,
+            id: ID,
+            password: Password,
+        }
+
+        axios.post('/api/join', body).then(response => {
+            alert(response.data);
+            props.history.push({ pathname: '/' })
+        }).catch(err => alert(err))
+
+    }
+
+    const onClickHandler = () => {
+        if(!AcceptTherms || !AcceptPrivacyPolicy) {
+            return alert('모든 약관에 동의해야 가입됩니다')
+        } else {
+            onSubmitHandler()
+        }
+    }
+
+    const onNextStepHandler = () => {
+        const regName = /^(?=.*?[가-힣]).{2,}$/
+        switch (step) {
+            case 1:
+                if (!regName.test(Name)) {
+                    return alert('이름을 정확하게 입력하세요')
+                } else if (Email.indexOf("@") < 0 || Email.length < 4) {
+                    return alert('@: 이메일 형식에 맞춰 입력하세요')
+                } else if (Phone.indexOf("-") < 3) {
+                    return alert('-를 포함하여 연락처를 입력하세요(지역번호 등 포함)')
+                } else {
+                    setStep(step + 1)
+                }
+                break;
+            case 2:
+                setStep(step + 1)
+                break;
+            default:
+                break;
+        }
+        
+    }
+
+    const onBackStepHandler = () => {
+        switch (step) {
+            case 1:
+                setStep(1)
+                break;
+            case 2:
+            case 3:
+                setStep(step - 1)
+                break;
+            default:
+                setStep(1)
+        }
+    }
+
 
     return (
-        <form className="joinFormContainer">
+        <form className="joinFormContainer" onSubmit={ onSubmitHandler }>
             <header>
                 <p>Fantimate Account</p>
                 <p>3단계 중 { step }단계</p>
             </header>
             {
-                step == 1 && <FirstStep />
+                step == 1 
+                && <FirstStep 
+                        value={{ name: Name, email: Email, phone: Phone }} 
+                        setValue={{ setName: setName, setEmail: setEmail, setPhone: setPhone }}
+                    />
             }
             {
-                step == 2 && <SecondStep />
+                step == 2 
+                && <SecondStep 
+                        value={{ id: ID, password: Password, confirmPassword: ConfirmPassword }}
+                        setValue={{ setID: setID, setPassword: setPassword, setConfirmPassword: setConfirmPassword }}
+                    />
             }
             {
-                step == 3 && <ThirdStep />
+                step == 3 
+                && <ThirdStep 
+                        value={{ acceptTherms: AcceptTherms, acceptPrivacyPolicy: AcceptPrivacyPolicy }}
+                        setValue={{ setAcceptTherms: setAcceptTherms, setAcceptPrivacyPolicy: setAcceptPrivacyPolicy }}
+                    />
             }
             <div className="joinButtonContainer">
                 {
-                    step == 4
-                    ? <button className="nextBtn" type="button">가입하기</button>
-                    : <button className="nextBtn" type="button" onClick={() => { setStep(step + 1) }}>다음</button>
+                    step == 3
+                    ? <button className="nextBtn" type="button" onClick={ onClickHandler }>가입하기</button>
+                    : <button className="nextBtn" type="button" onClick={ onNextStepHandler }>다음</button>
                 }
-                <button className="backBtn" type="button" onClick={() => {
-                    setStep(step - 1)
-                }}>뒤로가기</button>
+                <button className="backBtn" type="button" onClick={ onBackStepHandler }>뒤로가기</button>
             </div>
         </form>
     );
 }
 
-function FirstStep() {
+function FirstStep({ value, setValue }) {
+    const onNameHandler = (e) => {
+        setValue.setName(e.currentTarget.value)
+    }
+
+    const onEmailHandler = (e) => {
+        setValue.setEmail(e.currentTarget.value)
+    }
+
+    const onPhoneHandler = (e) => {
+        setValue.setPhone(e.currentTarget.value)
+    }
+
     return (
         <section className="firstStepContainer">
             <p className="title">이름, 이메일을 입력하세요</p>
             <div className="firstInputContainer">
-                <input type="text" placeholder="이름 입력" />
-                <input type="email" placeholder="이메일 입력" />
+                <input
+                    type="text"
+                    value={ value.name }
+                    placeholder="이름 입력" 
+                    onChange={ onNameHandler }
+                    required
+                />
+                <input
+                    type="email"
+                    value={ value.email }
+                    placeholder="이메일 입력"
+                    onChange={ onEmailHandler }
+                    required
+                />
                 <p className="guide">(-)포함하여 연락처를 입력해주세요.</p>
-                <input type="tel" className="thirdInput" placeholder="연락처" />
+                <input
+                    type="tel"
+                    className="thirdInput"
+                    value={ value.phone }
+                    placeholder="연락처" 
+                    onChange={ onPhoneHandler }
+                    required
+                />
             </div>
         </section>
     )
 }
 
-function SecondStep() {
+function SecondStep({ value, setValue }) {
+    const [IdValidation, setIdValidation] = useState('')
+    const [PasswordValidation, setPasswordValidation] = useState('')
+    const [ConfirmPasswordValidation, setConfirmPasswordValidation] = useState('')
+
+    const onIdHandler = (e) => {
+        const id = e.currentTarget.value
+        setValue.setID(id)
+
+        // 유효성 검사 하기
+        const regId = /^(?=.*?[a-z])(?=.*?[0-9]).{4,12}$/;
+
+        if (id == '') {
+            setIdValidation('')
+        } else if (!regId.test(id)) {
+            setIdValidation('영문 소문자 및 숫자 조합 4~12자리')
+        } else {
+            setIdValidation('')
+        }
+    }
+
+    const onPasswordHandler = (e) => {
+        const password = e.currentTarget.value
+        setValue.setPassword(password)
+
+        // 유효성 검사 하기
+        const regPwd = /^(?=.*?[a-z])(?=.*?[0-9]).{4,12}$/;
+
+        if (password == '') {
+            setPasswordValidation('')
+        } else if (!regPwd.test(password)) {
+            setPasswordValidation('영문 소문자 및 숫자 조합 4~12자리')
+        } else {
+            setPasswordValidation('이 비밀번호는 안전합니다')
+        }
+        
+    }
+
+    const onConfirmPasswordHandler = (e) => {
+        const password = e.currentTarget.value
+        setValue.setConfirmPassword(password)
+
+        if (value.confirmPassword == '') {
+            setConfirmPasswordValidation('')
+        } else if (value.password !== password) {
+            setConfirmPasswordValidation('입력하신 비밀번호와 일치하지 않습니다')
+        } else {
+            setConfirmPasswordValidation('입력하신 비밀번호와 일치합니다')
+        }
+    }
+
+    const onIdCheckHandler = () => {
+        axios.get('/api/').then(response => console.log(response.data)).catch(err => alert(err))
+    }
+
     return (
         <section className="secondStepContainer">
             <p className="guide">아이디, 패스워드를 입력하세요</p>
             <div className="secondInputIdContainer">
-                <input type="text" placeholder="아이디 입력" />
-                <button type="button">중복 확인</button> 
+                <input
+                    type="text" 
+                    value={ value.id }
+                    placeholder="아이디 입력"
+                    onChange={ onIdHandler }
+                    required
+                />
+                <button type="button" onClick={ onIdCheckHandler }>중복 확인</button> 
             </div>
-            <p className="valid">아이디를 입력하세요. (영문 소문자, 숫자만 입력 가능)</p>
+            <p className="valid">{ IdValidation }</p>
             <p className="guideInputPassword">비밀번호는 5-10자의 영문, 숫자를 조합하여 설정해주세요</p>
             <div className="secondInputPwdContainer">
-                <input type="password" placeholder="비밀번호 입력" required />
+                <input
+                    type="password"
+                    value={ value.password }
+                    placeholder="비밀번호 입력"
+                    onChange={ onPasswordHandler }
+                    required
+                />
                 <div className="secondImageContainer">
                     <IconContext.Provider value={{ size: 50 }}>
                         <BiHide />
                     </IconContext.Provider>
                 </div>
             </div>
-            <p className="valid">5-10자의 영문, 숫자</p>
+            <p className="valid">{ PasswordValidation }</p>
             <div className="secondInputPwdContainer">
-                <input type="password" placeholder="비밀번호 확인" required />
+                <input
+                    type="password"
+                    value={ value.confirmPassword }
+                    placeholder="비밀번호 확인"
+                    onChange={ onConfirmPasswordHandler }
+                    required
+                />
                 <div className="secondImageContainer">
                     <IconContext.Provider value={{ size: 50 }}>
                         <BiHide />
                     </IconContext.Provider>
                 </div>
             </div>
-            <p className="valid">비밀번호를 다시 입력하세요.</p>
+            <p className="valid">{ ConfirmPasswordValidation }</p>
         </section>
     )
 }
 
-function ThirdStep() {
+function ThirdStep({ value, setValue }) {
+    const onThermsHandler = (e) => {
+        setValue.setAcceptTherms(!value.AcceptTherms)
+    }
+
+    const onPrivacyHandler = (e) => {
+        setValue.setAcceptPrivacyPolicy(!value.AcceptPrivacyPolicy)
+    }
+    
     return (
         <section className="thirdStepContainer">
             <div>
@@ -104,7 +292,12 @@ function ThirdStep() {
                 </div>
             </div>
             <label className="thirdCheckBoxContainer">
-                <input type="checkbox" id="acceptTerms"/>
+                <input
+                    type="checkbox"
+                    id="acceptTerms"
+                    value={ value.acceptTherms }
+                    onClick={ onThermsHandler }
+                />
                 <span className="checkBoxIcon"></span>
                 <label htmlFor="acceptTerms">이용약관에 동의합니다</label>
             </label>
@@ -118,7 +311,12 @@ function ThirdStep() {
                 </div>
             </div>
             <label className="thirdCheckBoxContainer">
-                <input type="checkbox" id="acceptPrivacyPolicy"/>
+                <input
+                    type="checkbox"
+                    id="acceptPrivacyPolicy"
+                    value={ value.AcceptPrivacyPolicy }
+                    onClick={ onPrivacyHandler }
+                />
                 <span className="checkBoxIcon"></span>
                 <label htmlFor="acceptPrivacyPolicy">개인정보 수집 및 이용에 동의합니다.</label>
             </label>
@@ -127,4 +325,4 @@ function ThirdStep() {
 }
 
 
-export default Join;
+export default withRouter(Join);

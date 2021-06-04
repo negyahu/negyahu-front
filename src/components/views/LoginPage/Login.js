@@ -1,10 +1,11 @@
 import React, { useReducer, useState } from 'react';
 import { withRouter } from 'react-router';
-import { tempAccount } from '../../../utils/temp';
+import axios from 'axios';
 
-import './Login.scss';
+import { tempAccount } from '../../../utils/temp';
 import { BackgroundColor } from '../NavBar/Header';
 
+import './Login.scss';
 
 const findAccount = {
     findUserEmail: false,
@@ -22,6 +23,35 @@ function findAccountReducer(state, action) {
 function Login(props) {
     const [state, dispatch] = useReducer(findAccountReducer, findAccount);
 
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const onEmailHandler = (e) => {
+        setEmail(e.currentTarget.value)
+    }
+
+    const onPasswordHandler = (e) => {
+        setPassword(e.currentTarget.value)
+    }
+
+    const onSubmitHandler = (e) => {
+        e.preventDefault();
+        
+        let userInfo = {
+            email: email,
+            password: password
+        }
+
+        axios.post('/api/login', userInfo)
+        .then(response => {
+            alert(response.data + "님 환영합니다") 
+            props.history.push({ pathname: '/' })
+        })
+        .catch(err => {
+            alert(err) 
+        })
+    }
+
     return (
         <>
         {
@@ -30,17 +60,29 @@ function Login(props) {
         {
             state.findUserPwd && <FindUserPassword state={ state } dispatch={ dispatch } />
         }
-        <form className="loginFormContainer">
+        <form className="loginFormContainer" onSubmit={ onSubmitHandler }>
             <header className="loginHeader">
                 <p>Fantimate Account</p>
                 <p>로그인</p>
             </header>
             <div className="accountInputContainer">
-                <input type="email" placeholder="이메일" required />
-                <input type="password" placeholder="비밀번호" required />
+                <input 
+                    type="email"
+                    value={ email } 
+                    onChange={ onEmailHandler } 
+                    placeholder="이메일을 입력하세요"
+                    required
+                />
+                <input 
+                    type="password"
+                    value={ password }
+                    onChange={ onPasswordHandler }
+                    placeholder="비밀번호를 입력하세요"
+                    required
+                />
             </div>
             <div className="LoginButtonContainer">
-                <button type="button" className="loginBtn">로그인</button>
+                <button className="loginBtn" type="submit">로그인</button>
             </div>
             <div className="accountFindButtonContainer">
                 <p onClick={() => {
@@ -70,9 +112,6 @@ const information = {
     email: '',
     phone: '',
 }
-
-
-
 
 function FindUserEmail({ state, dispatch, ...rest }) {
     
