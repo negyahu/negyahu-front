@@ -18,6 +18,7 @@ function Join(props) {
     const [ConfirmPassword, setConfirmPassword] = useState('');
     const [AcceptTherms, setAcceptTherms] = useState(false);
     const [AcceptPrivacyPolicy, setAcceptPrivacyPolicy] = useState(false);
+    const [DuplicateIdCheck, setDuplicateIdCheck] = useState(false);
 
     const onSubmitHandler = () => {
         alert('가입됨!')
@@ -46,7 +47,10 @@ function Join(props) {
     }
 
     const onNextStepHandler = () => {
+
         const regName = /^(?=.*?[가-힣]).{2,}$/
+        const regExp = /^(?=.*?[a-z])(?=.*?[0-9]).{4,12}$/
+
         switch (step) {
             case 1:
                 if (!regName.test(Name)) {
@@ -60,7 +64,15 @@ function Join(props) {
                 }
                 break;
             case 2:
-                setStep(step + 1)
+                if (!DuplicateIdCheck) {
+                    return alert('아이디 중복확인 해주세요')
+                } else if (Password !== ConfirmPassword) {
+                    return alert('비밀번호가 일치하지 않습니다')
+                } else if (!regExp.test(Password)) {
+                    return alert('비밀번호 유효성이 맞지 않습니다')
+                } else {
+                    setStep(step + 1)
+                }
                 break;
             default:
                 break;
@@ -99,8 +111,18 @@ function Join(props) {
             {
                 step == 2 
                 && <SecondStep 
-                        value={{ id: ID, password: Password, confirmPassword: ConfirmPassword }}
-                        setValue={{ setID: setID, setPassword: setPassword, setConfirmPassword: setConfirmPassword }}
+                        value={{ 
+                            id: ID, 
+                            password: Password, 
+                            confirmPassword: ConfirmPassword, 
+                            duplicateIdCheck: DuplicateIdCheck 
+                        }}
+                        setValue={{ 
+                            setID: setID, 
+                            setPassword: setPassword, 
+                            setConfirmPassword: setConfirmPassword, 
+                            setDuplicateIdCheck: setDuplicateIdCheck 
+                        }}
                     />
             }
             {
@@ -184,7 +206,7 @@ function SecondStep({ value, setValue }) {
         } else if (!regId.test(id)) {
             setIdValidation('영문 소문자 및 숫자 조합 4~12자리')
         } else {
-            setIdValidation('')
+            setIdValidation('사용할 수 있는 아이디입니다')
         }
     }
 
@@ -200,7 +222,7 @@ function SecondStep({ value, setValue }) {
         } else if (!regPwd.test(password)) {
             setPasswordValidation('영문 소문자 및 숫자 조합 4~12자리')
         } else {
-            setPasswordValidation('이 비밀번호는 안전합니다')
+            setPasswordValidation('사용가능한 비밀번호입니다')
         }
         
     }
@@ -219,7 +241,21 @@ function SecondStep({ value, setValue }) {
     }
 
     const onIdCheckHandler = () => {
-        axios.get('/api/').then(response => console.log(response.data)).catch(err => alert(err))
+        if (IdValidation == '영문 소문자 및 숫자 조합 4~12자리') {
+            return alert('아이디가 유효성에 맞지 않습니다')
+        } 
+        
+        axios.get('/api/').then(response => {
+            setValue.setDuplicateIdCheck(true)
+            alert(response)
+        }).catch(err => {
+            setValue.setDuplicateIdCheck(true)
+            alert(err)
+        })
+    }
+
+    const onTogglePasswordHandler = () => {
+        // 아이콘 클릭시 비밀번호 표시 / 제거
     }
 
     return (
