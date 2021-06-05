@@ -62,9 +62,7 @@ function Join(props) {
                 }
                 break;
             case 2:
-                if (Email.indexOf("@") < 0 || Email.length < 4) {
-                    return alert('@: 이메일 형식에 맞춰 입력하세요')
-                } else if (!DuplicateEmailCheck) {
+                if (!DuplicateEmailCheck) {
                     return alert('아이디 중복확인 해주세요')
                 } else if (Password !== ConfirmPassword) {
                     return alert('비밀번호가 일치하지 않습니다')
@@ -192,12 +190,12 @@ function SecondStep({ value, setValue }) {
         setValue.setEmail(email)
 
         // 유효성 검사 하기
-        const regEmail = /^(?=.*?[a-z])(?=.*?[@])(?=.*?[a-z]).{4,12}$/;
+        const regEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/;
 
         if (email == '') {
             setEmailValidation('')
         } else if (!regEmail.test(email)) {
-            setEmailValidation('@포함하여 이메일 작성')
+            setEmailValidation('@: 포함하여 이메일 작성')
         } else {
             setEmailValidation('사용할 수 있는 아이디입니다')
         }
