@@ -18,7 +18,7 @@ function Join(props) {
     const [ConfirmPassword, setConfirmPassword] = useState('');
     const [AcceptTherms, setAcceptTherms] = useState(false);
     const [AcceptPrivacyPolicy, setAcceptPrivacyPolicy] = useState(false);
-    const [DuplicateIdCheck, setDuplicateIdCheck] = useState(false);
+    const [DuplicateEmailCheck, setDuplicateEmailCheck] = useState(false);
 
     const onSubmitHandler = () => {
         alert('가입됨!')
@@ -31,7 +31,7 @@ function Join(props) {
             password: Password,
         }
 
-        axios.post('/api/join', body).then(response => {
+        axios.post('/api/accounts', body).then(response => {
             alert(response.data);
             props.history.push({ pathname: '/' })
         }).catch(err => alert(err))
@@ -55,8 +55,6 @@ function Join(props) {
             case 1:
                 if (!regName.test(Name)) {
                     return alert('이름을 정확하게 입력하세요')
-                } else if (Email.indexOf("@") < 0 || Email.length < 4) {
-                    return alert('@: 이메일 형식에 맞춰 입력하세요')
                 } else if (Phone.indexOf("-") < 3) {
                     return alert('-를 포함하여 연락처를 입력하세요(지역번호 등 포함)')
                 } else {
@@ -64,7 +62,9 @@ function Join(props) {
                 }
                 break;
             case 2:
-                if (!DuplicateIdCheck) {
+                if (Email.indexOf("@") < 0 || Email.length < 4) {
+                    return alert('@: 이메일 형식에 맞춰 입력하세요')
+                } else if (!DuplicateEmailCheck) {
                     return alert('아이디 중복확인 해주세요')
                 } else if (Password !== ConfirmPassword) {
                     return alert('비밀번호가 일치하지 않습니다')
@@ -104,24 +104,24 @@ function Join(props) {
             {
                 step == 1 
                 && <FirstStep 
-                        value={{ name: Name, email: Email, phone: Phone }} 
-                        setValue={{ setName: setName, setEmail: setEmail, setPhone: setPhone }}
+                        value={{ name: Name, phone: Phone }} 
+                        setValue={{ setName: setName, setPhone: setPhone }}
                     />
             }
             {
                 step == 2 
                 && <SecondStep 
                         value={{ 
-                            id: ID, 
+                            email: Email, 
                             password: Password, 
                             confirmPassword: ConfirmPassword, 
-                            duplicateIdCheck: DuplicateIdCheck 
+                            duplicateEmailCheck: DuplicateEmailCheck 
                         }}
                         setValue={{ 
-                            setID: setID, 
+                            setEmail: setEmail, 
                             setPassword: setPassword, 
                             setConfirmPassword: setConfirmPassword, 
-                            setDuplicateIdCheck: setDuplicateIdCheck 
+                            setDuplicateEmailCheck: setDuplicateEmailCheck 
                         }}
                     />
             }
@@ -168,13 +168,6 @@ function FirstStep({ value, setValue }) {
                     onChange={ onNameHandler }
                     required
                 />
-                <input
-                    type="email"
-                    value={ value.email }
-                    placeholder="이메일 입력"
-                    onChange={ onEmailHandler }
-                    required
-                />
                 <p className="guide">(-)포함하여 연락처를 입력해주세요.</p>
                 <input
                     type="tel"
@@ -190,23 +183,23 @@ function FirstStep({ value, setValue }) {
 }
 
 function SecondStep({ value, setValue }) {
-    const [IdValidation, setIdValidation] = useState('')
+    const [EamilValidation, setEmailValidation] = useState('')
     const [PasswordValidation, setPasswordValidation] = useState('')
     const [ConfirmPasswordValidation, setConfirmPasswordValidation] = useState('')
 
-    const onIdHandler = (e) => {
-        const id = e.currentTarget.value
-        setValue.setID(id)
+    const onEmailHandler = (e) => {
+        const email = e.currentTarget.value
+        setValue.setEmail(email)
 
         // 유효성 검사 하기
-        const regId = /^(?=.*?[a-z])(?=.*?[0-9]).{4,12}$/;
+        const regEmail = /^(?=.*?[a-z])(?=.*?[@])(?=.*?[a-z]).{4,12}$/;
 
-        if (id == '') {
-            setIdValidation('')
-        } else if (!regId.test(id)) {
-            setIdValidation('영문 소문자 및 숫자 조합 4~12자리')
+        if (email == '') {
+            setEmailValidation('')
+        } else if (!regEmail.test(email)) {
+            setEmailValidation('@포함하여 이메일 작성')
         } else {
-            setIdValidation('사용할 수 있는 아이디입니다')
+            setEmailValidation('사용할 수 있는 아이디입니다')
         }
     }
 
@@ -240,16 +233,16 @@ function SecondStep({ value, setValue }) {
         }
     }
 
-    const onIdCheckHandler = () => {
-        if (IdValidation == '영문 소문자 및 숫자 조합 4~12자리') {
-            return alert('아이디가 유효성에 맞지 않습니다')
+    const onEmailCheckHandler = () => {
+        if (EamilValidation == '@포함하여 이메일 작성') {
+            return alert('이메일이 유효성에 맞지 않습니다')
         } 
         
-        axios.get('/api/').then(response => {
-            setValue.setDuplicateIdCheck(true)
+        axios.get(`/api/join?email=${ value.email }`).then(response => {
+            setValue.setDuplicateEmailCheck(true)
             alert(response)
         }).catch(err => {
-            setValue.setDuplicateIdCheck(true)
+            setValue.setDuplicateEmailCheck(true)
             alert(err)
         })
     }
@@ -260,18 +253,18 @@ function SecondStep({ value, setValue }) {
 
     return (
         <section className="secondStepContainer">
-            <p className="guide">아이디, 패스워드를 입력하세요</p>
+            <p className="guide">이메일, 패스워드를 입력하세요</p>
             <div className="secondInputIdContainer">
                 <input
                     type="text" 
-                    value={ value.id }
-                    placeholder="아이디 입력"
-                    onChange={ onIdHandler }
+                    value={ value.email }
+                    placeholder="이메일 입력"
+                    onChange={ onEmailHandler }
                     required
                 />
-                <button type="button" onClick={ onIdCheckHandler }>중복 확인</button> 
+                <button type="button" onClick={ onEmailCheckHandler }>중복 확인</button> 
             </div>
-            <p className="valid">{ IdValidation }</p>
+            <p className="valid">{ EamilValidation }</p>
             <p className="guideInputPassword">비밀번호는 5-10자의 영문, 숫자를 조합하여 설정해주세요</p>
             <div className="secondInputPwdContainer">
                 <input
