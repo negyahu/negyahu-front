@@ -22,7 +22,6 @@ function findAccountReducer(state, action) {
 
 function Login(props) {
     const [state, dispatch] = useReducer(findAccountReducer, findAccount);
-
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -34,9 +33,10 @@ function Login(props) {
         setPassword(e.currentTarget.value)
     }
 
+    const onClickHandler = () => {
+        onSubmitHandler()
+    }
     const onSubmitHandler = (e) => {
-        e.preventDefault();
-        
         let userInfo = {
             email: email,
             password: password
@@ -82,7 +82,7 @@ function Login(props) {
                 />
             </div>
             <div className="LoginButtonContainer">
-                <button className="loginBtn" type="submit">로그인</button>
+                <button className="loginBtn" type="button" onClick={ onClickHandler }>로그인</button>
             </div>
             <div className="accountFindButtonContainer">
                 <p onClick={() => {

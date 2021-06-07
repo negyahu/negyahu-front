@@ -12,8 +12,8 @@ function Join(props) {
     const [step, setStep] = useState(1);
     const [Name, setName] = useState('');
     const [Email, setEmail] = useState('');
-    const [Phone, setPhone] = useState('');
-    const [ID, setID] = useState('');
+    const [Mobile, setMobile] = useState('');
+    const [NickName, setNickName] = useState('');
     const [Password, setPassword] = useState('');
     const [ConfirmPassword, setConfirmPassword] = useState('');
     const [AcceptTherms, setAcceptTherms] = useState(false);
@@ -24,18 +24,20 @@ function Join(props) {
         alert('가입됨!')
 
         let body = {
-            name: Name,
+            userName: Name,
             email: Email,
-            phone: Phone,
-            id: ID,
+            mobile: Mobile,
+            nickName: NickName,
             password: Password,
         }
 
         axios.post('/api/accounts', body).then(response => {
-            alert(response.data);
+            alert(response.data);   // 가입한 모든 정보 보내줌 + 가입시간
+            // result false일때 메세지 alert 출력
             props.history.push({ pathname: '/' })
-        }).catch(err => alert(err))
-
+        }).catch(err => alert(err)) // 에러상태 체크해서 alert창 메세지 변경 (통신이 안된경우)
+        // 400 : 회원가입실패
+        // 404 : 서버 불안정
     }
 
     const onClickHandler = () => {
@@ -55,7 +57,7 @@ function Join(props) {
             case 1:
                 if (!regName.test(Name)) {
                     return alert('이름을 정확하게 입력하세요')
-                } else if (Phone.indexOf("-") < 3) {
+                } else if (Mobile.indexOf("-") < 3) {
                     return alert('-를 포함하여 연락처를 입력하세요(지역번호 등 포함)')
                 } else {
                     setStep(step + 1)
@@ -102,8 +104,8 @@ function Join(props) {
             {
                 step == 1 
                 && <FirstStep 
-                        value={{ name: Name, phone: Phone }} 
-                        setValue={{ setName: setName, setPhone: setPhone }}
+                        value={{ name: Name, mobile: Mobile }} 
+                        setValue={{ setName: setName, setMobile: setMobile }}
                     />
             }
             {
@@ -151,8 +153,8 @@ function FirstStep({ value, setValue }) {
         setValue.setEmail(e.currentTarget.value)
     }
 
-    const onPhoneHandler = (e) => {
-        setValue.setPhone(e.currentTarget.value)
+    const onMobileHandler = (e) => {
+        setValue.setMobile(e.currentTarget.value)
     }
 
     return (
@@ -170,9 +172,9 @@ function FirstStep({ value, setValue }) {
                 <input
                     type="tel"
                     className="thirdInput"
-                    value={ value.phone }
+                    value={ value.mobile }
                     placeholder="연락처" 
-                    onChange={ onPhoneHandler }
+                    onChange={ onMobileHandler }
                     required
                 />
             </div>
