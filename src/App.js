@@ -7,6 +7,8 @@ import Join from './components/views/RegisterPage/Join';
 import Header from './components/views/NavBar/Header';
 import Main from './components/views/LandingPage/Main';
 
+console.log(`api server : ${process.env.REACT_APP_API_SERVER}`);
+
 function getUserInformation() {
   // 앱구동시 유저정보 모두 불러오기
   return []
