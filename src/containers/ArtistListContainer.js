@@ -6,8 +6,6 @@ import { getArtists } from '../modules/artists';
 
 function ArtistListContainer() {
     const { data, loading, error } = useSelector(state => state.artists.artists);
-    console.log(data)
-    console.log(loading)
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -16,7 +14,7 @@ function ArtistListContainer() {
 
     if (loading) return <Loading />
     if (error) return alert('잠시 후 다시 접속해주세요')
-    // if (!data) return alert('데이터를 가져오지 못했습니다')
+    if (!data) return <div></div>
 
     return <ArtistList artists={data} />
 }

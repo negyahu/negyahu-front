@@ -5,7 +5,6 @@ export const createPromiseThunk = (type, promiseCreator) => {
         dispatch({ type })
         try {
             const payload = await promiseCreator(param);
-            console.log("페이로드", payload)
 
             dispatch({
                 type: SUCCESS,

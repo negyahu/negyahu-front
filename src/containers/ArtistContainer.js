@@ -14,7 +14,7 @@ function ArtistContainer({ imageId }) {
 
     if (loading) return <Loading />
     if (error) return alert('잠시 후 다시 접속해주세요')
-    // if (!data) return alert('데이터를 받아오지 못했습니다')
+    if (!data) return <div></div>
 
     return <Artist artist={data}/>
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import '../../scss/ArtistList.scss';
 
@@ -43,18 +43,17 @@ const ArtistImage = styled.div`
     }
 `;
 
-function ArtistList({ artists, history }) {
-    const onClick = (url) => {
-        history.push(`${url}`)
-    }
+function ArtistList({ artists }) {
     return (
         <section className="mainContainer">
             <div className="artistsContainer">
                 {
                     artists.map(artist => 
-                        <ArtistImage name={artist.name} onClick={onClick}>
-                            <img src={`${artist.imageURL}`} alt="연예인"/>
-                        </ArtistImage>
+                        <Link to={`/artist/${artist.imageId}`} key={artist.imageId}>
+                            <ArtistImage name={artist.name}>
+                                <img src={`${artist.imageURL}`} alt="연예인"/>
+                            </ArtistImage>
+                        </Link>
                     )
                 }
             </div>
@@ -62,4 +61,4 @@ function ArtistList({ artists, history }) {
     );
 }
 
-export default withRouter(ArtistList);
+export default ArtistList;
