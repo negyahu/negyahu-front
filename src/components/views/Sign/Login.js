@@ -3,9 +3,9 @@ import { withRouter } from 'react-router';
 import axios from 'axios';
 
 import { tempAccount } from '../../../utils/temp';
-import { BackgroundColor } from '../NavBar/Header';
 
-import './Login.scss';
+import '../../scss/Login.scss';
+import BackgroundBlur from '../Common/Background';
 
 const findAccount = {
     findUserEmail: false,
@@ -142,7 +142,7 @@ function FindUserEmail({ state, dispatch, ...rest }) {
     }
 
     return (
-        <BackgroundColor>
+        <BackgroundBlur>
             {
                 open && searchEmail(information)
             }
@@ -170,7 +170,7 @@ function FindUserEmail({ state, dispatch, ...rest }) {
                     }}>뒤로가기</button>
                 </div>
             </section>
-        </BackgroundColor>
+        </BackgroundBlur>
     )
 }
 
@@ -196,7 +196,7 @@ function FindUserPassword({ state, dispatch, ...rest }) {
     }
 
     return (
-        <BackgroundColor>
+        <BackgroundBlur>
             {
                 open && searchPwd(information)
             }
@@ -224,7 +224,7 @@ function FindUserPassword({ state, dispatch, ...rest }) {
                     }}>뒤로가기</button>
                 </div>
             </section>
-        </BackgroundColor>
+        </BackgroundBlur>
     )
 }
 

@@ -19,3 +19,10 @@ body::-webkit-scrollbar-thumb {
 div {
   box-sizing: border-box;
 }
+
+// all section
+.section {
+  display: flex;
+  justify-content: flex-end;
+  overflow: auto;
+}

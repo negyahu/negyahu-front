@@ -5,7 +5,7 @@ import { BiHide, BiShow } from 'react-icons/bi';
 import { IconContext } from 'react-icons/lib';
 import { withRouter } from 'react-router';
 
-import './Join.scss';
+import '../../scss/Join.scss';
 
 
 function Join(props) {
