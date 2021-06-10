@@ -11,6 +11,7 @@ import Notifications from './Notifications';
 import Mails from './Mails';
 import Mail from '../Common/Mail';
 import MoreMenus from './MoreMenus';
+import { useSelector } from 'react-redux';
 
 const NavbarContainer = styled.header`
     width: 100%;
@@ -52,8 +53,8 @@ function openReducer(state, action) {
 }
 
 
-
-function Header({ data, history }) {
+function Header({ history }) {
+    const { data } = useSelector(state => state.sign.login)
     const [state, dispatch] = useReducer(openReducer, initialOpenState);
     return (
         <NavbarContainer>

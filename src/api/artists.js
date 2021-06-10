@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 const sleep = n => new Promise(resolve => setTimeout(resolve, n));
 
 const artists = [
