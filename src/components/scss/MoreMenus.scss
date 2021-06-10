@@ -1,0 +1,45 @@
+@import '../../App.scss';
+
+.moreMenu {
+    display: block;
+    width: 160px;
+    height: 130px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 0px 4px 0px;
+    border: 1px solid rgb(235, 235, 235);
+    margin-right: 40px;
+    position: absolute;
+    z-index: 2;
+    overflow: auto;
+    box-shadow : 0px 5px 8px rgba(0, 0, 0, 0.2);
+    &::-webkit-scrollbar {
+        width: 10px;
+        background: #FBF6F6;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: #5C5F78;
+        background-clip: padding-box;
+        border-radius: 5px;
+        border: 2.5px solid transparent;
+    }
+    &::-webkit-scrollbar-track {
+        border-radius: 5px;
+        background: transparent;
+    }
+    .menu-ul {
+        padding: 0 20px 0;
+        list-style: none;
+        li {
+            color: #000000;
+            font-style: normal;
+            font-size: 16px;
+            cursor: pointer;
+            border-bottom: 1px solid #ACACAC;
+            padding: 10px 0;
+            &:hover {
+                color: #ec8c8c;
+            }
+        }
+    }
+}

@@ -1,40 +1,32 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Route } from 'react-router-dom';
 
 import './App.scss';
-import Login from './components/views/LoginPage/Login';
-import Join from './components/views/RegisterPage/Join';
+import Login from './components/views/Sign/Login';
+import Join from './components/views/Sign/Join';
 import Header from './components/views/NavBar/Header';
-import Main from './components/views/LandingPage/Main';
+import Main from './components/views/Landing/Main';
+import Footer from './components/views/Footer/Footer';
+import ArtistPage from './pages/ArtistPage';
 
 console.log(`api server : ${process.env.REACT_APP_API_SERVER}`);
 
-function getUserInformation() {
-  // 앱구동시 유저정보 모두 불러오기
-  return []
-}
-
-function getArtists() {
-  // 앱 구동시 등록된 아티스트정보(소속사) 모두 불러오기
-  return []
-}
 
 function App() {
-  useEffect(getUserInformation, []);
-  useEffect(getArtists, []);
-  
   return (
     <>
       <Header />
-      <Route exact path="/">
+      <Route path="/" exact>
         <Main />
       </Route>
+      <Route path="/artist/:id" component={ArtistPage} exact />
       <Route path="/login">
         <Login />
       </Route>
       <Route path="/join">
         <Join />
       </Route>
+      <Footer />
     </>
   );
 }

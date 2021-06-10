@@ -1,13 +1,14 @@
 import React from 'react';
-import { BackgroundColor, initialOpenState } from './Header';
-import './MailForm.scss';
+import BackgroundBlur from './Background';
+import { initialOpenState } from '../NavBar/Header';
+import '../../scss/MailForm.scss';
 
 function MailForm({ state, dispatch }) {
     const closeMailForm = () => {
         dispatch({ type: 'SENDMAIL', open: { ...initialOpenState, mailForm: !state.mailForm }})
     }
     return (
-        <BackgroundColor>
+        <BackgroundBlur>
             <form className="sendMailContainer">
                 <div className="sendMailByUserInformation">
                     <p className="sendMailByUserId">TO. <span>user</span></p>
@@ -21,7 +22,7 @@ function MailForm({ state, dispatch }) {
                     <button type="button" id="closeMailBtn" onClick={ closeMailForm }>취소하기</button>
                 </div>
             </form>
-        </BackgroundColor>
+        </BackgroundBlur>
     );
 }
 
