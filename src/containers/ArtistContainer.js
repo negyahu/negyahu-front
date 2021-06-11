@@ -4,9 +4,12 @@ import Loading from '../components/views/Common/Loading';
 import Artist from '../components/views/Landing/Artist';
 import { getArtist } from '../modules/artists';
 
-function ArtistContainer({ imageId }) {
+function ArtistContainer({ match }) {
     const { data, loading, error } = useSelector(state => state.artists.artist);
     const dispatch = useDispatch();
+
+    const { id } = match.params;
+    const imageId = parseInt(id, 10);
 
     useEffect(() => {
         dispatch(getArtist(imageId))
