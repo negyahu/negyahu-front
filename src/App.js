@@ -7,7 +7,7 @@ import Join from './components/views/Sign/Join';
 import Header from './components/views/NavBar/Header';
 import Main from './components/views/Landing/Main';
 import Footer from './components/views/Footer/Footer';
-import ArtistPage from './pages/ArtistPage';
+import Artist from './components/views/Landing/Artist';
 
 console.log(`api server : ${process.env.REACT_APP_API_SERVER}`);
 
@@ -19,7 +19,7 @@ function App() {
       <Route path="/" exact>
         <Main />
       </Route>
-      <Route path="/artist/:id" component={ArtistPage} exact />
+      <Route path="/artist/:id" component={Artist} exact />
       <Route path="/login">
         <Login />
       </Route>

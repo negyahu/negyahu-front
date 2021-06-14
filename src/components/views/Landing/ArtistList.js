@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useEffect }from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { getArtists } from '../../../modules/artists';
 import '../../scss/ArtistList.scss';
+import Loading from '../Common/Loading';
 
 const ArtistImage = styled.div`
     width: 350px;
@@ -43,12 +46,23 @@ const ArtistImage = styled.div`
     }
 `;
 
-function ArtistList({ artists }) {
+function ArtistList() {
+    const { data, loading, error } = useSelector(state => state.artists.artists);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getArtists());
+    }, [dispatch])
+
+    if (loading) return <Loading />
+    if (error) return alert('잠시 후 다시 접속해주세요')
+    if (!data) return <div></div>
+    
     return (
         <section className="mainContainer">
             <div className="artistsContainer">
                 {
-                    artists.map(artist => 
+                    data.map(artist => 
                         <Link to={`/artist/${artist.imageId}`} key={artist.imageId}>
                             <ArtistImage name={artist.name}>
                                 <img src={`${artist.imageURL}`} alt="연예인"/>
