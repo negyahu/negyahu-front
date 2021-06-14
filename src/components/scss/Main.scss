@@ -1,20 +1,41 @@
 @import '../../App.scss';
 
-.mainContainer {
-    width: 100%;
+.faqTitle {
+    width: 350px;
+    height: 45px;
+    font-family: Yoon Minguk;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 22px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+
+.faqContent {
+    width: 350px;
     height: auto;
-    .artistsContainer {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: repeat(2, 300px);
-        grid-auto-rows: 300px;
-        align-items: center;
-        justify-items: center;
-        margin: 0 auto;
-        overflow: hidden;
-        width: 1200px;
-        height: 1000px;
-        padding-top: 50px;
-        // border: 2px solid red;
+    margin: 5px 0;
+    padding: 5px;
+    box-sizing: border-box;
+    font-family: Yoon Minguk;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 14px;
+}
+
+.linkButton {
+    outline: none;
+    border: none;
+    font-family: Yoon Minguk;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    color: blue;
+    background: none;
+    &:hover {
+        color: lightblue;
     }
 }

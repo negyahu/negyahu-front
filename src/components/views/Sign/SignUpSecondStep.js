@@ -4,6 +4,7 @@ import { BiHide } from 'react-icons/bi';
 import { IconContext } from 'react-icons/lib';
 
 function SignUpSecondStep({ value, setValue }) {
+    
     const [EamilValidation, setEmailValidation] = useState('')
     const [PasswordValidation, setPasswordValidation] = useState('')
     const [ConfirmPasswordValidation, setConfirmPasswordValidation] = useState('')

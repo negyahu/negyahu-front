@@ -1,8 +1,6 @@
 /* eslint-disable */
 import axios from 'axios';
 import React, { useState } from 'react';
-import { BiHide, BiShow } from 'react-icons/bi';
-import { IconContext } from 'react-icons/lib';
 import { withRouter } from 'react-router';
 
 import '../../scss/Join.scss';
