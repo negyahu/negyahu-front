@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { openFindEmail } from '../../../modules/openModules';
+import { OPEN_FIND_EMAIL } from '../../../_actions/openModules';
 import BackgroundBlur from '../Common/Background';
 
 function FindUserEmail() {
@@ -38,7 +38,7 @@ function FindUserEmail() {
                 </div>
                 <div className="findAccountButtonContainer">
                     <button type="button">이메일 찾기</button>
-                    <button type="button" onClick={() => { dispatch(openFindEmail()) }}>뒤로가기</button>
+                    <button type="button" onClick={() => { dispatch({ type: OPEN_FIND_EMAIL }) }}>뒤로가기</button>
                 </div>
             </section>
         </BackgroundBlur>

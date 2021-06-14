@@ -1,6 +1,7 @@
-import React, { useReducer } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import '../../scss/Header.scss';
 
@@ -11,7 +12,6 @@ import Notifications from './Notifications';
 import Mails from './Mails';
 import Mail from '../Common/Mail';
 import MoreMenus from './MoreMenus';
-import { useSelector } from 'react-redux';
 
 const NavbarContainer = styled.header`
     width: 100%;
@@ -31,38 +31,18 @@ const Navbar = styled.nav`
     box-shadow: 0 2px 2px rgba(150, 150, 150, 0.3);
 `;
 
-export const initialOpenState = {
-    notification: false,
-    mail: false,
-    more: false,
-    getMail: false,
-    sendMail: false,
-    mailForm: false,
-}
-
-function openReducer(state, action) {
-    switch (action.type) {
-        case 'NOTIFICATION': return state = action.open;
-        case 'MAIL': return state = action.open;
-        case 'MORE': return state = action.open;
-        case 'GETMAIL': return state = action.open;
-        case 'SENDMAIL': return state = action.open;
-        case 'MAILFORM': return state = action.open;
-        default: throw new Error(`Unhandled action type: ${ action.type }`)
-    }
-}
-
 
 function Header({ history }) {
     const { data } = useSelector(state => state.sign.login)
-    const [state, dispatch] = useReducer(openReducer, initialOpenState);
+    const openModule = useSelector(state => state.openModules.header)
+
     return (
         <NavbarContainer>
             {
-                state.getMail && <Mail state={ state } dispatch={ dispatch } />
+                openModule.getMail && <Mail />
             }
             {
-                state.mailForm && <MailForm state={ state } dispatch={ dispatch } />
+                openModule.mailForm && <MailForm />
             }
             <Navbar>
                 <p className="logo" onClick={() => {
@@ -71,19 +51,19 @@ function Header({ history }) {
                 <div className="menuContainer">
                     {
                         data 
-                        ? <LoginMenuIcons state={ state } dispatch={ dispatch }/>
+                        ? <LoginMenuIcons />
                         : <NoneLoginMenuIcons />
                     }
                 </div>
             </Navbar>
             {
-                state.notification && <Notifications />
+                openModule.notification && <Notifications />
             }
             {
-                state.mail && <Mails state={ state } dispatch={ dispatch } />
+                openModule.mail && <Mails />
             }
             {
-                state.more && <MoreMenus />
+                openModule.more && <MoreMenus />
             }
         </NavbarContainer>
     );

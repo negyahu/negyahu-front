@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { openFindPassword, openFoundAccount } from '../../../modules/openModules';
+import { OPEN_FIND_PASSWORD } from '../../../_actions/openModules';
 import BackgroundBlur from '../Common/Background';
 
 function FindUserPassword() {
@@ -37,7 +37,7 @@ function FindUserPassword() {
                 </div>
                 <div className="findAccountButtonContainer">
                     <button type="button">비밀번호 찾기</button>
-                    <button type="button" onClick={() => {dispatch(openFindPassword())}}>뒤로가기</button>
+                    <button type="button" onClick={() => {dispatch({ type: OPEN_FIND_PASSWORD })}}>뒤로가기</button>
                 </div>
             </section>
         </BackgroundBlur>

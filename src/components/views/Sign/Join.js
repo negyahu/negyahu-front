@@ -30,7 +30,6 @@ function Join(props) {
             email: Email,
             mobile: Mobile,
             password: Password,
-            nickname: '닉네임3'
         }
         setSignUpUser(body)
         .then(response => alert(response.data.username + "님 환영합니다"))

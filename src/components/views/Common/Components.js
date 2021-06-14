@@ -31,6 +31,24 @@ export const HelpToggle = styled.div`
     }
 `;
 
+
+export const AgencyApplicationGuide = styled.div`
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color:#ffd43b;
+    font-size: 30px;
+    &:hover {
+        color: #fab005;
+    }
+`; 
+
+
+
 export const HelpCenter = styled.div`
     width: 400px;
     height: 0px;

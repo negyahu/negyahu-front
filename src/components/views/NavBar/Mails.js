@@ -3,7 +3,7 @@ import GetMails from './GetMails';
 import SendMails from './SendMails';
 import '../../scss/Mails.scss';
 
-function Mails({ state, dispatch }) {
+function Mails() {
     const openMailCategory = (category) => {
         let bTags = document.getElementsByTagName("b");
         for (let i = 0; i < bTags.length; i++) {
@@ -12,10 +12,10 @@ function Mails({ state, dispatch }) {
         switch (category) {
             case '받은 쪽지':
                 bTags[0].style.color = "#000000";
-                return <GetMails state={ state } dispatch={ dispatch } />
+                return <GetMails />
             case '보낸 쪽지':
                 bTags[1].style.color = "#000000";
-                return <SendMails state={ state } dispatch={ dispatch } />
+                return <SendMails />
             default:
                 throw new Error(`Not Found category: ${ category }`);
         }
@@ -36,7 +36,7 @@ function Mails({ state, dispatch }) {
                         }}>보낸 쪽지 목록</b>
                     </div>
                     {
-                        category ? category : <GetMails state={ state } dispatch={ dispatch } />
+                        category ? category : <GetMails />
                     }
                 </div>
             </section>

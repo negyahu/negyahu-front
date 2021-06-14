@@ -5,10 +5,10 @@ import { withRouter } from 'react-router';
 import FindUserEmail from './FindUserEmail';
 import FindUserPassword from './FindUserPassword';
 import FoundAccount from './FoundAccount';
-import { openFindEmail, openFindPassword } from '../../../modules/openModules';
 
 import '../../scss/Login.scss';
 import { setLogin } from '../../../api/sign';
+import { OPEN_FIND_EMAIL, OPEN_FIND_PASSWORD } from '../../../_actions/openModules';
 
 
 function Login({ history }) {
@@ -76,8 +76,8 @@ function Login({ history }) {
                 <button className="loginBtn" type="submit">로그인</button>
             </div>
             <div className="accountFindButtonContainer">
-                <p onClick={() => { dispatch(openFindEmail())}}>이메일 찾기</p>
-                <p onClick={() => { dispatch(openFindPassword())}}>비밀번호 찾기</p>
+                <p onClick={() => { dispatch({ type: OPEN_FIND_EMAIL })}}>이메일 찾기</p>
+                <p onClick={() => { dispatch({ type: OPEN_FIND_PASSWORD })}}>비밀번호 찾기</p>
             </div>
             <hr />
             <p className="subTitle">또는 다른 계정으로 로그인</p>
