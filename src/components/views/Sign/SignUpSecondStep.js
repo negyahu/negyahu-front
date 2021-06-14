@@ -60,12 +60,18 @@ function SignUpSecondStep({ value, setValue }) {
             return alert('이메일이 유효성에 맞지 않습니다')
         } 
         
-        axios.get(`/api/join?email=${ value.email }`).then(response => {
+        axios({
+            url: '/api/check/email',
+            method: 'get',
+            params: {
+                email: value.email
+            }
+        }).then(response => {
             setValue.setDuplicateEmailCheck(true)
-            alert(response)
+            alert(response.data.statusCode)
         }).catch(err => {
-            setValue.setDuplicateEmailCheck(true)
             alert(err)
+            console.log(err)
         })
     }
 

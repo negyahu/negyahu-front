@@ -32,11 +32,14 @@ function Join(props) {
             password: Password,
         }
 
-        axios.post('/api/accounts', body).then(response => {
-            alert(response.data);   // 가입한 모든 정보 보내줌 + 가입시간
+        axios.post('http://3.36.75.14/api/accounts', body).then(response => {
+            alert(response.data.statusCode);   // 가입한 모든 정보 보내줌 + 가입시간
             // result false일때 메세지 alert 출력
             props.history.push({ pathname: '/' })
-        }).catch(err => alert(err)) // 에러상태 체크해서 alert창 메세지 변경 (통신이 안된경우)
+        }).catch(err => {
+            alert(err)
+            console.log(err)
+        }) // 에러상태 체크해서 alert창 메세지 변경 (통신이 안된경우)
         // 400 : 회원가입실패
         // 404 : 서버 불안정
     }
@@ -58,7 +61,7 @@ function Join(props) {
             case 1:
                 if (!regName.test(Name)) {
                     return alert('이름을 정확하게 입력하세요')
-                } else if (Mobile.indexOf("-") < 3) {
+                } else if (Mobile.indexOf('-') < 3) {
                     return alert('-를 포함하여 연락처를 입력하세요(지역번호 등 포함)')
                 } else {
                     setStep(step + 1)
