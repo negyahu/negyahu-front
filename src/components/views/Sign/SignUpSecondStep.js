@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { BiHide } from 'react-icons/bi';
 import { IconContext } from 'react-icons/lib';
+import { setDuplicateEmailCheck } from '../../../api/sign';
 
 function SignUpSecondStep({ value, setValue }) {
     
@@ -60,18 +61,14 @@ function SignUpSecondStep({ value, setValue }) {
             return alert('이메일이 유효성에 맞지 않습니다')
         } 
         
-        axios({
-            url: '/api/check/email',
-            method: 'get',
-            params: {
-                email: value.email
-            }
-        }).then(response => {
+        setDuplicateEmailCheck(value.email).then(response => {
             setValue.setDuplicateEmailCheck(true)
-            alert(response.data.statusCode)
+            // alert(response.data.statusCode)
+            alert(`사용가능한 이메일입니다.`)
         }).catch(err => {
-            alert(err)
-            console.log(err)
+            // alert(err)
+            // console.log(err)
+            alert(`사용중인 이메일입니다.`)
         })
     }
 

@@ -6,9 +6,9 @@ import FindUserEmail from './FindUserEmail';
 import FindUserPassword from './FindUserPassword';
 import FoundAccount from './FoundAccount';
 import { openFindEmail, openFindPassword } from '../../../modules/openModules';
-import { setLogin } from '../../../modules/sign';
 
 import '../../scss/Login.scss';
+import { setLogin } from '../../../api/sign';
 
 
 function Login({ history }) {
@@ -33,15 +33,10 @@ function Login({ history }) {
             email: email,
             password: password
         }
-        dispatch(setLogin(userInfo))
-        if (data) {
-            alert(`${data.login.data.name}님 환영합니다`)
+        setLogin(userInfo).then(res => {
+            alert('로그인 완료 : ' + res.data.token)
             history.push('/')
-        } else {
-            alert('데이터를 불러오지 못했습니다 잠시 후 다시 접속하세요', e)
-            setEmail('')
-            setPassword('')
-        }
+        }).catch(err => alert(err))
     }
 
     

@@ -1,7 +1,9 @@
 /* eslint-disable */
 import axios from 'axios';
+import { fixRequestBody } from 'http-proxy-middleware';
 import React, { useState } from 'react';
 import { withRouter } from 'react-router';
+import { setSignUpUser } from '../../../api/sign';
 
 import '../../scss/Join.scss';
 import SignUpFirstStep from './SignUpFirstStep';
@@ -14,7 +16,6 @@ function Join(props) {
     const [Name, setName] = useState('');
     const [Email, setEmail] = useState('');
     const [Mobile, setMobile] = useState('');
-    const [NickName, setNickName] = useState('');
     const [Password, setPassword] = useState('');
     const [ConfirmPassword, setConfirmPassword] = useState('');
     const [AcceptTherms, setAcceptTherms] = useState(false);
@@ -25,23 +26,15 @@ function Join(props) {
         alert('가입됨!')
 
         let body = {
-            userName: Name,
+            username: Name,
             email: Email,
             mobile: Mobile,
-            nickName: NickName,
             password: Password,
+            nickname: '닉네임3'
         }
-
-        axios.post('http://3.36.75.14/api/accounts', body).then(response => {
-            alert(response.data.statusCode);   // 가입한 모든 정보 보내줌 + 가입시간
-            // result false일때 메세지 alert 출력
-            props.history.push({ pathname: '/' })
-        }).catch(err => {
-            alert(err)
-            console.log(err)
-        }) // 에러상태 체크해서 alert창 메세지 변경 (통신이 안된경우)
-        // 400 : 회원가입실패
-        // 404 : 서버 불안정
+        setSignUpUser(body)
+        .then(response => alert(response.data.username + "님 환영합니다"))
+        .catch(err => alert(err))
     }
 
     const onClickHandler = () => {
