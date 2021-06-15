@@ -8,6 +8,8 @@ import Header from './components/views/NavBar/Header';
 import Main from './components/views/Landing/Main';
 import Footer from './components/views/Footer/Footer';
 import Artist from './components/views/Landing/Artist';
+import ApplyArtists from './components/views/Agency/ApplyArtists';
+import ApplyArtist from './components/views/Agency/ApplyArtist';
 
 console.log(`api server : ${process.env.REACT_APP_API_SERVER}`);
 
@@ -26,6 +28,9 @@ function App() {
       <Route path="/join">
         <Join />
       </Route>
+      <Route path="/agency/artists" component={ApplyArtists}/>
+      <Route path="/artist/apply" component={ApplyArtist}/>
+        
       <Footer />
     </>
   );

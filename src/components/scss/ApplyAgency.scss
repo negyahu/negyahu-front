@@ -70,6 +70,26 @@
                 border: 1px solid #F4D4D4;
                 cursor: pointer;
             }
+            article {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                position: relative;
+                button {
+                    background: #F4D4D4;
+                    width: 90px;
+                    height: 30px;
+                    font-style: normal;
+                    font-size: 18px;
+                    text-align: center;
+                    color: #5C5F78;
+                    border: 1px solid #F4D4D4;
+                    cursor: pointer;
+
+                    position: absolute;
+                    right: 0;
+                }
+            }
         }
     }
     .agencyApplicationButtonContainer {

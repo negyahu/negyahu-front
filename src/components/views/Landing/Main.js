@@ -37,7 +37,7 @@ function Main() {
                     {
                         data.map(faq => {
                             return (
-                                <>
+                                <div key={faq.id}>
                                     <button className="faqTitle">{faq.title}</button>
                                     <p className="faqContent">{faq.content}<br />
                                     {
@@ -48,7 +48,7 @@ function Main() {
                                         >이 링크를 클릭</button>
                                     }
                                     </p>
-                                </>
+                                </div>
                             )
                         })
                     }

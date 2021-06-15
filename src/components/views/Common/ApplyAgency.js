@@ -8,6 +8,24 @@ import { OPEN_APPLY_AGENCY } from '../../../_actions/openModules';
 
 
 function ApplyAgency() {
+    const [AgencyName, setAgencyName] = useState('');
+    const [CompanyNumber, setCompanyNumber] = useState('');
+    const [BoseName, setBoseName] = useState('');
+    const [Email, setEmail] = useState('');
+    const [Mobile, setMobile] = useState('');
+    const [FileName, setFileName] = useState('');
+
+    const attachment = () => {
+        let att = document.getElementById('attachment');
+        att.click()
+    }
+
+    const fileChange = (e) => {
+        var files = e.currentTarget.value;
+        setFileName(files.substring(files.lastIndexOf("\\") + 1))
+
+    }
+
     const [guide, setGuide] = useState(false)
     const onGuide = () => {
         setGuide(!guide)
@@ -41,9 +59,9 @@ function ApplyAgency() {
                         <td colSpan="3">
                             <input 
                                 type="text"
-                                value
+                                value={AgencyName}
                                 placeholder="소속사명을 입력하세요"
-                                onChange
+                                onChange={(e) => {setAgencyName(e.currentTarget.value)}}
                             />
                         </td>
                     </tr>
@@ -52,9 +70,9 @@ function ApplyAgency() {
                         <td>
                             <input 
                                 type="text"
-                                value
-                                placeholder="사업자번호를 입력하세요"
-                                onChange
+                                value={CompanyNumber}
+                                placeholder="(-)를 포함하여 사업자번호를 입력하세요"
+                                onChange={(e) => {setCompanyNumber(e.currentTarget.value)}}
                             />
                         </td>
                         <td>
@@ -69,9 +87,9 @@ function ApplyAgency() {
                         <td colSpan="3">
                             <input 
                                 type="text"
-                                value
-                                placeholder="사업자번호를 입력하세요"
-                                onChange
+                                value={BoseName}
+                                placeholder="대표자명을 입력하세요"
+                                onChange={(e) => {setBoseName(e.currentTarget.value)}}
                             />
                         </td>
                     </tr>
@@ -80,9 +98,9 @@ function ApplyAgency() {
                         <td colSpan="3">
                             <input 
                                 type="text"
-                                value
-                                placeholder="사업자번호를 입력하세요"
-                                onChange
+                                value={Mobile}
+                                placeholder="연락처를 입력하세요"
+                                onChange={(e) => {setMobile(e.currentTarget.value)}}
                             />
                         </td>
                     </tr>
@@ -91,18 +109,29 @@ function ApplyAgency() {
                         <td colSpan="3">
                             <input 
                                 type="text"
-                                value
+                                value={Email}
                                 placeholder="사업자번호를 입력하세요"
-                                onChange
+                                onChange={(e) => {setEmail(e.currentTarget.value)}}
                             />
                         </td>
                     </tr>
                     <tr>
                         <td>첨부파일</td>
-                        <td colSpan="3">
-                            <input
+                        <td colSpan="2">
+                            <input 
+                                type="text" 
+                                value={FileName} 
+                                placeholder="파일을 첨부하세요(사업자등록증)" 
+                                disabled
+                            />
+                        </td>
+                        <td>
+                            <button onClick={attachment}>파일첨부</button>
+                            <input 
                                 type="file"
-                                placeholder="사업자등록증을 올려주세요"
+                                id="attachment"
+                                style={{display: "none"}}
+                                onChange={fileChange}
                             />
                         </td>
                     </tr>
