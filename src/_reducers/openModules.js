@@ -17,6 +17,9 @@ const initialState = {
         getMail: false,
         sendMail: false,
         mailForm: false,
+    },
+    common: {
+        alert: false
     }
 
 }
@@ -140,6 +143,14 @@ export default function openModulesReducer(state = initialState, action) {
                     ...state.main,
                     help: false,
                     agency: !state.main.agency
+                } 
+            }
+        case openModule.OPEN_CONFIRM:
+            return {
+                ...state,
+                common: {
+                    ...state.common,
+                    alert: !state.alert
                 } 
             }
         default:

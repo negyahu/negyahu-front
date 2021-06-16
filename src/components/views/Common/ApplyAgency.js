@@ -5,36 +5,63 @@ import '../../scss/ApplyAgency.scss';
 import { AgencyApplicationGuide } from './Components';
 import { useDispatch } from 'react-redux';
 import { OPEN_APPLY_AGENCY } from '../../../_actions/openModules';
+import { postApplyAgency } from '../../../api/artists';
 
 
 function ApplyAgency() {
+    const dispatch = useDispatch();
     const [AgencyName, setAgencyName] = useState('');
     const [CompanyNumber, setCompanyNumber] = useState('');
     const [BoseName, setBoseName] = useState('');
     const [Email, setEmail] = useState('');
     const [Mobile, setMobile] = useState('');
     const [FileName, setFileName] = useState('');
+    const [Files, setFiles] = useState('');
 
     const attachment = () => {
-        let att = document.getElementById('attachment');
+        const att = document.getElementById('attachment');
         att.click()
     }
 
     const fileChange = (e) => {
-        var files = e.currentTarget.value;
-        setFileName(files.substring(files.lastIndexOf("\\") + 1))
-
+        let files = e.target.files;
+        setFileName(files[0].name)
+        setFiles(files)
     }
 
     const [guide, setGuide] = useState(false)
     const onGuide = () => {
         setGuide(!guide)
     }
-    const dispatch = useDispatch();
+
+    const onSubmitHandler = (e) => {
+        e.preventDefault();
+
+        const formData = new FormData();
+        formData.append(
+            "file",
+            Files,
+        );
+        const config = {
+            headers: {
+                "content-type": "multipart/form-data"
+            }
+        }
+        postApplyAgency(formData, config)
+            .then(res => {
+                
+                dispatch({ type: OPEN_APPLY_AGENCY })
+                
+            })
+            .catch(err => {
+                alert(err)
+            })
+        
+    }
 
     return (
         <BackgroundBlur>
-            <div className="applyAgencyContainer">
+            <form className="applyAgencyContainer" onSubmit={onSubmitHandler}>
                 <h2>
                     소속사 가입신청
                     <AgencyApplicationGuide onMouseEnter={onGuide} onMouseLeave={onGuide}>
@@ -79,7 +106,7 @@ function ApplyAgency() {
                             <button>확인</button>
                         </td>
                         <td>
-                            <label>확인되었습니다</label>
+                            <label></label>
                         </td>
                     </tr>
                     <tr>
@@ -126,7 +153,7 @@ function ApplyAgency() {
                             />
                         </td>
                         <td>
-                            <button onClick={attachment}>파일첨부</button>
+                            <button type="button" onClick={attachment}>파일첨부</button>
                             <input 
                                 type="file"
                                 id="attachment"
@@ -137,10 +164,10 @@ function ApplyAgency() {
                     </tr>
                 </table>
                 <div className="agencyApplicationButtonContainer">
-                    <button>신청하기</button>
+                    <button type="submit">신청하기</button>
                     <button onClick={() => { dispatch({ type: OPEN_APPLY_AGENCY })}}>취소하기</button>
                 </div>
-            </div>
+            </form>
         </BackgroundBlur>
     );
 }

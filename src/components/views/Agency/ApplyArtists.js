@@ -7,8 +7,12 @@ import { PhotoContianer } from '../Common/Components';
 
 
 function ApplyArtists({ history }) {
+
     const onClick = () => {
-        history.push({ pathname: '/artist/apply' })
+        /* eslint-disable */
+        if (confirm('소속사를 등록하시겠습니까?')) {
+            history.push({ pathname: '/artist/apply' })
+        }
     }
 
     return (

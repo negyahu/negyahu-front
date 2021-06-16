@@ -24,9 +24,9 @@ function ApplyArtist() {
                         <td>노출여부</td>
                         <td>
                             <div className="toggle-area">
-                                <div className="toggle-switch" tabindex="0">
+                                <div className="toggle-switch" tabIndex="0">
                                     <input type="checkbox" name="my_checkbox" value="yes" id="checkbox-id" />
-                                    <label for="checkbox-id">
+                                    <label htmlFor="checkbox-id">
                                     <div className="area" aria-hidden="true">
                                         <div className="background">
                                             <div className="handle"></div>

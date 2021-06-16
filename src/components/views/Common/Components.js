@@ -180,3 +180,125 @@ export const ArtistImageDiv = styled.div`
         }
     }
 `;
+
+export const SearchContainer = styled.div`
+    width: 350px;
+    height: 55px;
+    box-sizing: border-box;
+    position: relative;
+    input {
+        width: 100%;
+        height: 100%;
+        padding: 1px 40px 1px 30px;
+        box-sizing: border-box;
+        border-radius: 50px;
+        outline: none;
+        border: 2px solid $footerColor;
+        background-color: $backgroundColor;
+
+        font-family: Yoon Minguk;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 24px;
+        &::placeholder {
+            color: lightgray;
+        }
+
+    }
+    .searchIcons {
+        font-size: 30px;
+        color: $footerColor;
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-45%);
+    }
+`;
+
+export const CategoryButton = styled.button`
+    width: 250px;
+    height: 70px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 28px;
+    outline: none;
+    border: none;
+    color: #AAAAAA;
+    background: rgba(0,0,0,0);
+    ${ props => 
+        props.path && 
+        css`
+            color: #5C5F78;
+        `
+    }
+`;
+
+export const IconContainer = styled.div`
+    font-size: ${props => props.size ? props.size : "30px"};
+    color: ${props => props.color ? props.color : "black"};
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    ${props => props.position && css`position: absolute; left: 0; top: 50%; transform: translateY(-50%);`}
+`;
+
+export const CheckBoxContainer = styled.label`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    input {
+        display: none;
+        &:checked ~ .checkBoxIcon {
+            border-color: #5C5F78;
+        }
+        &:checked ~ .checkBoxIcon::before {
+            height: 10px;
+            transition: all .35s ease;
+        }
+        &:checked ~ .checkBoxIcon::after {
+            height: 25px;
+            transition: all .35s ease .35s;
+        }
+    }
+    .checkBoxIcon {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        background-color: transparent;
+        border: 2px solid #777777;
+        border-radius: 5px;
+        position: relative;
+        cursor: pointer;
+        &::before {
+            content: '';
+            display: inline-block;
+            width: 5px;
+            height: 0;
+            background-color: #5C5F78;
+            transform-origin: left top;
+            border-radius: 5px;
+            position: absolute;
+            top:9px;
+            left: 1px;
+            transform:rotate(-45deg);
+        }
+        &::after {
+            content: '';
+            display: inline-block;
+            width: 5px;
+            height: 0;
+            background-color: #5C5F78;
+            transform-origin: left top;
+            border-radius: 5px;
+            position: absolute;
+            top: 18px;
+            left: 10px;
+            transform:rotate(-135deg);
+        }
+
+    }
+`;

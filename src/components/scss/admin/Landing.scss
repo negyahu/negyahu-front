@@ -1,0 +1,11 @@
+@import '../../../App.scss';
+
+.adminContainer {
+    width: 90%;
+    max-width: 1500px;
+    height: auto;
+    margin: 50px auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}

@@ -1,0 +1,79 @@
+@import '../../../App.scss';
+
+.agencyContainer {
+    min-width: 500px;
+    width: 70%;
+    height: 500px;
+    // border: 1px solid red;
+    position: relative;
+    article {
+        width: 250px;
+        height: 45px;
+        box-sizing: border-box;
+        position: absolute;
+        top: 0;
+        right: 0;
+        transform: translateY(-100%);
+        input {
+            width: 100%;
+            height: 100%;
+            padding: 1px 40px 1px 30px;
+            box-sizing: border-box;
+            border-radius: 50px;
+            outline: none;
+            border: 2px solid $footerColor;
+            background-color: $backgroundColor;
+
+            font-family: Yoon Minguk;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 24px;
+            &::placeholder {
+                color: lightgray;
+            }
+        }
+        .searchIcons {
+            font-size: 30px;
+            color: $footerColor;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-45%);
+        }
+    }
+    table {
+        width: 100%;
+        td {
+            position: relative;
+        }
+    }
+    .agencyTableHeader {
+        tr {
+            background-color: $footerColor;
+        }
+        td {
+            text-align: center;
+            line-height: 50px;
+            color: white;
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 18px;
+        }
+    }
+    .agencyTableBody {
+        td {
+            text-align: center;
+            line-height: 40px;
+            max-width: 80px;
+            p {
+                padding: 0;
+                padding-left: 30px;
+                overflow: hidden;
+                white-space: nowrap;
+                border-collapse: collapse;
+                text-overflow: ellipsis;
+            }
+        }
+    }
+}
