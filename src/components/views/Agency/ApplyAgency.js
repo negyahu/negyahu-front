@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { IoIosHelpCircle } from 'react-icons/io'
-import BackgroundBlur from './Background';
+import BackgroundBlur from '../Common/Background';
 import '../../scss/ApplyAgency.scss';
-import { AgencyApplicationGuide } from './Components';
+import { AgencyApplicationGuide } from '../Common/Components';
 import { useDispatch } from 'react-redux';
 import { OPEN_APPLY_AGENCY } from '../../../_actions/openModules';
 import { postApplyAgency } from '../../../api/artists';
@@ -18,6 +18,11 @@ function ApplyAgency() {
     const [FileName, setFileName] = useState('');
     const [Files, setFiles] = useState('');
 
+    const [guide, setGuide] = useState(false)
+    const onGuide = () => {
+        setGuide(!guide)
+    }
+
     const attachment = () => {
         const att = document.getElementById('attachment');
         att.click()
@@ -29,14 +34,22 @@ function ApplyAgency() {
         setFiles(files)
     }
 
-    const [guide, setGuide] = useState(false)
-    const onGuide = () => {
-        setGuide(!guide)
-    }
+    const regName = /^(?=.*?[가-힣a-zA-Z]).{2,}$/
+    const regPNo = /^(?=.*?[0-9]).{10}$/
+    const regEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/;
 
-    const onSubmitHandler = (e) => {
-        e.preventDefault();
-
+    const onSubmitHandler = () => {
+        if (!regName.test(AgencyName)) {
+            return alert('소속사명을 입력하세요')
+        } else if (!regPNo.test(CompanyNumber)) {
+            return alert('사업자번호를 요구사항에 맞춰 입력하세요')
+        } else if (!BoseName) {
+            return alert('대표자명을 입력하세요')
+        } else if (!regEmail.test(Email)) {
+            return alert('이메일을 입력하세요')
+        } else if (!Files) {
+            return alert('파일(사업자등록증)을 첨부바랍니다')
+        }
         const formData = new FormData();
         formData.append(
             "file",
@@ -51,7 +64,6 @@ function ApplyAgency() {
             .then(res => {
                 
                 dispatch({ type: OPEN_APPLY_AGENCY })
-                
             })
             .catch(err => {
                 alert(err)
@@ -61,7 +73,7 @@ function ApplyAgency() {
 
     return (
         <BackgroundBlur>
-            <form className="applyAgencyContainer" onSubmit={onSubmitHandler}>
+            <div className="applyAgencyContainer">
                 <h2>
                     소속사 가입신청
                     <AgencyApplicationGuide onMouseEnter={onGuide} onMouseLeave={onGuide}>
@@ -98,7 +110,7 @@ function ApplyAgency() {
                             <input 
                                 type="text"
                                 value={CompanyNumber}
-                                placeholder="(-)를 포함하여 사업자번호를 입력하세요"
+                                placeholder="(-)포함하지 않고 사업자번호를 입력하세요"
                                 onChange={(e) => {setCompanyNumber(e.currentTarget.value)}}
                             />
                         </td>
@@ -137,7 +149,7 @@ function ApplyAgency() {
                             <input 
                                 type="text"
                                 value={Email}
-                                placeholder="사업자번호를 입력하세요"
+                                placeholder="관리자 이메일을 입력하세요"
                                 onChange={(e) => {setEmail(e.currentTarget.value)}}
                             />
                         </td>
@@ -164,10 +176,10 @@ function ApplyAgency() {
                     </tr>
                 </table>
                 <div className="agencyApplicationButtonContainer">
-                    <button type="submit">신청하기</button>
+                    <button onClick={onSubmitHandler}>신청하기</button>
                     <button onClick={() => { dispatch({ type: OPEN_APPLY_AGENCY })}}>취소하기</button>
                 </div>
-            </form>
+            </div>
         </BackgroundBlur>
     );
 }

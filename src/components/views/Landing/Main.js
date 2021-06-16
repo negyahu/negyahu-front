@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { withRouter } from 'react-router';
 import { FiHelpCircle } from 'react-icons/fi'
 import { BsExclamationCircleFill } from 'react-icons/bs'
@@ -7,7 +7,7 @@ import ArtistList from './ArtistList';
 import '../../scss/Main.scss';
 import { HelpCenter, HelpToggle } from '../Common/Components';
 import { getFAQ } from '../../../api/faq';
-import ApplyAgency from '../Common/ApplyAgency';
+import ApplyAgency from '../Agency/ApplyAgency';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { OPEN_APPLY_AGENCY, OPEN_HELP_CENTER } from '../../../_actions/openModules';

@@ -1,12 +1,27 @@
 import React from 'react';
+import { useEffect } from 'react';
 import { FiSearch } from 'react-icons/fi';
 
 import { MdFiberNew } from 'react-icons/md';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { getAgency } from '../../../modules/artists';
 import '../../scss/admin/AgencyList.scss';
 import { CheckBoxContainer, IconContainer, SearchContainer } from '../Common/Components';
+import Loading from '../Common/Loading';
 
 function AgencyList() {
-    
+    const { data, loading, error } = useSelector(state => state.artists.agency)
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getAgency());
+    }, [dispatch])
+
+    if (loading) return <Loading />
+    if (error) return alert('잠시 후 다시 접속해주세요')
+    if (!data) return <div></div>
+
     return (
         <div className="agencyContainer">
             <div>
@@ -50,28 +65,34 @@ function AgencyList() {
                         <col width="17%" />
                         <col width="8%" />
                     </colgroup>
-                    <tr>
-                        <td>
-                            <IconContainer color="#ffe066" position>
-                                <MdFiberNew />
-                            </IconContainer>
-                            <p>ygEntertainmentwefwefewf</p>
-                        </td>
-                        <td>000-00-00000</td>
-                        <td>김대표</td>
-                        <td>010-1234-1234</td>
-                        <td>yg@gmail.com</td>
-                        <td>bts.jpg</td>
-                        <td>
-                            <CheckBoxContainer>
-                                <input
-                                    type="checkbox"
-                                    id="acceptTerms"
-                                />
-                                <span className="checkBoxIcon"></span>
-                            </CheckBoxContainer>
-                        </td>
-                    </tr>
+                    {
+                        data.map(agency => {
+                            return (
+                                <tr key={agency.id}>
+                                    <td>
+                                        <IconContainer color="#ffe066" position>
+                                            <MdFiberNew />
+                                        </IconContainer>
+                                        <p>{agency.agencyName}</p>
+                                    </td>
+                                    <td>{agency.companyNumber}</td>
+                                    <td>{agency.bossName}</td>
+                                    <td>{agency.mobile}</td>
+                                    <td>{agency.email}</td>
+                                    <td>{agency.filename}</td>
+                                    <td>
+                                        <CheckBoxContainer>
+                                            <input
+                                                type="checkbox"
+                                                id="acceptTerms"
+                                            />
+                                            <span className="checkBoxIcon"></span>
+                                        </CheckBoxContainer>
+                                    </td>
+                                </tr>
+                            )
+                        })
+                    }
                 </table>
             </div>
         </div>

@@ -55,9 +55,14 @@
             input {
                 width: 100%;
                 height: 100%;
+                font-size: 18px;
                 box-sizing: border-box;
                 outline: none;
                 border: none;
+                padding: 0 5px;
+                &::placeholder {
+                    color: darkgray;
+                }
             }
             button {
                 background: #F4D4D4;

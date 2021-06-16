@@ -20,6 +20,29 @@ export const createPromiseThunk = (type, promiseCreator) => {
     }
 }
 
+export const createPromiseThunkAgency = (type, promiseCreator) => {
+    const [SUCCESS, ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`];
+
+    return param => async dispatch => {
+        dispatch({ type })
+        const payload = await promiseCreator(param);
+        payload
+        .then(res => {
+            dispatch({
+                type: SUCCESS,
+                payload: res
+            })
+        })
+        .catch(err => {
+            dispatch({
+                type: ERROR,
+                payload: err,
+                error: true
+            })
+        })
+    }
+}
+
 export const handleAsyncActions = (type, key) => {
     const [SUCCESS, ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`];
     return (state, action) => {
