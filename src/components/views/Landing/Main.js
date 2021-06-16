@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { withRouter } from 'react-router';
 import { FiHelpCircle } from 'react-icons/fi'
 import { BsExclamationCircleFill } from 'react-icons/bs'
@@ -7,55 +7,55 @@ import ArtistList from './ArtistList';
 import '../../scss/Main.scss';
 import { HelpCenter, HelpToggle } from '../Common/Components';
 import { getFAQ } from '../../../api/faq';
-import BackgroundBlur from '../Common/Background';
-import ApplyAgency from '../Common/ApplyAgency';
+import ApplyAgency from '../Agency/ApplyAgency';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { OPEN_APPLY_AGENCY, OPEN_HELP_CENTER } from '../../../_actions/openModules';
 
 
 
 function Main() {
     const data = getFAQ()
-    
-    const [open, setOpen] = useState(false)
-    const [application, setApplication] = useState(false)
-    const openHelpCenter = () => {
-        setOpen(!open)
-    }
-    const openApplyForAgency = () => {
-        setApplication(!application)
-        setOpen(!open)
-    }
+    const openModule = useSelector(state => state.openModules.main);
+    const dispatch = useDispatch();
 
     return (
         <>
             <ArtistList />
-            <HelpToggle onClick={openHelpCenter} open={open}>
+            <HelpToggle 
+                open={openModule.help} 
+                onClick={() => { dispatch({ type: OPEN_HELP_CENTER })}}
+            >
                 {
-                    open ? <BsExclamationCircleFill /> : <FiHelpCircle />
+                    openModule.help ? <BsExclamationCircleFill /> : <FiHelpCircle />
                 }
             </HelpToggle>
             {
-                open && 
-                <HelpCenter open={open}>
+                openModule.help && 
+                <HelpCenter open={openModule.help}>
                     <h2>Fantimate HelpCenter</h2>
                     {
                         data.map(faq => {
                             return (
-                                <>
+                                <div key={faq.id}>
                                     <button className="faqTitle">{faq.title}</button>
                                     <p className="faqContent">{faq.content}<br />
                                     {
                                         faq.link && 
-                                        <button className="linkButton" onClick={openApplyForAgency}>이 링크를 클릭</button>
+                                        <button 
+                                            className="linkButton"
+                                            onClick={() => { dispatch({ type: OPEN_APPLY_AGENCY })}}
+                                        >이 링크를 클릭</button>
                                     }
                                     </p>
-                                </>
+                                </div>
                             )
                         })
                     }
                 </HelpCenter>
             }
             {
-                application && <ApplyAgency />
+                openModule.agency && <ApplyAgency />
             }
         </>
     )

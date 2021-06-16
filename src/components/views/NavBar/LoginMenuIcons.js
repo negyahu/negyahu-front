@@ -1,8 +1,12 @@
 import React from 'react';
-import { initialOpenState } from './Header';
-import '../../scss/LoginMenuIcons.scss';
+import { useDispatch } from 'react-redux';
 
-function LoginMenuIcons({ state, dispatch }) {
+import '../../scss/LoginMenuIcons.scss';
+import { OPEN_MAIL, OPEN_MORE_MENU, OPEN_NOTIFICATION } from '../../../_actions/openModules';
+
+function LoginMenuIcons() {
+    const dispatch = useDispatch();
+
     return (
         <>
             <input type="checkbox" id="check" />
@@ -26,7 +30,7 @@ function LoginMenuIcons({ state, dispatch }) {
                 src="/resources/icons/alarm.svg" 
                 alt="알림"
                 onClick={() => {
-                    dispatch({ type: 'NOTIFICATION', open: { ...initialOpenState, notification: !state.notification } })
+                    dispatch({ type: OPEN_NOTIFICATION })
                 }}
             />
             <div id="alarmCount">0</div>
@@ -41,7 +45,7 @@ function LoginMenuIcons({ state, dispatch }) {
                 src="/resources/icons/email.svg"
                 alt="쪽지"
                 onClick={() => {
-                    dispatch({ type: 'MAIL', open: { ...initialOpenState, mail: !state.mail } })
+                    dispatch({ type: OPEN_MAIL })
                 }}
             />
             <div id="mailCount">0</div>
@@ -50,7 +54,7 @@ function LoginMenuIcons({ state, dispatch }) {
                 src="/resources/icons/more.svg"
                 alt="더보기"
                 onClick={() => {
-                    dispatch({ type: 'MORE', open: { ...initialOpenState, more: !state.more } })
+                    dispatch({ type: OPEN_MORE_MENU })
                 }}
             />
         </>

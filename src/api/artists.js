@@ -39,3 +39,13 @@ export const getArtistById = async id => {
     await sleep(500);
     return artists.find(artist => artist.imageId === id)
 }
+
+export const postApplyAgency = async (formData, config) => {
+    const response = await axios.post('/api/apply/agency', formData, config);
+    return response;
+}
+
+export const getAgency = async () => {
+    const response = await axios.get('/api/admin/agency');
+    return response;
+}

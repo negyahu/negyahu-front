@@ -1,14 +1,14 @@
 import React from 'react';
 import BackgroundBlur from './Background';
 
-function ApplyAgency() {
+function Subscribe() {
     return (
         <BackgroundBlur>
-            <div className="applyAgencyContainer">
+            <section className="subscribeContainer">
                 
-            </div>
+            </section>
         </BackgroundBlur>
     );
 }
 
-export default ApplyAgency;
+export default Subscribe;

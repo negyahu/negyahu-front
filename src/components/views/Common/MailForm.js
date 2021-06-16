@@ -1,12 +1,13 @@
 import React from 'react';
-import BackgroundBlur from './Background';
-import { initialOpenState } from '../NavBar/Header';
-import '../../scss/MailForm.scss';
+import { useDispatch } from 'react-redux';
 
-function MailForm({ state, dispatch }) {
-    const closeMailForm = () => {
-        dispatch({ type: 'SENDMAIL', open: { ...initialOpenState, mailForm: !state.mailForm }})
-    }
+import BackgroundBlur from './Background';
+import '../../scss/MailForm.scss';
+import { OPEN_MAILFORM } from '../../../_actions/openModules';
+
+function MailForm() {
+    const dispatch = useDispatch();
+    
     return (
         <BackgroundBlur>
             <form className="sendMailContainer">
@@ -19,7 +20,7 @@ function MailForm({ state, dispatch }) {
                 </div>
                 <div className="sendMailButtonContainer">
                     <button type="button" id="sendMailBtn">보내기</button>
-                    <button type="button" id="closeMailBtn" onClick={ closeMailForm }>취소하기</button>
+                    <button type="button" id="closeMailBtn" onClick={() => { dispatch({ type: OPEN_MAILFORM })} }>취소하기</button>
                 </div>
             </form>
         </BackgroundBlur>
