@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { getAgency } from '../../../modules/artists';
 import '../../scss/admin/AgencyList.scss';
-import { CheckBoxContainer, IconContainer, SearchContainer } from '../Common/Components';
+import { CheckBoxContainer, IconContainer } from '../Common/Components';
 import Loading from '../Common/Loading';
 
 function AgencyList() {

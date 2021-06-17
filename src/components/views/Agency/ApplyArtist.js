@@ -22,6 +22,17 @@ function ApplyArtist({ history }) {
             history.push({ pathname: '/agency/artists'})
         }
     }
+
+    const onModifyArtistProfile = () => {
+        /* eslint-disable-next-line */
+        if (confirm('수정하시겠습니까?')) {
+            dispatch({ type: OPEN_CREATE_MEMBER })
+        }
+    }
+
+    const onChangeProfilePhoto = (e) => {
+        console.log(e)
+    }
     
     return (
         <>
@@ -37,7 +48,12 @@ function ApplyArtist({ history }) {
                             <tr>
                                 <td rowSpan="3">
                                     <img src="/resources/images/artists/bts.png" alt="대표사진" />
-                                    <input type="file" style={{ display: "none" }}/>
+                                    <input 
+                                        id="fileInput"
+                                        type="file"
+                                        style={{ display: "none" }}
+                                        onChange={onChangeProfilePhoto}
+                                    />
                                 </td>
                                 <th>AGENCY<br/>NAME</th>
                                 <td>BIGHIT</td>
@@ -66,7 +82,9 @@ function ApplyArtist({ history }) {
                             </tr>
                             <tr>
                                 <td>
-                                    <button>사진첨부</button>
+                                    <button onClick={() => {
+                                        document.getElementById('fileInput').click()
+                                    }}>사진첨부</button>
                                 </td>
                                 <th>OFF / ON</th>
                                 <td>
@@ -95,7 +113,7 @@ function ApplyArtist({ history }) {
                         className="createMemberButton"
                         onClick={() => {dispatch({ type: OPEN_CREATE_MEMBER })}}
                     >CREATE</button>
-                    <ArtistImageDiv name="RM">
+                    <ArtistImageDiv name="RM" onClick={onModifyArtistProfile}>
                         <img src="/resources/images/artists/rm.jpg" alt="아티스트"/>
                         <div onClick={() => { alert('삭제하시겠습니까?')}}>
                             <TiPlus />

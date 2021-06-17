@@ -48,11 +48,6 @@ function ApplyAgency() {
         }
     }
 
-    const onClickAttachment = () => {
-        const att = document.getElementById('attachment');
-        att.click()
-    }
-
     const onChangeFiles = (e) => {
         let files = e.target.files;
         if (files.length === 0) {
@@ -179,7 +174,9 @@ function ApplyAgency() {
                                 />
                             </td>
                             <td>
-                                <button type="button" onClick={onClickAttachment}>파일첨부</button>
+                                <button type="button" onClick={() => {
+                                    document.getElementById('attachment').click();
+                                }}>파일첨부</button>
                                 <input 
                                     type="file"
                                     id="attachment"
