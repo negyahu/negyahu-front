@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+const api = process.env.REACT_APP_API_SERVER
 const sleep = n => new Promise(resolve => setTimeout(resolve, n));
 
 const artists = [
@@ -41,11 +42,11 @@ export const getArtistById = async id => {
 }
 
 export const postApplyAgency = async (formData, config) => {
-    const response = await axios.post('/api/apply/agency', formData, config);
+    const response = await axios.post(`${api}/api/`, formData, config);
     return response;
 }
 
 export const getAgency = async () => {
-    const response = await axios.get('/api/admin/agency');
+    const response = await axios.get(`${api}/api/`);
     return response;
 }

@@ -36,7 +36,7 @@ export const AgencyApplicationGuide = styled.div`
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-100%, -50%);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -129,11 +129,12 @@ export const PhotoContianer = styled.div`
 
 export const ArtistImageDiv = styled.div`
     min-width: 150px;
+    width: 150px;
     height: 150px;
     box-sizing: border-box;
     cursor: pointer;
     position: relative;
-    margin: 10px 75px 0 0;
+    margin: 0;
     box-sizing: border-box;
     img {
         width: 100%;

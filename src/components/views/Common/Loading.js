@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import '../../scss/Loading.scss';
+import BackgroundBlur from './Background';
 
 const LoadingPage = styled.div`
     width: 100%;
@@ -12,6 +13,7 @@ const LoadingPage = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 4;
 `;
 
 function Loading() {

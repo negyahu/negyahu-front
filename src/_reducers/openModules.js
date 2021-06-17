@@ -20,8 +20,10 @@ const initialState = {
     },
     common: {
         alert: false
+    },
+    apply: {
+        artist: false
     }
-
 }
 
 export default function openModulesReducer(state = initialState, action) {
@@ -144,6 +146,14 @@ export default function openModulesReducer(state = initialState, action) {
                     help: false,
                     agency: !state.main.agency
                 } 
+            }
+        case openModule.OPEN_CREATE_MEMBER:
+            return {
+                ...state,
+                apply: {
+                    ...state.apply,
+                    artist: !state.apply.artist
+                }
             }
         case openModule.OPEN_CONFIRM:
             return {
