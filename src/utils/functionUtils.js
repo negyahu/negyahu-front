@@ -31,7 +31,6 @@ export function createAgencyValidation(data) {
     // 유효성 검사
     const regName = /^(?=.*?[가-힣a-zA-Z]).{2,}$/
     const regPNo = /^(?=.*?[0-9]).{10}$/
-    const regEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/;
 
     // 할당
     const { AgencyName, BusinessNumber, BoseName, Email, Files } = data;
@@ -45,9 +44,6 @@ export function createAgencyValidation(data) {
         return false
     } else if (!BoseName) {
         alert('대표자명을 입력하세요')
-        return false
-    } else if (!regEmail.test(Email)) {
-        alert('이메일을 입력하세요')
         return false
     } 
     else if (!Files) {

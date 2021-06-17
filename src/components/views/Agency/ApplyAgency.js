@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { OPEN_APPLY_AGENCY } from '../../../_actions/openModules';
 import { postApplyAgency } from '../../../api/artists';
 import { createAgencyValidation, checkBusinessNumber } from '../../../utils/functionUtils';
+import { setDuplicateEmailCheck } from '../../../api/sign';
 
 
 function ApplyAgency() {
@@ -26,7 +27,7 @@ function ApplyAgency() {
    
     const onChangeBusinessNumber = (e) => {
         setBusinessNumber(e.currentTarget.value)
-        let button = document.getElementById('checkBusinessNumberButton')
+        const button = document.getElementById('checkBusinessNumberButton')
         button.style.backgroundColor = "#F4D4D4"
         button.style.borderColor = "#F4D4D4"
         button.innerHTML = "확인"
@@ -37,7 +38,7 @@ function ApplyAgency() {
         // 사업자번호 검사
         if (checkBusinessNumber(BusinessNumber)) {
             alert('확인되었습니다')
-            let button = document.getElementById('checkBusinessNumberButton')
+            const button = document.getElementById('checkBusinessNumberButton')
             button.style.backgroundColor = "white"
             button.style.borderColor = "white"
             button.innerHTML = "확인완료"
@@ -46,6 +47,35 @@ function ApplyAgency() {
             alert('사업자번호로 확인되지 않습니다')
             setBusinessNumber('')
         }
+    }
+
+    const onChangeEmail = (e) => {
+        setEmail(e.currentTarget.value)
+        const button = document.getElementById('checkEmailButton')
+        button.style.backgroundColor = "#F4D4D4"
+        button.style.borderColor = "#F4D4D4"
+        button.innerHTML = "확인"
+        button.disabled = false
+    }
+
+    const onEmailCheckHandler = () => {
+        const regEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/;
+
+        if (!regEmail.test(Email)) {
+            return alert('올바른 이메일을 입력해주세요')
+        } 
+        
+        setDuplicateEmailCheck(Email).then(response => {
+            alert(`사용가능한 이메일입니다.`)
+            const button = document.getElementById('checkEmailButton');
+            button.style.backgroundColor = "white"
+            button.style.borderColor = "white"
+            button.innerHTML = "확인완료"
+            button.disabled = 'disabled'
+        }).catch(err => {
+            alert(`사용중인 이메일입니다.`)
+            setEmail('')
+        })
     }
 
     const onChangeFiles = (e) => {
@@ -154,13 +184,16 @@ function ApplyAgency() {
                         </tr>
                         <tr>
                             <td>관리자이메일 *</td>
-                            <td colSpan="3">
+                            <td colSpan="2">
                                 <input 
                                     type="text"
                                     value={Email}
                                     placeholder="관리자 이메일을 입력하세요"
-                                    onChange={(e) => {setEmail(e.currentTarget.value)}}
+                                    onChange={onChangeEmail}
                                 />
+                            </td>
+                            <td>
+                                <button id="checkEmailButton" onClick={onEmailCheckHandler}>확인</button>
                             </td>
                         </tr>
                         <tr>
