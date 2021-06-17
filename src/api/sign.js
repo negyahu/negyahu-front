@@ -1,18 +1,20 @@
 import axios from 'axios';
 
+const api = process.env.REACT_APP_API_SERVER
+
 export const setLogin = async (userInfo) => {
-    const response = await axios.post('http://3.36.75.14/api/login', userInfo)
+    const response = await axios.post(`${api}/api/login`, userInfo)
     return response;
 }
 
 export const setSignUpUser = async (userInfo) => {
-    const response = await axios.post('http://3.36.75.14/api/accounts', userInfo)
+    const response = await axios.post(`${api}/api/accounts`, userInfo)
     return response;
 }
 
 export const setDuplicateEmailCheck = async (email) => {
     const response = await axios({
-        url: 'http://3.36.75.14/api/check/email',
+        url: `${api}/api/check/email`,
         method: 'get',
         params: {
             email: email

@@ -16,9 +16,12 @@ import { OPEN_APPLY_AGENCY, OPEN_HELP_CENTER } from '../../../_actions/openModul
 
 function Main() {
     const data = getFAQ()
+    
     const openModule = useSelector(state => state.openModules.main);
-    const dispatch = useDispatch();
 
+    const dispatch = useDispatch();
+    const test1=process.env.REACT_APP_API_SERVER;
+    console.log(test1)
     return (
         <>
             <ArtistList />

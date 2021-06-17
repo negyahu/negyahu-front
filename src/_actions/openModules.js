@@ -12,4 +12,6 @@ export const OPEN_MAILFORM = 'openModules/OPEN_MAILFORM';
 export const OPEN_APPLY_AGENCY = 'openModules/OPEN_APPLY_AGENCY';
 export const OPEN_HELP_CENTER = 'openModules/OPEN_HELP_CENTER';
 
+export const OPEN_CREATE_MEMBER = 'openModules/OPEN_CREATE_MEMBER';
+
 export const OPEN_CONFIRM = 'openModules/OPEN_CONFIRM';

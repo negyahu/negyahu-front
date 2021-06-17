@@ -1,56 +1,149 @@
 @import '../../App.scss';
 
-.applyArtistInformationContainer {
-    width: 90%;
-    min-width: 1000px;
+.enrollArtistInfomation {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    // border: 1px solid red;
+}
+
+// 아티스트 정보
+.artistInformationContainer {
+    width: 600px;
     height: auto;
-    margin: 0 auto 50px;
+    margin: 0 10px;
     h2 {
-        font-family: Roboto;
+        width: 90%;
+        min-width: 500px;
+        margin: 30px auto 20px;
+        border-bottom: 1px solid black;
+        font-family: Yoon Minguk;
         font-style: normal;
         font-weight: normal;
-        font-size: 36px;
+        font-size: 30px;
+        line-height: 70px;
     }
-    .applyArtistInfomation {
+    .artistInfomation {
         display: flex;
         justify-content: flex-start;
         align-items: center;
-        img {
-            width: 200px;
-            height: 200px;
-            object-fit: cover;
-        }
         table {
-            width: 100%;
+            min-width: 500px;
+            max-width: 600px;
+            width: 90%;
+            margin: 0 auto;
+            tr:first-of-type {
+                td:first-of-type {
+                    width: 220px;
+                }
+            }
             td {
-                padding: 10px 0;
-                font-family: Roboto;
+                // border: 1px solid red;
+                // padding: 10px 0;
+                height: 40px;
+                font-family: Yoon Minguk;
+                font-style: normal;
+                font-weight: bold;
+                font-size: 18px;
+                text-align: center;
+                &:last-of-type {
+                    text-align: left;
+                    max-width: 200px;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    letter-spacing: 1px;
+                }
+                img {
+                    width: 200px;
+                    height: 200px;
+                    object-fit: cover;
+                }
+                button {
+                    background: #F4D4D4;
+                    width: 90px;
+                    height: 30px;
+                    font-family: Yoon Minguk;
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 18px;
+                    text-align: center;
+                    color: #5C5F78;
+                    border: 1px solid #F4D4D4;
+                    cursor: pointer;
+                }
+                input {
+                    width: 100%;
+                    height: 40px;
+                    box-sizing: border-box;
+                    border: 1px solid lightgray;
+                    outline: none;
+                    padding: 0 5px;
+                    background-color: #fbf6f6;
+
+                    font-family: Yoon Minguk;
+                    font-style: normal;
+                    font-weight: bold;
+                    font-size: 18px;
+                    text-align: left;
+
+                    &:focus {
+                        border: 1px solid red;
+                    }
+
+                    &::placeholder {
+                        font-size: 13px;
+                        color: lightgray;
+                    }
+                }
+            }
+            th {
+                font-family: Yoon Minguk;
                 font-style: normal;
                 font-weight: normal;
-                font-size: 23px;
-                &:first-of-type {
-                    width: 15%;
-                    text-align: center;
-                }
-                &:last-of-type {
-                    width: 85%;
-                    text-align: left;
-                }
-
+                font-size: 18px;
+                text-align: left;
+                width: 140px;
             }
         }
     }
-    .applyArtist {
-        display: flex;
-        flex-wrap: nowrap;
-        justify-content: flex-start;
-        align-content: flex-start;
-        overflow-y: hidden;
-        overflow-x: scroll;
-        height: 200px;
+}
+
+// 아티스트 멤버 등록
+.artistMemberContainer {
+    width: 400px;
+    height: 530px;
+    margin: 0 30px;
+    // border: 1px solid red;
+    position: relative;
+    h2 {
+        width: 90%;
+        min-width: 350px;
+        margin: 30px auto 20px;
+        border-bottom: 1px solid black;
+        font-family: Yoon Minguk;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 30px;
+        line-height: 70px;
+    }
+    .memberContainer {
+        display: grid;
+        grid-template-rows: 20px repeat(2, 200px);
+        grid-auto-rows: 200px;
+        justify-items: center;
+        align-items: center;
+        width: 90%;
+        min-width: 350px;
+        height: 400px;
+        margin: 0 auto;
+        background-color: white;
+        overflow-y: auto;
+        position: relative;
         &::-webkit-scrollbar {
             background: #fbf6f6;
-            height: 8px;
+            width: 6px;
         }
         
         &::-webkit-scrollbar-thumb {
@@ -58,36 +151,53 @@
             border-radius: 5px;
             border: 2px solid transparent;
         }
-        .createArtistMemberContainer {
-            min-width: 150px;
-            height: 150px;
-            margin: 10px 75px 0 0;
-            box-sizing: border-box;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: $galaryColor;
-            color: black;
-            font-family: Roboto;
+        .createMemberButton {
+            position: sticky;
+            top: 0;
+            right: 0;
+            z-index: 2;
+            justify-self: flex-end;
+            align-self: flex-start;
+            background: #F4D4D4;
+            width: 120px;
+            height: 40px;
             font-style: normal;
-            font-weight: normal;
-            font-size: 24px;
-            line-break: auto;
-            line-height: 50px;
+            font-size: 18px;
             text-align: center;
+            color: #5C5F78;
+            border: 1px solid #F4D4D4;
+            cursor: pointer;
         }
     }
-    .applyAccountTableHeader {
+}
+
+// 매니저 등록
+.artistManagerContainer {
+    width: 70%;
+    max-width: 1000px;
+    height: auto;
+    margin: 0 auto;
+    h2 {
+        width: 100%;
+        min-width: 500px;
+        margin: 30px auto 20px;
+        border-bottom: 1px solid black;
+        font-family: Yoon Minguk;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 30px;
+        line-height: 70px;
+    }
+    .tableHeader {
         width: 1000px;
-        .applyAccountTable {
+        .table {
             width: 100%;
         }
         tr {
             background-color: #5C5F78;
             color: white;
             td {
-                font-family: Roboto;
+                font-family: Yoon Minguk;
                 font-style: normal;
                 font-weight: normal;
                 font-size: 24px;
@@ -96,13 +206,15 @@
             }
         }
     }
-    .applyAccountTableBody {
+    .tableBody {
         width: 1000px;
-        height: 400px;
+        min-height: 150px;
+        max-height: 300px;
+        height: auto;
         overflow-y: scroll;
         &::-webkit-scrollbar {
             background: #fbf6f6;
-            width: 8px;
+            width: 6px;
         }
         
         &::-webkit-scrollbar-thumb {
@@ -110,7 +222,7 @@
             border-radius: 5px;
             border: 2px solid transparent;
         }
-        .applyAccountTable {
+        .table {
             width: 100%;
             height: auto;
             td {
@@ -138,7 +250,7 @@
                     outline: none;
                     border: none;
                     padding: 0 10px;
-    
+
                     font-family: Roboto;
                     font-style: normal;
                     font-weight: normal;
@@ -148,13 +260,14 @@
                     background: #F4D4D4;
                     width: 90px;
                     height: 30px;
+                    font-family: Yoon Minguk;
                     font-style: normal;
+                    font-weight: normal;
                     font-size: 18px;
                     text-align: center;
                     color: #5C5F78;
                     border: 1px solid #F4D4D4;
                     cursor: pointer;
-                    text-align: left;
                 }
                 label {
                     width: 100%;
@@ -163,7 +276,6 @@
             }
         }
     }
-    
 }
 
 .applyArtistButtonContainer {
@@ -172,124 +284,30 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 50%;
-    max-width: 500px;
+    width: 350px;
     button {
         background: #F4D4D4;
-        width: 200px;
-        height: 70px;
+        width: 140px;
+        height: 40px;
         font-family: Yoon Minguk;
         font-style: normal;
-        font-weight: bold;
-        font-size: 36px;
+        font-weight: normal;
+        font-size: 23px;
         text-align: center;
         color: #5C5F78;
         border: 1px solid #F4D4D4;
         cursor: pointer;
         &:last-of-type {
-            width: 200px;
-            height: 70px;
+            width: 140px;
+            height: 40px;
             background: #5C5F78;
             font-family: Yoon Minguk;
             font-style: normal;
-            font-weight: bold;
-            font-size: 36px;
+            font-weight: normal;
+            font-size: 23px;
             text-align: center;
             color: #FFFFFF;
             border: 1px solid #5C5F78;
         }
     }
 }
-
-.toggle-area {
-width: auto;
-height: auto;
-/* border: 2px solid red; */
-}
-
-.toggle-switch {
---width: 80px;
---height: 40px;
---padding: 3px;
---handle-size: calc(var(--height) - var(--padding) * 2);
-display: inline-block;
-outline-width: 0;
-}
-
-.toggle-switch > input {
-position: absolute;
-clip: rect(1px, 1px, 1px, 1px);
-clip-path: inset(50%);
-height: 1px;
-width: 1px;
-margin: -1px;
-overflow: hidden;
-}
-
-.area {
-padding: 4px;
-margin: -4px;
-position: relative;
-display: flex;
-align-items: center;
-/* border: 2px solid red; */
-}
-
-.area p {
-    margin: 0;
-    padding: 1px 3px 0;
-    font-size: 13px;
-    position: absolute;
-    right: 13px;
-    font-family: "Wemakeprice-bold";
-}
-
-.background,
-.handle,
-.area p {
-transition: all 0.3s ease;
-}
-
-.background {
-display: inline-flex;
-flex-direction: row;
-align-items: center;
-width: var(--width);
-height: var(--height);
-border-radius: var(--height);
-padding: 0 var(--padding);
-vertical-align: text-bottom;
-user-select: none;
-background-color: #ebebeb;
-box-shadow: inset 0px 0px 5px 2px rgba(0, 0, 0, 0.15);
-overflow: hidden;
-transition: background-color .15s ease;
-cursor: pointer;
-}
-
-
-.handle {
-width: var(--handle-size);
-height: var(--handle-size);
-background-color: white;
-border-radius: 50%;
-box-shadow:
-    0 2px 4px rgba(0, 0, 0, 0.5),
-    inset 0 2px 4px rgba(0, 0, 0, 0.15);
-}
-
-input:checked + label .area .background {
-background-color: #5C5F78;
-}
-
-input:checked + label .area .handle {
-/* background-color: white; */
-transform: translateX(calc(var(--width) - var(--handle-size)));
-}
-
-input:checked + label .area p {
-position: absolute;
-left: 12px;
-color: white;
-}
-  

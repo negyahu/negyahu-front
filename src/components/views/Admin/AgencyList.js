@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { getAgency } from '../../../modules/artists';
 import '../../scss/admin/AgencyList.scss';
-import { CheckBoxContainer, IconContainer, SearchContainer } from '../Common/Components';
+import { CheckBoxContainer, IconContainer } from '../Common/Components';
 import Loading from '../Common/Loading';
 
 function AgencyList() {
@@ -65,7 +65,7 @@ function AgencyList() {
                         <col width="17%" />
                         <col width="8%" />
                     </colgroup>
-                    {
+                    {/* {
                         data.map(agency => {
                             return (
                                 <tr key={agency.id}>
@@ -92,7 +92,29 @@ function AgencyList() {
                                 </tr>
                             )
                         })
-                    }
+                    } */}
+                    <tr>
+                        <td>
+                            <IconContainer color="#ffe066" position>
+                                <MdFiberNew />
+                            </IconContainer>
+                            <p>아무거나</p>
+                        </td>
+                        <td>아무거나</td>
+                        <td>아무거나</td>
+                        <td>아무거나</td>
+                        <td>아무거나</td>
+                        <td>아무거나</td>
+                        <td>
+                            <CheckBoxContainer>
+                                <input
+                                    type="checkbox"
+                                    id="acceptTerms"
+                                />
+                                <span className="checkBoxIcon"></span>
+                            </CheckBoxContainer>
+                        </td>
+                    </tr>
                 </table>
             </div>
         </div>

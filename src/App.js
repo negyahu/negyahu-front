@@ -30,7 +30,7 @@ function App() {
         <Join />
       </Route>
       <Route path="/agency/artists" component={ApplyArtists}/>
-      <Route path="/artist/apply" component={ApplyArtist}/>
+      <Route path="/agency/create/artist" component={ApplyArtist}/>
       <Route path="/admin" component={Landing}/>
       <Footer />
     </>
