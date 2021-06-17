@@ -91,10 +91,13 @@ function ApplyAgency() {
     const onSubmitHandler = () => {
         // 유효성 검사 후 진행
         if (createAgencyValidation({AgencyName, BusinessNumber, BoseName, Email, Files})) {
-            const button = document.getElementById('checkBusinessNumberButton');
-            if (button.textContent === '확인') {
+            const businessButton = document.getElementById('checkBusinessNumberButton');
+            const emailButton = document.getElementById('checkEmailButton');
+            if (businessButton.textContent === '확인') {
                 return alert('사업자번호를 확인하세요')
-            } 
+            } else if (emailButton.textContent === '확인') {
+                return alert('이메일 중복 확인하세요')
+            }
             // 데이터 전송
             const formData = new FormData();
             formData.append(
