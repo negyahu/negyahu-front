@@ -33,7 +33,7 @@ export function createAgencyValidation(data) {
     const regPNo = /^(?=.*?[0-9]).{10}$/
 
     // 할당
-    const { AgencyName, BusinessNumber, BoseName, Email, Files } = data;
+    const { AgencyName, BusinessNumber, BoseName, Files } = data;
 
     // 검사
     if (!regName.test(AgencyName)) {

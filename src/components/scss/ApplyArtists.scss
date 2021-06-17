@@ -1,19 +1,39 @@
 @import '../../App.scss';
 
 .registerArtistsContainer {
+    h2 {
+        width: 90%;
+        max-width: 1200px;
+        margin: 30px auto 20px;
+        border-bottom: 1px solid black;
+        font-family: Yoon Minguk;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 30px;
+        line-height: 70px;
+        letter-spacing: 2px;
+    }
     .headerContainer {
+        position: sticky;
+        top: 0;
         display: flex;
         justify-content: space-between;
         align-items: center;
         width: 90%;
+        max-width: 1200px;
         margin: 0 auto;
-        h2 {
-            font-family: Roboto;
+        button {
+            background: #F4D4D4;
+            width: 170px;
+            height: 50px;
+            font-family: Yoon Minguk;
             font-style: normal;
             font-weight: normal;
-            font-size: 36px;
-            line-height: 80px;
-            max-width: 650px;
+            font-size: 23px;
+            text-align: center;
+            color: #5C5F78;
+            border: 1px solid #F4D4D4;
+            cursor: pointer;
         }
         article {
             width: 350px;
@@ -57,7 +77,8 @@
         grid-template-columns: repeat(3, 1fr);
         grid-template-rows: repeat(2, 400px);
         grid-auto-rows: 400px;
-        width: 1300px;
+        width: 90%;
+        max-width: 1200px;
         height: 1000px;
         margin: 0 auto;
         .createArtistContainer {
