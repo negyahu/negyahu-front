@@ -1,18 +1,7 @@
 @import '../../App.scss';
 
 .registerArtistsContainer {
-    h2 {
-        width: 90%;
-        max-width: 1200px;
-        margin: 30px auto 20px;
-        border-bottom: 1px solid black;
-        font-family: Yoon Minguk;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 30px;
-        line-height: 70px;
-        letter-spacing: 2px;
-    }
+    
     .headerContainer {
         position: sticky;
         top: 0;
@@ -22,18 +11,18 @@
         width: 90%;
         max-width: 1200px;
         margin: 0 auto;
-        button {
-            background: #F4D4D4;
-            width: 170px;
-            height: 50px;
+        h2 {
+            width: 90%;
+            min-width: 430px;
+            max-width: 1200px;
+            margin: 30px auto;
+            border-bottom: 1px solid black;
             font-family: Yoon Minguk;
             font-style: normal;
             font-weight: normal;
-            font-size: 23px;
-            text-align: center;
-            color: #5C5F78;
-            border: 1px solid #F4D4D4;
-            cursor: pointer;
+            font-size: 30px;
+            line-height: 70px;
+            letter-spacing: 2px;
         }
         article {
             width: 350px;
@@ -42,6 +31,7 @@
             position: relative;
             input {
                 width: 100%;
+                min-width: 300px;
                 height: 100%;
                 padding: 1px 40px 1px 30px;
                 box-sizing: border-box;
@@ -73,14 +63,44 @@
         display: grid;
         justify-items: center;
         align-items: center;
-        padding: 50px 0;
-        grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: repeat(2, 400px);
+        position: relative;
+        grid-template-columns: minmax(300px, 1fr) minmax(300px, 1fr) minmax(300px, 1fr);
+        grid-template-rows: 40px repeat(2, 400px);
         grid-auto-rows: 400px;
         width: 90%;
         max-width: 1200px;
-        height: 1000px;
+        height: 800px;
         margin: 0 auto;
+        background-color: white;
+        overflow-y: auto;
+        &::-webkit-scrollbar {
+            background: #fbf6f6;
+            width: 6px;
+            height: 6px;
+        }
+        &::-webkit-scrollbar-thumb {
+            background: lightgray;
+            border-radius: 5px;
+            border: 2px solid transparent;
+        }
+        button {
+            grid-column: 1 / 4;
+            position: sticky;
+            top: 0;
+            z-index: 3;
+            justify-self: flex-end;
+            background: #F4D4D4;
+            width: 170px;
+            height: 50px;
+            font-family: Yoon Minguk;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 23px;
+            text-align: center;
+            color: #5C5F78;
+            border: none;
+            cursor: pointer;
+        }
         .createArtistContainer {
             width: 350px;
             height: 350px;
@@ -98,7 +118,6 @@
             line-break: auto;
             line-height: 50px;
             text-align: center;
-            
         }
     }
 }

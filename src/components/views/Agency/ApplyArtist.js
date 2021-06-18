@@ -4,21 +4,28 @@ import { BsFileEarmarkPlus, BsFileEarmarkMinus } from 'react-icons/bs'
 import '../../scss/ApplyArtist.scss';
 import { ArtistImageDiv } from '../Common/Components';
 import { useDispatch, useSelector } from 'react-redux';
-import { OPEN_CREATE_MEMBER } from '../../../_actions/openModules';
+import { OPEN_CHOOSEMENU, OPEN_CREATE_MEMBER } from '../../../_actions/openModules';
 import CreateMember from './CreateMember';
+import { useEffect } from 'react';
 
-function ApplyArtist({ history }) {
-    const openModule = useSelector(state => state.openModules.apply);
+function ApplyArtist({ history, location }) {
+    const openModule = useSelector(state => state.openModules);
     const dispatch = useDispatch();
-
+    console.log(location)
     const [ArtistNameKR, setArtistNameKR] = useState('');
     const [ArtistNameEN, setArtistNameEN] = useState('');
     const [Display, setDisplay] = useState('off');
     const [File, setFile] = useState('')
 
+    useEffect(() => {
+        Object.keys(location.state).includes('name') && setArtistNameEN(location.state.name);
+        Object.keys(location.state).includes('nameKR') && setArtistNameKR(location.state.nameKR);
+    }, [])
+
     const onHistoryBack = () => {
         /* eslint-disable-next-line */
         if (confirm('등록을 취소하시겠습니까?')) {
+            openModule.common.chooseMenu && dispatch({ type: OPEN_CHOOSEMENU })
             history.push({ pathname: '/agency/artists'})
         }
     }
@@ -37,7 +44,7 @@ function ApplyArtist({ history }) {
     return (
         <>
         {
-            openModule.artist && <CreateMember />
+            openModule.apply.artist && <CreateMember />
         }
         <div className="enrollArtistInfomation">
             <div className="artistInformationContainer">
@@ -56,7 +63,7 @@ function ApplyArtist({ history }) {
                                     />
                                 </td>
                                 <th>AGENCY<br/>NAME</th>
-                                <td>BIGHIT</td>
+                                <td>{location.state.agency}</td>
                             </tr>
                             <tr>
                                 <th>ARTIST<br/>NAME_EN *</th>
@@ -90,7 +97,7 @@ function ApplyArtist({ history }) {
                                 <td>
                                     <div className="toggle-area">
                                         <div className="toggle-switch" tabIndex="0">
-                                            <input type="checkbox" id="checkbox-id" />
+                                            <input type="checkbox" id="checkbox-id" onChange={(e) => {setDisplay(e.currentTarget.value)}}/>
                                             <label htmlFor="checkbox-id">
                                             <div className="area" aria-hidden="true">
                                                 <div className="background">
