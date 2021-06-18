@@ -6,8 +6,8 @@ import { AgencyApplicationGuide } from '../Common/Components';
 import { useDispatch } from 'react-redux';
 import { OPEN_APPLY_AGENCY } from '../../../_actions/openModules';
 import { postApplyAgency } from '../../../api/artists';
-import { createAgencyValidation, checkBusinessNumber } from '../../../utils/functionUtils';
-import { setDuplicateEmailCheck } from '../../../api/sign';
+import { createAgencyValidation, checkBusinessNumber, onEmailCheckHandler } from '../../../utils/functionUtils';
+import { useRef } from 'react';
 
 
 function ApplyAgency() {
@@ -25,24 +25,26 @@ function ApplyAgency() {
         setGuide(!guide)
     }
    
+    const checkEmailButton = useRef();
+    const checkBusinessNumberButton = useRef();
+    const inputFiles = useRef();
+
     const onChangeBusinessNumber = (e) => {
         setBusinessNumber(e.currentTarget.value)
-        const button = document.getElementById('checkBusinessNumberButton')
-        button.style.backgroundColor = "#F4D4D4"
-        button.style.borderColor = "#F4D4D4"
-        button.innerHTML = "확인"
-        button.disabled = false
+        checkBusinessNumberButton.current.style.backgroundColor = "#F4D4D4"
+        checkBusinessNumberButton.current.style.borderColor = "#F4D4D4"
+        checkBusinessNumberButton.current.innerHTML = "확인"
+        checkBusinessNumberButton.current.disabled = false
     }
     
     const onCheckBusinessNumber = () => {
         // 사업자번호 검사
         if (checkBusinessNumber(BusinessNumber)) {
             alert('확인되었습니다')
-            const button = document.getElementById('checkBusinessNumberButton')
-            button.style.backgroundColor = "white"
-            button.style.borderColor = "white"
-            button.innerHTML = "확인완료"
-            button.disabled = 'disabled'
+            checkBusinessNumberButton.current.style.backgroundColor = "white"
+            checkBusinessNumberButton.current.style.borderColor = "white"
+            checkBusinessNumberButton.current.innerHTML = "확인완료"
+            checkBusinessNumberButton.current.disabled = 'disabled'
         } else {
             alert('사업자번호로 확인되지 않습니다')
             setBusinessNumber('')
@@ -51,32 +53,12 @@ function ApplyAgency() {
 
     const onChangeEmail = (e) => {
         setEmail(e.currentTarget.value)
-        const button = document.getElementById('checkEmailButton')
-        button.style.backgroundColor = "#F4D4D4"
-        button.style.borderColor = "#F4D4D4"
-        button.innerHTML = "확인"
-        button.disabled = false
+        checkEmailButton.current.style.backgroundColor = "#F4D4D4"
+        checkEmailButton.current.style.borderColor = "#F4D4D4"
+        checkEmailButton.current.innerHTML = "확인"
+        checkEmailButton.current.disabled = false
     }
 
-    const onEmailCheckHandler = () => {
-        const regEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/;
-
-        if (!regEmail.test(Email)) {
-            return alert('올바른 이메일을 입력해주세요')
-        } 
-        
-        setDuplicateEmailCheck(Email).then(response => {
-            alert(`사용가능한 이메일입니다.`)
-            const button = document.getElementById('checkEmailButton');
-            button.style.backgroundColor = "white"
-            button.style.borderColor = "white"
-            button.innerHTML = "확인완료"
-            button.disabled = 'disabled'
-        }).catch(err => {
-            alert(`사용중인 이메일입니다.`)
-            setEmail('')
-        })
-    }
 
     const onChangeFiles = (e) => {
         let files = e.target.files;
@@ -91,11 +73,9 @@ function ApplyAgency() {
     const onSubmitHandler = () => {
         // 유효성 검사 후 진행
         if (createAgencyValidation({AgencyName, BusinessNumber, BoseName, Email, Files})) {
-            const businessButton = document.getElementById('checkBusinessNumberButton');
-            const emailButton = document.getElementById('checkEmailButton');
-            if (businessButton.textContent === '확인') {
+            if (checkBusinessNumberButton.current.textContent === '확인') {
                 return alert('사업자번호를 확인하세요')
-            } else if (emailButton.textContent === '확인') {
+            } else if (checkEmailButton.current.textContent === '확인') {
                 return alert('이메일 중복 확인하세요')
             }
             // 데이터 전송
@@ -160,7 +140,7 @@ function ApplyAgency() {
                                 />
                             </td>
                             <td>
-                                <button id="checkBusinessNumberButton" onClick={onCheckBusinessNumber}>확인</button>
+                                <button onClick={onCheckBusinessNumber} ref={checkBusinessNumberButton}>확인</button>
                             </td>
                         </tr>
                         <tr>
@@ -196,7 +176,10 @@ function ApplyAgency() {
                                 />
                             </td>
                             <td>
-                                <button id="checkEmailButton" onClick={onEmailCheckHandler}>확인</button>
+                                <button 
+                                    onClick={() => {onEmailCheckHandler(Email, checkEmailButton.current, setEmail)}}
+                                    ref={checkEmailButton}
+                                >확인</button>
                             </td>
                         </tr>
                         <tr>
@@ -211,13 +194,13 @@ function ApplyAgency() {
                             </td>
                             <td>
                                 <button type="button" onClick={() => {
-                                    document.getElementById('attachment').click();
+                                    inputFiles.current.click();
                                 }}>파일첨부</button>
                                 <input 
                                     type="file"
-                                    id="attachment"
                                     style={{display: "none"}}
                                     onChange={onChangeFiles}
+                                    ref={inputFiles}
                                 />
                             </td>
                         </tr>

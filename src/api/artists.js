@@ -49,25 +49,33 @@ const artistMembers = [
                 id: 1,
                 name: 'RM',
                 nameKR: '알엠',
-                imageURL: '/resources/images/artists/rm.jpg'
+                imageURL: '/resources/images/artists/rm.jpg',
+                instargram: '',
+                youtube: '',
             },
             {
                 id: 2,
                 name: 'JK',
                 nameKR: '정국',
-                imageURL: '/resources/images/artists/jk.jpg'
+                imageURL: '/resources/images/artists/jk.jpg',
+                instargram: '',
+                youtube: '',
             },
             {
                 id: 3,
                 name: 'JIN',
                 nameKR: '진',
-                imageURL: '/resources/images/artists/jin.jpg'
+                imageURL: '/resources/images/artists/jin.jpg',
+                instargram: '',
+                youtube: '',
             },
             {
                 id: 4,
                 name: 'JHOPE',
                 nameKR: '제이홉',
-                imageURL: '/resources/images/artists/hope.jpg'
+                imageURL: '/resources/images/artists/hope.jpg',
+                instargram: '',
+                youtube: '',
             },
         ]
     },
@@ -78,13 +86,17 @@ const artistMembers = [
                 id: 1,
                 name: 'SUHYUN',
                 nameKR: '수현',
-                imageURL: '/resources/images/artists/rm.jpg'
+                imageURL: '/resources/images/artists/rm.jpg',
+                instargram: '',
+                youtube: '',
             },
             {
                 id: 2,
                 name: 'CHANHYUK',
                 nameKR: '찬혁',
-                imageURL: '/resources/images/artists/jk.jpg'
+                imageURL: '/resources/images/artists/jk.jpg',
+                instargram: '',
+                youtube: '',
             },
         ]
     },

@@ -1,3 +1,5 @@
+import { setDuplicateEmailCheck } from "../api/sign";
+
 // 사업자 번호 확인
 export function checkBusinessNumber(num) {
     // 인증키 9자리
@@ -51,4 +53,36 @@ export function createAgencyValidation(data) {
         return false
     }
     return true
+}
+
+// 이메일 중복 체크
+export const onEmailCheckHandler = (email, button, initialInput) => {
+    const regEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/;
+
+    if (!regEmail.test(email)) {
+        return alert('올바른 이메일을 입력해주세요')
+    } 
+    
+    setDuplicateEmailCheck(email).then(response => {
+        alert(`사용가능한 이메일입니다.`)
+        button.style.backgroundColor = "white"
+        button.style.borderColor = "white"
+        button.innerHTML = "확인완료"
+        button.disabled = 'disabled'
+    }).catch(err => {
+        alert(`사용중인 이메일입니다.`)
+        initialInput('')
+    })
+}
+
+
+// 사진 등록
+export const onChangeProfilePhoto = (e) => {
+    const file = e.target.files[0]
+    const formData = new FormData();
+    formData.append('file', file)
+    // 사진데이터를 보낸다
+    // 사진 url을 받는다
+    // 리턴한다
+    return 
 }
