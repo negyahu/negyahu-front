@@ -5,7 +5,7 @@ import { FiSearch } from 'react-icons/fi';
 import { MdFiberNew } from 'react-icons/md';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { getAgency } from '../../../modules/artists';
+import { getAgency } from '../../../_reducers/artists';
 import '../../scss/admin/AgencyList.scss';
 import { CheckBoxContainer, IconContainer } from '../Common/Components';
 import Loading from '../Common/Loading';

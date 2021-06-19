@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getArtist } from '../../../modules/artists';
+import { getArtist } from '../../../_reducers/artists';
 import Loading from '../Common/Loading';
 
 

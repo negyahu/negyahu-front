@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { IoIosHelpCircle } from 'react-icons/io';
 import BackgroundBlur from '../Common/Background';
-import '../../scss/ApplyAgency.scss';
+import '../../scss/agency/ApplyAgency.scss';
 import { AgencyApplicationGuide } from '../Common/Components';
 import { useDispatch } from 'react-redux';
 import { OPEN_APPLY_AGENCY } from '../../../_actions/openModules';

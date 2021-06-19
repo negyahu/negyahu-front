@@ -1,17 +1,17 @@
 import React, { useRef, useState }from 'react';
 import { TiPlus } from 'react-icons/ti';
 import { BsFileEarmarkPlus, BsFileEarmarkMinus } from 'react-icons/bs'
-import '../../scss/ApplyArtist.scss';
+import '../../scss/agency/ApplyArtist.scss';
 import { ArtistImageDiv } from '../Common/Components';
 import { useDispatch, useSelector } from 'react-redux';
 import { OPEN_CHOOSEMENU, OPEN_CREATE_MEMBER } from '../../../_actions/openModules';
 import CreateMember from './CreateMember';
 import { useEffect } from 'react';
 import { onChangeProfilePhoto, onEmailCheckHandler } from '../../../utils/functionUtils';
-import { getArtistMembers } from '../../../modules/artists';
+import { getArtistMembers } from '../../../_reducers/artists';
 import Loading from '../Common/Loading';
 import { KEEP_ARTIST_MEMBER } from '../../../_actions/keepInformation';
-import { INITIAL_ARTIST } from '../../../modules/artists';
+import { INITIAL_ARTIST } from '../../../_actions/artists';
 
 function ApplyArtist({ history, location }) {
     const { data, loading, error } = useSelector(state => state.artists.artistMembers)

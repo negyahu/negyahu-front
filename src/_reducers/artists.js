@@ -1,6 +1,6 @@
 import * as artistsAPI from '../api/artists';
-import { createPromiseThunk, createPromiseThunkAgency, createPromiseThunkParams, handleAsyncActions, reducerUtils } from '../utils/asyncUtils';
 import * as artists_action from '../_actions/artists';
+import { createPromiseThunk, createPromiseThunkAgency, createPromiseThunkParams, handleAsyncActions, reducerUtils } from '../utils/asyncUtils';
 
 // 액션 생성함수 생성
 // 전체 아티스트 불러오기

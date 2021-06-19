@@ -3,10 +3,10 @@ import { useEffect } from 'react';
 import { FiSearch } from 'react-icons/fi';
 import { TiPlus } from 'react-icons/ti';
 import { useDispatch, useSelector } from 'react-redux';
-import { getArtists, getSearchArtists } from '../../../modules/artists';
+import { getArtists, getSearchArtists } from '../../../_reducers/artists';
 import { OPEN_CHOOSEMENU } from '../../../_actions/openModules';
 
-import '../../scss/ApplyArtists.scss';
+import '../../scss/agency/ApplyArtists.scss';
 import { PhotoContianer } from '../Common/Components';
 import ChooseMenu from './ChooseMenu';
 import Loading from '../Common/Loading';
