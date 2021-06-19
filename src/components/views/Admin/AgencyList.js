@@ -20,7 +20,6 @@ function AgencyList() {
 
     if (loading) return <Loading />
     if (error) return alert('잠시 후 다시 접속해주세요')
-    if (!data) return <div></div>
 
     return (
         <div className="agencyContainer">

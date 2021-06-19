@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 import artists from './artists';
 import sign from './sign';
-import openModules from '../_reducers/openModules';
-import keepInformation from '../_reducers/keepInfomation';
+import openModules from './openModules';
+import keepInformation from './keepInfomation';
 
 const rootReducer = combineReducers({
     artists,

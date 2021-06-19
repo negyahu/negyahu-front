@@ -1,12 +1,15 @@
 import React, { useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import BackgroundBlur from '../Common/Background';
 import '../../scss/agency/CreateMember.scss';
 import { OPEN_CREATE_MEMBER } from '../../../_actions/openModules'
 import { onChangeProfilePhoto, onEmailCheckHandler } from '../../../utils/functionUtils';
+import { useEffect } from 'react';
+import { KEEP_ARTIST_MEMBER } from '../../../_actions/keepInformation';
 
 function CreateMember() {
+    const member = useSelector(state => state.keepInformation.artist)
     const dispatch = useDispatch();
     const [Email, setEmail] = useState('');
     const [NameEN, setNameEN] = useState('');
@@ -16,6 +19,24 @@ function CreateMember() {
     const [ImageURL, setImageURL] = useState('');
     const checkEmailButton = useRef();
     const inputFiles = useRef();
+
+    useEffect(() => {
+        if (member) {
+            setEmail(member.email)
+            setNameEN(member.name)
+            setNameKR(member.nameKR)
+            setInstargram(member.instargram)
+            setYouTube(member.youtube)
+            setImageURL(member.imageURL)
+        } else {
+            setImageURL("/resources/images/account/profile.png")
+        }
+    },[member, setEmail, setNameEN, setNameKR, setInstargram, setYouTube, setImageURL])
+
+    const onBackHistory = () => {
+        dispatch({ type: KEEP_ARTIST_MEMBER, action: null })
+        dispatch({ type: OPEN_CREATE_MEMBER })
+    }
 
     const onChangeEmail = (e) => {
         setEmail(e.currentTarget.value)
@@ -39,7 +60,7 @@ function CreateMember() {
                     <tbody>
                         <tr>
                             <td rowSpan="4">
-                                <img src="/resources/images/account/profile.png" alt="프로필" />
+                                <img src={ImageURL} alt="프로필" />
                             </td>
                             <th>EMAIL *</th>
                             <td>
@@ -48,14 +69,16 @@ function CreateMember() {
                                     value={Email}
                                     placeholder="로그인 계정으로 사용할 이메일을 입력하세요"
                                     onChange={onChangeEmail}
+                                    disabled={member ? true : false}
                                 />
                             </td>
                             <td>
                                 <button 
-                                    id="checkEmailButton"
-                                    onClick={(e) => {onEmailCheckHandler(Email, checkEmailButton, setEmail)}}
                                     ref={checkEmailButton}
-                                >확인</button>
+                                    onClick={() => {onEmailCheckHandler(Email, checkEmailButton.current, setEmail)}}
+                                    disabled={member ? true : false}
+                                    style={member && {backgroundColor: 'white'}}
+                                >{member ? '확인완료' : '확인'}</button>
                             </td>
                         </tr>
                         <tr>
@@ -116,8 +139,8 @@ function CreateMember() {
                     </tbody>
                 </table>
                 <div className="createMemberButtonContainer">
-                    <button>등록하기</button>
-                    <button onClick={() => {dispatch({ type: OPEN_CREATE_MEMBER })}}>취소하기</button>
+                    <button>{member ? '수정하기' : '등록하기'}</button>
+                    <button onClick={onBackHistory}>취소하기</button>
                 </div>
             </div>
         </BackgroundBlur>

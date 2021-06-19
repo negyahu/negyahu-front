@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useEffect } from 'react';
 import { FiSearch } from 'react-icons/fi';
 import { TiPlus } from 'react-icons/ti';
 import { useDispatch, useSelector } from 'react-redux';
-import { getArtistsByAgency } from '../../../modules/artists';
+import { getArtists, getSearchArtists } from '../../../modules/artists';
 import { OPEN_CHOOSEMENU } from '../../../_actions/openModules';
 
 import '../../scss/ApplyArtists.scss';
@@ -13,30 +13,55 @@ import Loading from '../Common/Loading';
 
 
 function ApplyArtists({ history }) {
-    const { data, loading, error } = useSelector(state => state.artists.artistsByAgency)
+    const { data, loading, error } = useSelector(state => state.artists.artists)
     const openModule = useSelector(state => state.openModules.common);
     const dispatch = useDispatch();
-
+    const [searchArtist, setSearchArtist] = useState('');
     const [art, setArt] = useState('')
+    const artistContainer = useRef();
+    const deleteButton = useRef(new Array());
     const agency = 'BIGHIT ENTERTAINMENT';
 
     useEffect(() => {
-        dispatch(getArtistsByAgency(agency))
+        dispatch(getArtists(agency))
     },[dispatch])
 
     if (loading || !data) return <Loading />
     if (error) return <div>에러발생!</div>
 
-    const onApplyArtist = () => {
+    const onApplyArtist = (e, i) => {
         /* eslint-disable-next-line */
-        if (confirm('소속사를 등록하시겠습니까?')) {
+        if (confirm('소속 아티스트를 등록하시겠습니까?')) {
             history.push({ pathname: '/agency/create/artist', state: { agency: agency } })
         }
     }
 
-    const onClickArtist = art => {
-        setArt(art)
-        dispatch({ type: OPEN_CHOOSEMENU })
+    const onClickArtist = (e, art, i) => {
+        if (!deleteButton.current[i].contains(e.target)) {
+            setArt(art)
+            dispatch({ type: OPEN_CHOOSEMENU })
+        }
+    }
+
+    const onDeleteArtist = (e, art, i) => {
+        if (deleteButton.current[i].contains(e.target)) {
+            /* eslint-disable-next-line */
+            if (confirm(`${art.name} 아티스트를 삭제하시겠습니까? 삭제시 관련 모든 정보가 삭제됩니다`)) {
+                alert('삭제되었다고 치자')
+            }
+        }
+    }
+
+    // 엔터키 입력시 아티스트 검색
+    const onKeyPress = (e) => {
+        if(e.key === 'Enter') {
+            onSearchArtist()
+        }
+    }
+    // 아티스트 검색
+    const onSearchArtist = () => {
+        dispatch(getSearchArtists(agency, searchArtist.toUpperCase()))
+        setSearchArtist('')
     }
 
     return (
@@ -48,9 +73,15 @@ function ApplyArtists({ history }) {
             <div className="headerContainer">
                 <h2>{agency}</h2>
                 <article>
-                    <input type="text" placeholder="아티스트 검색" />
+                    <input
+                        type="text"
+                        value={searchArtist}
+                        placeholder="아티스트 검색"
+                        onChange={(e) => {setSearchArtist(e.currentTarget.value)}}
+                        onKeyPress={onKeyPress}
+                    />
                     <div className="searchIcons">
-                        <FiSearch />
+                        <FiSearch onClick={onSearchArtist}/>
                     </div>
                 </article>
             </div>
@@ -59,14 +90,18 @@ function ApplyArtists({ history }) {
                 {
                     data.length > 1 
                     ?
-                    data.map(artist => {
+                    data.map((artist, i) => {
                         return (
                             <PhotoContianer 
                                 name={artist.name}
-                                onClick={() => {onClickArtist(artist)}} key={artist.imageId}
+                                onClick={(e) => {onClickArtist(e, artist, i)}} key={artist.imageId}
+                                ref={artistContainer}
                             >
                                 <img src={artist.imageURL} alt="아티스트"/>
-                                <div>
+                                <div 
+                                    ref={(e) => {deleteButton.current[i] = e}}
+                                    onClick={(e) => {onDeleteArtist(e, artist, i)}}
+                                >
                                     <TiPlus />
                                 </div>
                             </PhotoContianer>
@@ -74,10 +109,10 @@ function ApplyArtists({ history }) {
                     })
                     : 
                     <PhotoContianer 
-                        name={data.name}
-                        onClick={() => {onClickArtist(data)}} key={data.imageId}
+                        name={data[0].name}
+                        onClick={() => {onClickArtist(data[0])}} key={data[0].imageId}
                     >
-                        <img src={data.imageURL} alt="아티스트"/>
+                        <img src={data[0].imageURL} alt="아티스트"/>
                         <div>
                             <TiPlus />
                         </div>
