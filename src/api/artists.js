@@ -61,7 +61,7 @@ const agencies = [
                 ]
             },
             {
-                id: 1,
+                id: 2,
                 name: 'AKMU',
                 nameKR: '악동뮤지션',
                 imageURL: '/resources/images/artists/akmu.jpg',
