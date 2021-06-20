@@ -7,13 +7,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { OPEN_CHOOSEMENU, OPEN_CREATE_MEMBER } from '../../../_actions/openModules';
 import CreateMember from './CreateMember';
 import { onChangeProfilePhoto, onEmailCheckHandler } from '../../../utils/functionUtils';
-import { getArtistMembers } from '../../../_reducers/artists';
 import Loading from '../Common/Loading';
 import { KEEP_ARTIST_MEMBER } from '../../../_actions/keepInformation';
 import { INITIAL_ARTIST } from '../../../_actions/artists';
+import { getMembersByArtist } from '../../../_reducers/artists';
 
 function ApplyArtist({ history, location }) {
-    const { artistMembers, agencyManagers } = useSelector(state => state.artists)
+    const { agency, artist } = useSelector(state => state.artists)
     const openModule = useSelector(state => state.openModules);
     const dispatch = useDispatch();
 
@@ -37,12 +37,9 @@ function ApplyArtist({ history, location }) {
         : setArtistImageURL('/resources/images/account/profile.png')
 
         // 소속 아티스트 멤버정보 불러오기
-        Object.keys(location.state).includes('imageId') && dispatch(getArtistMembers(location.state.imageId))
+        Object.keys(location.state).includes('imageId') && dispatch(getMembersByArtist(location.state.imageId))
 
-        // 소속사 매니저 정보 불러오기
-        dispatch(getAgencyManagers(1))
-
-        console.log("data : ", artistMembers, agencyManagers)
+        console.log("data : ", agency, artist)
         console.log("location : ", location)
     }, [location.state, dispatch, setArtistImageURL, setArtistNameEN, setArtistNameKR, ])
 
