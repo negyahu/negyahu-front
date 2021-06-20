@@ -1,4 +1,4 @@
-import React, { useRef, useState }from 'react';
+import React, { useRef, useState, useEffect }from 'react';
 import { TiPlus } from 'react-icons/ti';
 import { BsFileEarmarkPlus, BsFileEarmarkMinus } from 'react-icons/bs'
 import '../../scss/agency/ApplyArtist.scss';
@@ -6,7 +6,6 @@ import { ArtistImageDiv } from '../Common/Components';
 import { useDispatch, useSelector } from 'react-redux';
 import { OPEN_CHOOSEMENU, OPEN_CREATE_MEMBER } from '../../../_actions/openModules';
 import CreateMember from './CreateMember';
-import { useEffect } from 'react';
 import { onChangeProfilePhoto, onEmailCheckHandler } from '../../../utils/functionUtils';
 import { getArtistMembers } from '../../../_reducers/artists';
 import Loading from '../Common/Loading';
@@ -14,10 +13,10 @@ import { KEEP_ARTIST_MEMBER } from '../../../_actions/keepInformation';
 import { INITIAL_ARTIST } from '../../../_actions/artists';
 
 function ApplyArtist({ history, location }) {
-    const { data, loading, error } = useSelector(state => state.artists.artistMembers)
-    const managers = useSelector(state => state.artists.artist)
+    const { artistMembers, agencyManagers } = useSelector(state => state.artists)
     const openModule = useSelector(state => state.openModules);
     const dispatch = useDispatch();
+
     const [ArtistNameKR, setArtistNameKR] = useState('');
     const [ArtistNameEN, setArtistNameEN] = useState('');
     const [Display, setDisplay] = useState('off');
@@ -26,7 +25,7 @@ function ApplyArtist({ history, location }) {
     const [ArtistImageURL, setArtistImageURL] = useState('');
     const inputFiles = useRef();
     const checkEmailButton = useRef(new Array());
-    const artistMembers = useRef(new Array());
+    const members = useRef(new Array());
 
     useEffect(() => {
         // 소속사 및 아티스트 정보 넘겨 받았는지 확인 
@@ -39,12 +38,16 @@ function ApplyArtist({ history, location }) {
 
         // 소속 아티스트 멤버정보 불러오기
         Object.keys(location.state).includes('imageId') && dispatch(getArtistMembers(location.state.imageId))
-        // console.log("data : ", data)
-        // console.log("location : ", location)
-    }, [location.state, dispatch, setArtistImageURL, setArtistNameEN, setArtistNameKR])
 
-    if (loading) return <Loading />
-    if (error) return <div>에러발생</div>
+        // 소속사 매니저 정보 불러오기
+        dispatch(getAgencyManagers(1))
+
+        console.log("data : ", artistMembers, agencyManagers)
+        console.log("location : ", location)
+    }, [location.state, dispatch, setArtistImageURL, setArtistNameEN, setArtistNameKR, ])
+
+    // if (loading) return <Loading />
+    // if (error) return <div>에러발생</div>
 
     const onBackHistory = () => {
         /* eslint-disable-next-line */
@@ -56,7 +59,7 @@ function ApplyArtist({ history, location }) {
     }
 
     const onModifyArtistProfile = (e, member, i) => {
-        if (!artistMembers.current[i].contains(e.target)) {
+        if (!members.current[i].contains(e.target)) {
             /* eslint-disable-next-line */
             if (confirm(`${member.name}을 수정하시겠습니까?`)) {
                 dispatch({ type: KEEP_ARTIST_MEMBER, payload: member })
@@ -67,7 +70,7 @@ function ApplyArtist({ history, location }) {
     }
 
     const onDeleteArtistProfile = (e, member, i) => {
-        if (artistMembers.current[i].contains(e.target)) {
+        if (members.current[i].contains(e.target)) {
             /* eslint-disable-next-line */
             if (confirm(`${member.name}을 삭제하시겠습니까? 삭제시 관련 모든 정보가 삭제됩니다`)) {
                 alert('삭제했다고 치자')
@@ -161,9 +164,9 @@ function ApplyArtist({ history, location }) {
                         onClick={() => {dispatch({ type: OPEN_CREATE_MEMBER })}}
                     >CREATE</button>
                     {
-                        data
+                        artistMembers.data
                         ?
-                        data[0].members.map((member, i) => {
+                        artistMembers.data[0].members.map((member, i) => {
                             return (
                                 <ArtistImageDiv
                                     name={member.name}
@@ -173,7 +176,7 @@ function ApplyArtist({ history, location }) {
                                     <img src={member.imageURL} alt="아티스트"/>
                                     <div
                                         onClick={(e) => {onDeleteArtistProfile(e, member, i)}}
-                                        ref={(e) => {artistMembers.current[i] = e}}
+                                        ref={(e) => {members.current[i] = e}}
                                     >
                                         <TiPlus />
                                     </div>
@@ -221,42 +224,46 @@ function ApplyArtist({ history, location }) {
                     </colgroup>
                     <tbody>
                         {
-                            
+                            // agencyManagers.data.map((manager, i) => {
+                            //     return (
+                            //         <tr>
+                            //             <td>
+                            //                 <div>
+                            //                     { i === 0 && <BsFileEarmarkMinus />}
+                            //                 </div>
+                            //             </td>
+                            //             <td>
+                            //                 <select>
+                            //                     <option value="1">ALL</option>
+                            //                     <option value="2">CREATE</option>
+                            //                     <option value="3">MODIFY</option>
+                            //                     <option value="4">DELETE</option>
+                            //                 </select>
+                            //             </td>
+                            //             <td>
+                            //                 <input
+                            //                     type="email"
+                            //                     value={manager ? manager.email : ManagerEmail}
+                            //                     placeholder="로그인 계정으로 사용할 이메일을 입력하세요"
+                            //                     onChange={onChangeEmail}
+                            //                 />
+                            //             </td>
+                            //             <td>
+                            //                 <button 
+                            //                     ref={checkEmailButton}
+                            //                     onClick={(e) => {onEmailCheckHandler(ManagerEmail, checkEmailButton.current, setManagerEmail)}}
+                            //                 >확인</button>
+                            //             </td>
+                            //             <td>
+                            //                 <div>
+                            //                     <BsFileEarmarkPlus />
+                            //                 </div>
+                            //             </td>
+                            //         </tr>
+                            //     )
+                            // })
                         }
-                        <tr>
-                            <td>
-                                <div>
-                                    <BsFileEarmarkMinus />
-                                </div>
-                            </td>
-                            <td>
-                                <select>
-                                    <option value="">전체</option>
-                                    <option value="">아티스트</option>
-                                    <option value="">스토어</option>
-                                    <option value="">오피셜</option>
-                                </select>
-                            </td>
-                            <td>
-                                <input
-                                    type="email"
-                                    value={ManagerEmail}
-                                    placeholder="로그인 계정으로 사용할 이메일을 입력하세요"
-                                    onChange={onChangeEmail}
-                                />
-                            </td>
-                            <td>
-                                <button 
-                                    ref={checkEmailButton}
-                                    onClick={(e) => {onEmailCheckHandler(ManagerEmail, checkEmailButton.current, setManagerEmail)}}
-                                >확인</button>
-                            </td>
-                            <td>
-                                <div>
-                                    <BsFileEarmarkPlus />
-                                </div>
-                            </td>
-                        </tr>
+                        
                     </tbody>
                 </table>
             </div>
