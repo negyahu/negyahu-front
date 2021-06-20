@@ -75,8 +75,8 @@ export const HelpCenter = styled.div`
 `;
 
 export const PhotoContianer = styled.div`
-    width: 350px;
-    height: 350px;
+    width: 300px;
+    height: 300px;
     box-sizing: border-box;
     cursor: pointer;
     position: relative;
@@ -85,13 +85,14 @@ export const PhotoContianer = styled.div`
         width: 100%;
         height: 100%;
         object-fit: cover;
+        object-position: top;
     }
     div {
-        font-size: 60px;
+        font-size: 50px;
         color: black;
         position: absolute;
-        right: -25px;
-        top: -30px;
+        right: -20px;
+        top: -25px;
         transform: rotate(45deg);
         opacity: 0;
     }

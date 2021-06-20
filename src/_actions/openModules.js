@@ -9,6 +9,8 @@ export const OPEN_GETMAIL = 'openModules/OPEN_GETMAIL';
 export const OPEN_SENDMAIL = 'openModules/OPEN_SENDMAIL';
 export const OPEN_MAILFORM = 'openModules/OPEN_MAILFORM';
 
+export const OPEN_CHOOSEMENU = 'openModules/OPEN_CHOOSEMENU';
+
 export const OPEN_APPLY_AGENCY = 'openModules/OPEN_APPLY_AGENCY';
 export const OPEN_HELP_CENTER = 'openModules/OPEN_HELP_CENTER';
 

@@ -2,7 +2,7 @@ import React, { useEffect }from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { getArtists } from '../../../modules/artists';
+import { getArtists } from '../../../_reducers/artists';
 import '../../scss/ArtistList.scss';
 import Loading from '../Common/Loading';
 
@@ -17,6 +17,7 @@ const ArtistImage = styled.div`
         width: 100%;
         height: 100%;
         object-fit: cover;
+        object-position: top;
     }
     &::before {
         content: '${props => props.name}';

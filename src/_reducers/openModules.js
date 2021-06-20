@@ -19,7 +19,9 @@ const initialState = {
         mailForm: false,
     },
     common: {
-        alert: false
+        alert: false,
+        confirm: false,
+        chooseMenu: false
     },
     apply: {
         artist: false
@@ -160,7 +162,15 @@ export default function openModulesReducer(state = initialState, action) {
                 ...state,
                 common: {
                     ...state.common,
-                    alert: !state.alert
+                    alert: !state.common.alert
+                } 
+            }
+        case openModule.OPEN_CHOOSEMENU:
+            return {
+                ...state,
+                common: {
+                    ...state.common,
+                    chooseMenu: !state.common.chooseMenu
                 } 
             }
         default:
