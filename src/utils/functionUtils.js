@@ -87,3 +87,8 @@ export const onChangeProfilePhoto = (e) => {
     // 리턴한다
     return 
 }
+
+// 숫자 3자리 단위 , 찍기
+export const numberWithCommas = (number) => {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}

@@ -1,0 +1,51 @@
+@import '../../../App.scss';
+
+.artistCategoryContainer {
+    width: 300px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    // border: 1px solid red;
+    .informationContainer {
+        p:first-of-type {
+            font-family: Wemakeprice;
+            font-weight: bold;
+            font-style: normal;
+            font-size: 30px;
+            margin: 80px 0 30px;
+            padding: 0;
+        }
+        p:last-of-type {
+            font-family: Yoon Minguk;
+            font-weight: normal;
+            font-style: normal;
+            font-size: 18px;
+            margin: 30px 0;
+            padding: 0;
+        }
+        .profileImagesContainer {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            align-items: center;
+            width: 150px;
+            margin: 30px 0;
+            img {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                object-fit: cover;
+                object-position: top;
+            }
+        }
+    }
+    .selectCategoryContainer {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        // border: 1px solid red;
+    }
+}

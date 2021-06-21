@@ -1,104 +1,129 @@
 import axios from 'axios';
 
 const api = process.env.REACT_APP_API_SERVER
-const sleep = n => new Promise(resolve => setTimeout(resolve, n));
 const agencies = [
     {
         id: 1,
         agencyName: '빅히트 엔터테인먼트',
         artists: [
             {
-                id: 1,
-                name: 'BTS',
+                id: 1,  // 보내지말고
+                nameEN: 'BTS',
                 nameKR: '방탄소년단',
+                fan: 10480200,
+                imageId: 1,
                 imageURL: '/resources/images/artists/bts.png',
+                isblind: true,
                 members: [
                     {
-                        id: 1,
+                        id: 1,  // 보내지말고
                         email: 'bighit_rm@gmail.com',
-                        name: 'RM',
+                        nameEN: 'RM',
                         nameKR: '알엠',
+                        imageId: 1,
                         imageURL: '/resources/images/artists/rm.jpg',
+                        password: '',
                         instargram: '',
-                        youtube: '',
+                        etc: '',
                     },
                     {
                         id: 2,
                         email: 'bighit_jk@gmail.com',
-                        name: 'JK',
+                        nameEN: 'JK',
                         nameKR: '정국',
+                        imageId: 2,
                         imageURL: '/resources/images/artists/jk.jpg',
+                        password: '',
                         instargram: '',
-                        youtube: '',
+                        etc: '',
                     },
                     {
                         id: 3,
                         email: 'bighit_jin@gmail.com',
-                        name: 'JIN',
+                        nameEN: 'JIN',
                         nameKR: '진',
+                        imageId: 3,
                         imageURL: '/resources/images/artists/jin.jpg',
+                        password: '',
                         instargram: '',
-                        youtube: '',
+                        etc: '',
                     },
                     {
                         id: 4,
                         email: 'bighit_hope@gmail.com',
-                        name: 'JHOPE',
+                        nameEN: 'JHOPE',
                         nameKR: '제이홉',
+                        imageId: 4,
                         imageURL: '/resources/images/artists/hope.jpg',
+                        password: '',
                         instargram: '',
-                        youtube: '',
+                        etc: '',
                     },
                     {
                         id: 5,
                         email: 'bighit_jimin@gmail.com',
-                        name: 'JIMIN',
+                        nameEN: 'JIMIN',
                         nameKR: '지민',
+                        imageId: 5,
                         imageURL: '/resources/images/artists/jimin.jpg',
+                        password: '',
                         instargram: '',
-                        youtube: '',
+                        etc: '',
                     },
                 ]
             },
             {
                 id: 2,
-                name: 'AKMU',
+                nameEN: 'AKMU',
                 nameKR: '악동뮤지션',
+                fan: 240480,
+                imageId: 2,
                 imageURL: '/resources/images/artists/akmu.jpg',
+                isblind: true,
                 members: [
                     {
-                        id: 1,
+                        id: 6,
                         email: 'akmu_hyun@gmail.com',
-                        name: 'SUHYUN',
+                        nameEN: 'SUHYUN',
                         nameKR: '수현',
+                        imageId: 1,
                         imageURL: '/resources/images/artists/suhyun.jpg',
+                        password: '',
                         instargram: '',
-                        youtube: '',
+                        etc: '',
                     },
                     {
-                        id: 2,
+                        id: 7,
                         email: 'akmu_chan@gmail.com',
-                        name: 'CHANHYUK',
+                        nameEN: 'CHANHYUK',
                         nameKR: '찬혁',
+                        imageId: 2,
                         imageURL: '/resources/images/artists/chan.jpg',
+                        password: '',
                         instargram: '',
-                        youtube: '',
+                        etc: '',
                     },
                 ]
             },
         ],
         managers: [
             {
-                id: 1,
+                id: 1,  // 보내지말고
                 email: 'bighit@gmail.com',
-                level: 1,
-                password: '1234'
+                name: '',
+                password: '1234',
+                mobile: '',
+                level: 'manager',
+                artistId: 1, 
             },
             {
                 id: 2,
                 email: 'test@gmail.com',
-                level: 2,
-                password: '1234'
+                name: '',
+                password: '1234',
+                mobile: '',
+                level: 'manager',
+                artistId: 2,
             },
         ],
     },
@@ -107,11 +132,26 @@ const agencies = [
         agencyName: '이담 엔터테인먼트',
         artists: [
             {
-                id: 2,
-                name: 'IU',
+                id: 3,
+                nameEN: 'IU',
                 nameKR: '아이유',
+                fan: 240480,
+                imageId: 1,
                 imageURL: '/resources/images/main/artist3.svg',
-                members: []
+                isblind: true,
+                members: [
+                    {
+                        id: 8,
+                        email: 'edam_id@gmail.com',
+                        nameEN: 'IU',
+                        nameKR: '아이유',
+                        imageId: 1,
+                        imageURL: '/resources/images/artists/suhyun.jpg',
+                        password: '',
+                        instargram: '',
+                        etc: '',
+                    }
+                ],
             }
         ],
         managers: []
@@ -121,18 +161,48 @@ const agencies = [
         agencyName: '숲 엔터테인먼트',
         artists: [
             {
-                id: 1,
-                name: 'SEOGANGJUN',
+                id: 4,
+                nameEN: 'SEOGANGJUN',
                 nameKR: '서강준',
+                fan: 240480,
+                imageId: 1,
                 imageURL: '/resources/images/main/artist5.svg',
-                members: []
+                isblind: true,
+                members: [
+                    {
+                        id: 9,
+                        email: 'forest_jun@gmail.com',
+                        nameEN: 'SEOGANGJUN',
+                        nameKR: '서강준',
+                        imageId: 1,
+                        imageURL: '/resources/images/artists/suhyun.jpg',
+                        password: '',
+                        instargram: '',
+                        etc: '',
+                    }
+                ]
             },
             {
-                id: 2,
-                name: 'SUZZI',
+                id: 5,
+                nameEN: 'SUZZI',
                 nameKR: '수지',
+                fan: 240480,
+                imageId: 2,
                 imageURL: '/resources/images/main/artist5.svg',
-                members: []
+                isblind: true,
+                members: [
+                    {
+                        id: 9,
+                        email: 'forest_suzzi@gmail.com',
+                        nameEN: 'SUZZI',
+                        nameKR: '수지',
+                        imageId: 2,
+                        imageURL: '/resources/images/artists/suhyun.jpg',
+                        password: '',
+                        instargram: '',
+                        etc: '',
+                    }
+                ]
             }
         ],
         managers: []
@@ -147,38 +217,31 @@ export const getAgencies = async () => {
 
 // id 값으로 소속사 불러오기 (소속사 아티스트들과 매니저 포함)
 export const getAgencyById = async id => {
-    await sleep(500);
-    return agencies.filter(agency => agency.id === id)
+    return agencies.find(agency => agency.id === id)
 }
 
 // 소속사 내 아티스트들 불러오기
 export const getArtists = async agencyId => {
-    return agencies.filter(agency => {
-        return agency.id === agencyId && agency.artists
-    })
+    return agencyId 
+    ? agencies.find(agency => agency.id === agencyId).artists
+    : agencies.map(agency => agency)
 }
 
 // 소속사 내 아티스트 ID로 불러오기
 export const getArtistById = async (agencyId, artistId) => {
-    return agencies.filter(agency => {
-        return agency.id === agencyId 
-        && agency.artists.find(artist => artist.id === artistId)
-    })
+    return agencies.find(agency => agency.id === agencyId)
+    .artists.find(artist => artist.id === artistId)
 }
 
 // 소속사 내 아티스트 검색해오기
 export const getArtistsBySearchData = (agencyId, searchName) => {
-    return agencies.filter(agency => {
-        return agency.id === agencyId 
-        && agency.artists.filter(artist => (searchName.includes(artist.name) || searchName.includes(artist.nameKR)))
-    })
+    return agencies.find(agency => agency.id === agencyId)
+    .artists.filter(artist => (searchName === artist.nameEN || searchName === artist.nameKR))
 }
 // 소속사 내 아티스트 내 멤버 불러오기
 export const getMembersByArtist = async (agencyId, artistId) => {
-    return agencies.filter(agency => {
-        return agency.id === agencyId
-        && agency.artists.find(artist => artist.id === artistId)
-    })
+    return agencies.find(agency => agency.id === agencyId)
+    .artists.find(artist => artist.id === artistId).members
 }
 
 // 소속사 내 아티스트 멤버 ID로 불러오기

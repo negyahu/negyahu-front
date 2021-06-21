@@ -1,21 +1,23 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 import BackgroundBlur from '../Common/Background';
 import '../../scss/agency/ChooseMenu.scss';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { OPEN_CHOOSEMENU } from '../../../_actions/openModules';
 import { withRouter } from 'react-router-dom';
 
 
-function ChooseMenu({ history, art }) {
+function ChooseMenu({ history, match }) {
+    const { data } = useSelector(state => state.openModules.common.chooseMenu)
     const dispatch = useDispatch();
+    const agencyId = parseInt(match.params.agencyId, 10)
 
     const onMoveMenu = () => {
-        const menu = document.getElementById('selectMenu').value
-        if (menu === 'official') {
-            history.push({ pathname: '/artist/official' })
-        } else if (menu === 'update') {
-            history.push({ pathname: '/agency/create/artist', state: art })
+        const selectMenu = document.getElementById('selectMenu')
+        if (selectMenu.value === 'official') {
+            history.push({ pathname: `/agency/:agencyId/artist/:artistId/official` })
+        } else if (selectMenu.value === 'update') {
+            history.push({ pathname: `/agency/${agencyId}/artist/${data.id}`, state: {data: data} })
         } else {
             alert('메뉴를 선택해주세요')
         }
@@ -31,7 +33,7 @@ function ChooseMenu({ history, art }) {
                 </select>
                 <div className="chooseMenuButtonContainer">
                     <button onClick={onMoveMenu}>이동하기</button>
-                    <button onClick={() => {dispatch({ type: OPEN_CHOOSEMENU })}}>취소하기</button>
+                    <button onClick={() => {dispatch({ type: OPEN_CHOOSEMENU, data: null })}}>취소하기</button>
                 </div>
             </div>
         </BackgroundBlur>

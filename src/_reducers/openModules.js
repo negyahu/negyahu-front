@@ -21,10 +21,14 @@ const initialState = {
     common: {
         alert: false,
         confirm: false,
-        chooseMenu: false
+        chooseMenu: {
+            open: false,
+            data: null
+        }
     },
-    apply: {
-        artist: false
+    create: {
+        artist: false,
+        managers: false,
     }
 }
 
@@ -152,9 +156,9 @@ export default function openModulesReducer(state = initialState, action) {
         case openModule.OPEN_CREATE_MEMBER:
             return {
                 ...state,
-                apply: {
-                    ...state.apply,
-                    artist: !state.apply.artist
+                create: {
+                    ...state.create,
+                    artist: !state.create.artist
                 }
             }
         case openModule.OPEN_CONFIRM:
@@ -170,7 +174,18 @@ export default function openModulesReducer(state = initialState, action) {
                 ...state,
                 common: {
                     ...state.common,
-                    chooseMenu: !state.common.chooseMenu
+                    chooseMenu: {
+                        open: !state.common.chooseMenu.open,
+                        data: action.data
+                    }
+                } 
+            }
+        case openModule.OPEN_MANAGERS:
+            return {
+                ...state,
+                create: {
+                    ...state.create,
+                    managers: !state.create.managers
                 } 
             }
         default:

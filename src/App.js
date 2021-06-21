@@ -19,18 +19,13 @@ function App() {
   return (
     <>
       <Header />
-      <Route path="/" exact>
-        <Main />
-      </Route>
-      <Route path="/artist/:id" component={Artist} exact />
-      <Route path="/login">
-        <Login />
-      </Route>
-      <Route path="/join">
-        <Join />
-      </Route>
-      <Route path="/agency/artists" component={ApplyArtists}/>
-      <Route path="/agency/create/artist" component={ApplyArtist}/>
+      <Route path="/" exact component={Main} />
+      <Route path="/login" component={Login} />
+      <Route path="/join" component={Join} />
+      <Route path="/agency/:agencyId/artists" component={ApplyArtists}/>
+      <Route path="/agency/:agencyId/artist/" component={ApplyArtist}/>
+      <Route path="/agency/:agencyId/artist/:artistId" component={ApplyArtist}/>
+      <Route path="/feed/agency/:agencyId/artist/:artistId" component={Artist} exact />
       <Route path="/admin" component={Landing}/>
       <Footer />
     </>
