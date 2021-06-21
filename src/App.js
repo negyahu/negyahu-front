@@ -23,7 +23,7 @@ function App() {
       <Route path="/login" component={Login} />
       <Route path="/join" component={Join} />
       <Route path="/agency/:agencyId/artists" component={ApplyArtists}/>
-      <Route path="/agency/:agencyId/artist/" component={ApplyArtist}/>
+      <Route path="/agency/:agencyId/artist/" exact component={ApplyArtist}/>
       <Route path="/agency/:agencyId/artist/:artistId" component={ApplyArtist}/>
       <Route path="/feed/agency/:agencyId/artist/:artistId" component={Artist} exact />
       <Route path="/admin" component={Landing}/>

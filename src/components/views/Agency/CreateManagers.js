@@ -96,7 +96,7 @@ function CreateManagers({ match }) {
                                 <td>name</td>
                                 <td>account</td>
                                 <td>pwd</td>
-                                <td>Mobile</td>
+                                <td>mobile</td>
                                 <td>add</td>
                             </tr>
                         </thead>

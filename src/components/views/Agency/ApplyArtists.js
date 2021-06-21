@@ -50,7 +50,7 @@ function ApplyArtists({ history, match }) {
     const onDeleteArtist = (e, artist, i) => {
         if (deleteButton.current[i].contains(e.target)) {
             /* eslint-disable-next-line */
-            if (confirm(`${artist.name} 아티스트를 삭제하시겠습니까? 삭제시 관련 모든 정보가 삭제됩니다`)) {
+            if (confirm(`${artist.nameEN} 아티스트를 삭제하시겠습니까? 삭제시 관련 모든 정보가 삭제됩니다`)) {
                 alert('삭제되었다고 치자')
             }
         }
