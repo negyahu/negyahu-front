@@ -74,13 +74,17 @@ function ApplyArtists({ history, match }) {
         setSearchArtist('')
     }
 
+    const onGetManagers = () => {
+        dispatch({ type: OPEN_MANAGERS, data: data })
+    }
+
     return (
         <>
         {
             openModule.common.chooseMenu.open && <ChooseMenu />
         }
         {
-            openModule.create.managers && <CreateManagers />
+            openModule.create.managers.open && <CreateManagers />
         }
         <section className="registerArtistsContainer">
             <div className="headerContainer">
@@ -88,7 +92,7 @@ function ApplyArtists({ history, match }) {
                     {agency.agencyName}
                     <IconContainer 
                         size="50px" 
-                        onClick={() => {dispatch({ type: OPEN_MANAGERS })}}
+                        onClick={onGetManagers}
                     >
                         <FcManager />
                     </IconContainer>

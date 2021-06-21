@@ -110,20 +110,29 @@ const agencies = [
             {
                 id: 1,  // 보내지말고
                 email: 'bighit@gmail.com',
-                name: '',
+                name: '방시혁',
                 password: '1234',
-                mobile: '',
-                level: 'manager',
-                artistId: 1, 
+                mobile: '010-1234-1234',
+                level: 'boss',
+                artistId: 0, 
             },
             {
                 id: 2,
-                email: 'test@gmail.com',
-                name: '',
+                email: 'test1@gmail.com',
+                name: '김매니저',
                 password: '1234',
-                mobile: '',
+                mobile: '010-1234-1234',
                 level: 'manager',
                 artistId: 2,
+            },
+            {
+                id: 3,
+                email: 'test2@gmail.com',
+                name: '김게스트',
+                password: '1234',
+                mobile: '010-3211-3211',
+                level: 'imployee',
+                artistId: 999,
             },
         ],
     },
@@ -259,9 +268,7 @@ export const getMemberById = async (agencyId, artistId, memberId) => {
 
 // 소속사 매니저 불러오기
 export const getManagers = async (agencyId) => {
-    return agencies.filter(agency => {
-        return agency.id === agencyId && agency.managers
-    })
+    return agencies.find(agency => agency.id === agencyId).managers.filter(manager => manager)
 }
 
 

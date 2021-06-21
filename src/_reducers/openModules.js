@@ -28,7 +28,10 @@ const initialState = {
     },
     create: {
         artist: false,
-        managers: false,
+        managers: {
+            open: false,
+            data: null
+        },
     }
 }
 
@@ -185,7 +188,11 @@ export default function openModulesReducer(state = initialState, action) {
                 ...state,
                 create: {
                     ...state.create,
-                    managers: !state.create.managers
+                    managers: {
+                        ...state.create.managers,
+                        open: !state.create.managers.open,
+                        data: action.data
+                    }
                 } 
             }
         default:

@@ -85,6 +85,14 @@ export default function artists(state = initialState, action) {
         case actions.GET_MEMBER_SUCCESS:
         case actions.GET_MEMBER_ERROR:
             return getMemberByIdReducer(state, action)
+        case actions.CREATE_MANAGER_TR:
+            return {
+                ...state,
+                managers: {
+                    ...state.managers,
+                    data: state.managers.data.concat(action.manager)
+                }
+            }
         case actions.INITIAL_ARTIST:
             return {
                 ...state,

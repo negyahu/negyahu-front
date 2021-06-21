@@ -33,3 +33,6 @@ export const GET_MEMBER_ERROR = 'artists/GET_MEMBER_ERROR';
 
 // 등록 취소시 데이터 정보 지우기
 export const INITIAL_ARTIST = 'artists/INITIAL_ARTIST';
+
+// 매니저 껍데기 추가
+export const CREATE_MANAGER_TR = 'artists/CREATE_MANAGER_TR';
