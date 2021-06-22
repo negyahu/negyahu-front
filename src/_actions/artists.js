@@ -45,3 +45,9 @@ export const CREATE_MANAGER_ERROR = 'artists/CREATE_MANAGER_ERROR';
 export const DELETE_MANAGER = 'artists/DELETE_MANAGER';
 export const DELETE_MANAGER_SUCCESS = 'artists/DELETE_MANAGER_SUCCESS';
 export const DELETE_MANAGER_ERROR = 'artists/DELETE_MANAGER_ERROR';
+
+// 소속사 아티스트 등록하기
+export const CREATE_ARTIST = 'artists/CREATE_ARTIST';
+export const CREATE_ARTIST_SUCCESS = 'artists/CREATE_ARTIST_SUCCESS';
+export const CREATE_ARTIST_ERROR = 'artists/CREATE_ARTIST_ERROR';
+

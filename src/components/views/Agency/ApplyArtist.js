@@ -72,7 +72,6 @@ function ApplyArtist({ history, match, location }) {
                 dispatch({ type: OPEN_CREATE_MEMBER })
             }
         }
-        
     }
 
     const onDeleteArtistProfile = (e, member, i) => {

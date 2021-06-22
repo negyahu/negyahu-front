@@ -1,4 +1,5 @@
 import axios from 'axios';
+import jwt from 'jwt-decode';
 
 const api = process.env.REACT_APP_API_SERVER
 const agencies = [
@@ -271,10 +272,39 @@ export const getManagers = async (agencyId) => {
     return agencies.find(agency => agency.id === agencyId).managers.filter(manager => manager)
 }
 
+// 사진 업로드
+export const uploadFiles = async (files) => {
+    const response = await axios({
+        url: `${api}/api/artists/upload`,
+        method: 'post',
+        params: {
+            files: files
+        },
+        headers: { "Content-Type": "multipart/form-data", Authorization: "여기에 토큰 넣기" }
+    }).then(res => {
+        const token = jwt(res.data.token);
+        return token
+    }).catch(err => {
+        return err
+    })
+    return response
+}
+// some logic
+// axios.post(`${axios.defaults.baseURL}/auth`, { email, password })
+//     .then(res => {
+//       const token = res.data.token;
+//       const user = jwt(token); // decode your token here
+//       localStorage.setItem('token', token);
+//       dispatch(actions.authSuccess(token, user));
+//     })
+//     .catch(err => {
+//       dispatch(actions.loginUserFail());
+//   });
+// }
 
-// 데이터 등록하기
+
 // 소속사 등록하기
-export const postApplyAgency = async (formData, config) => {
+export const createAgency = async (formData, config) => {
     const response = await axios.post(`${api}/api/`, formData, config);
     return response;
 }
@@ -282,19 +312,34 @@ export const postApplyAgency = async (formData, config) => {
 // 매니저 등록하기
 export const createManager = async (agencyId, manager) => {
     try {
-        const response = await axios.post(`${api}/api/agency/${agencyId}/`, manager)
+        const response = await axios.post(`${api}/api/agencies/${agencyId}/`, manager)
         return response.data
     } catch (e) {
         alert(e)
+        console.log(e)
+        return e
     }
 }
-
 // 매니저 삭제하기
 export const deleteManager = async (agencyId, managerId) => {
     try {
-        const response = await axios.delete(`${api}/api/agency/${agencyId}/`, managerId)
+        const response = await axios.delete(`${api}/api/agencies/${agencyId}/`, managerId)
         return response.data
     } catch (e) {
         alert(e)
+        console.log(e)
+        return e
     }
 }
+
+// 소속 아티스트 등록하기
+export const createArtist = async (agencyId, artist) => {
+    try {
+        const response = await axios.post(`${api}/api/agencies/${agencyId}/artists`)
+        return response.data
+    } catch (e) {
+        alert(e)
+        console.log(e)
+        return e
+    }
+ }

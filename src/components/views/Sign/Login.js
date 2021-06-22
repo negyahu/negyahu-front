@@ -7,8 +7,8 @@ import FindUserPassword from './FindUserPassword';
 import FoundAccount from './FoundAccount';
 
 import '../../scss/Login.scss';
-import { setLogin } from '../../../api/sign';
 import { OPEN_FIND_EMAIL, OPEN_FIND_PASSWORD } from '../../../_actions/openModules';
+import { setLogin } from '../../../_reducers/sign';
 
 
 function Login({ history }) {
@@ -33,10 +33,7 @@ function Login({ history }) {
             email: email,
             password: password
         }
-        setLogin(userInfo).then(res => {
-            alert('로그인 완료 : ' + res.data.token)
-            history.push('/')
-        }).catch(err => alert(err))
+        dispatch(setLogin(userInfo))
     }
 
     
