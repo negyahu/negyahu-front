@@ -1,0 +1,192 @@
+@import '../../../App.scss';
+
+// 매니저 등록
+.artistManagerContainer {
+    width: 100%;
+    max-width: 1000px;
+    height: 80%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    h2 {
+        width: 100%;
+        min-width: 500px;
+        margin: 30px auto 0;
+        border-bottom: 1px solid white;
+        font-family: Wemakeprice;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 30px;
+        line-height: 70px;
+        color: white;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .addManagerRowContainer {
+        width: 100%;
+        height: auto;
+        margin: 5px auto;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+    .tableHeader {
+        width: 1000px;
+        background-color: #5C5F78;
+        .table {
+            width: 100%;
+        }
+        tr {
+            color: white;
+            td {
+                font-family: Yoon Minguk;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 24px;
+                text-align: center;
+                line-height: 50px;
+            }
+        }
+    }
+    .tableBody {
+        width: 1000px;
+        min-height: 150px;
+        max-height: 500px;
+        height: auto;
+        overflow-y: scroll;
+        background-color: white;
+        &::-webkit-scrollbar {
+            background: #fbf6f6;
+            width: 6px;
+        }
+        
+        &::-webkit-scrollbar-thumb {
+            background: lightgray;
+            border-radius: 5px;
+            border: 2px solid transparent;
+        }
+        .table {
+            width: 100%;
+            height: auto;
+            td {
+                height: 50px;
+                text-align: center;
+                select {
+                    width: 90%;
+                    height: 40px;
+                    outline: none;
+                    border: none;
+                    padding-left: 3px;
+                    box-sizing: border-box;
+                    background-color: #f5f5f5;
+                }
+                .checkAccount {
+                    width: 100%;
+                    height: 100%;
+                    display: flex;
+                    justify-content: space-evenly;
+                    align-items: center;
+                    margin: 0;
+                    padding: 0;
+                    // border: 1px solid red;
+                    input {
+                        width: 70%;
+                        height: 40px;
+                        box-sizing: border-box;
+                        outline: none;
+                        border: none;
+                        background-color: #f5f5f5;
+                        padding: 0 10px;
+    
+                        font-family: Roboto;
+                        font-style: normal;
+                        font-weight: normal;
+                        font-size: 12px;
+    
+                        &::placeholder {
+                            font-size: 12px;
+                            color: lightgray;
+                        }
+                    }
+                }
+                input {
+                    width: 95%;
+                    height: 40px;
+                    box-sizing: border-box;
+                    outline: none;
+                    border: none;
+                    background-color: #f5f5f5;
+                    padding: 0 10px;
+
+                    font-family: Roboto;
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 14px;
+                    // border: 1px solid red;
+                    &::placeholder {
+                        font-size: 14px;
+                        color: lightgray;
+                    }
+                    &:last-of-type {
+                        font-size: 12px;
+                    }
+                }
+                button {
+                    background: #F4D4D4;
+                    width: 70px;
+                    height: 30px;
+                    font-family: Yoon Minguk;
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 15px;
+                    text-align: center;
+                    color: #5C5F78;
+                    border: 1px solid #F4D4D4;
+                    cursor: pointer;
+                }
+                label {
+                    width: 100%;
+                    text-align: left;
+                }
+            }
+        }
+    }
+}
+
+.createManagersButtonContainer {
+    height: auto;
+    margin: 100px auto 70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 350px;
+    button {
+        background: #F4D4D4;
+        width: 140px;
+        height: 40px;
+        font-family: Yoon Minguk;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 23px;
+        text-align: center;
+        color: #5C5F78;
+        border: 1px solid #F4D4D4;
+        cursor: pointer;
+        &:last-of-type {
+            width: 140px;
+            height: 40px;
+            background: #5C5F78;
+            font-family: Yoon Minguk;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 23px;
+            text-align: center;
+            color: #FFFFFF;
+            border: 1px solid #5C5F78;
+        }
+    }
+}

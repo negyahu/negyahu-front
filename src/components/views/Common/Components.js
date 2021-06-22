@@ -227,13 +227,18 @@ export const CategoryButton = styled.button`
     line-height: 28px;
     outline: none;
     border: none;
-    color: #AAAAAA;
+    color: #F4D4D4;
+    text-align: left;
+    cursor: pointer;
     background: rgba(0,0,0,0);
     ${ props => 
         props.path && 
         css`
             color: #5C5F78;
         `
+    }
+    &:hover {
+        color: #5C5F78;
     }
 `;
 
@@ -244,6 +249,24 @@ export const IconContainer = styled.div`
     justify-content: center;
     align-items: center;
     ${props => props.position && css`position: absolute; left: 0; top: 50%; transform: translateY(-50%);`}
+    cursor: pointer;
+    /* transition: all 0.3s linear; */
+    &:hover {
+        ${props => props.hover && css `
+            animation-name: rotation;
+            animation-duration: 1s;
+            animation-iteration-count: infinite;
+            animation-direction: alternate;
+        `}
+    }
+    @keyframes rotation {
+        0% {
+            transform: rotate(45deg);
+        }
+        100% {
+            transform: rotate(-45deg);
+        }
+    }
 `;
 
 export const CheckBoxContainer = styled.label`

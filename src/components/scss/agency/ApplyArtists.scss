@@ -1,7 +1,6 @@
 @import '../../../App.scss';
 
 .registerArtistsContainer {
-    
     .headerContainer {
         position: sticky;
         top: 0;
@@ -23,6 +22,11 @@
             font-size: 30px;
             line-height: 70px;
             letter-spacing: 2px;
+            position: relative;
+
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
         }
         article {
             width: 350px;

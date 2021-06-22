@@ -1,28 +1,6 @@
 export const createPromiseThunk = (type, promiseCreator) => {
     const [SUCCESS, ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`];
 
-    return param => async dispatch => {
-        dispatch({ type })
-        try {
-            const payload = await promiseCreator(param);
-
-            dispatch({
-                type: SUCCESS,
-                payload
-            })
-        } catch (e) {
-            dispatch({
-                type: ERROR,
-                payload: e,
-                error: true
-            })
-        }
-    }
-}
-
-export const createPromiseThunkParams = (type, promiseCreator) => {
-    const [SUCCESS, ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`];
-
     return (...params) => async dispatch => {
         dispatch({ type })
         try {
@@ -39,29 +17,6 @@ export const createPromiseThunkParams = (type, promiseCreator) => {
                 error: true
             })
         }
-    }
-}
-
-export const createPromiseThunkAgency = (type, promiseCreator) => {
-    const [SUCCESS, ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`];
-
-    return param => async dispatch => {
-        dispatch({ type })
-        const payload = await promiseCreator(param);
-        payload
-        .then(res => {
-            dispatch({
-                type: SUCCESS,
-                payload: res
-            })
-        })
-        .catch(err => {
-            dispatch({
-                type: ERROR,
-                payload: err,
-                error: true
-            })
-        })
     }
 }
 

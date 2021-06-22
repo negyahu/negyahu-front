@@ -15,7 +15,7 @@ function CreateMember() {
     const [NameEN, setNameEN] = useState('');
     const [NameKR, setNameKR] = useState('');
     const [Instargram, setInstargram] = useState('');
-    const [YouTube, setYouTube] = useState('');
+    const [EtcUrl, setEtcUrl] = useState('');
     const [ImageURL, setImageURL] = useState('');
     const checkEmailButton = useRef();
     const inputFiles = useRef();
@@ -23,15 +23,15 @@ function CreateMember() {
     useEffect(() => {
         if (member) {
             setEmail(member.email)
-            setNameEN(member.name)
+            setNameEN(member.nameEN)
             setNameKR(member.nameKR)
             setInstargram(member.instargram)
-            setYouTube(member.youtube)
+            setEtcUrl(member.etc)
             setImageURL(member.imageURL)
         } else {
             setImageURL("/resources/images/account/profile.png")
         }
-    },[member, setEmail, setNameEN, setNameKR, setInstargram, setYouTube, setImageURL])
+    },[member, setEmail, setNameEN, setNameKR, setInstargram, setEtcUrl, setImageURL])
 
     const onBackHistory = () => {
         dispatch({ type: KEEP_ARTIST_MEMBER, action: null })
@@ -126,13 +126,13 @@ function CreateMember() {
                                     ref={inputFiles}
                                 />
                             </td>
-                            <th>YOUTUBE</th>
+                            <th>ETC</th>
                             <td colSpan="2">
                                 <input
                                     type="url"
-                                    value={YouTube}
+                                    value={EtcUrl}
                                     placeholder="https:// 포함하여 주소입력"
-                                    onChange={(e) => {setYouTube(e.currentTarget.value)}}
+                                    onChange={(e) => {setEtcUrl(e.currentTarget.value)}}
                                 />
                             </td>
                         </tr>

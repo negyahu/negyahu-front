@@ -63,12 +63,16 @@ function ArtistList() {
         <section className="mainContainer">
             <div className="artistsContainer">
                 {
-                    data.map(artist => 
-                        <Link to={`/artist/${artist.imageId}`} key={artist.imageId}>
-                            <ArtistImage name={artist.name}>
-                                <img src={`${artist.imageURL}`} alt="연예인"/>
-                            </ArtistImage>
-                        </Link>
+                    data.map(agency => 
+                        agency.artists.map(artist => {
+                            return (
+                                <Link to={`/feed/agency/${agency.id}/artist/${artist.id}`} key={artist.id}>
+                                    <ArtistImage name={artist.nameEN}>
+                                        <img src={`${artist.imageURL}`} alt="연예인"/>
+                                    </ArtistImage>
+                                </Link>
+                            )
+                        })
                     )
                 }
             </div>
