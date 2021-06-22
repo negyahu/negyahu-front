@@ -1,9 +1,17 @@
 import axios from 'axios';
+import jwt from 'jwt-decode';
 
 const api = process.env.REACT_APP_API_SERVER
 
 export const setLogin = async (userInfo) => {
     const response = await axios.post(`${api}/api/login`, userInfo)
+    .then(res => {
+        const token = jwt(res.data.token);
+        return token
+    })
+    .catch(err => {
+        return err
+    })
     return response;
 }
 

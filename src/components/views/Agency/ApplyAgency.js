@@ -5,9 +5,9 @@ import '../../scss/agency/ApplyAgency.scss';
 import { AgencyApplicationGuide } from '../Common/Components';
 import { useDispatch } from 'react-redux';
 import { OPEN_APPLY_AGENCY } from '../../../_actions/openModules';
-import { postApplyAgency } from '../../../api/artists';
 import { createAgencyValidation, checkBusinessNumber, onEmailCheckHandler } from '../../../utils/functionUtils';
 import { useRef } from 'react';
+import { createAgency } from '../../../api/artists';
 
 
 function ApplyAgency() {
@@ -89,14 +89,7 @@ function ApplyAgency() {
                     "content-type": "multipart/form-data"
                 }
             }
-            postApplyAgency(formData, config)
-            .then(res => {
-                
-                dispatch({ type: OPEN_APPLY_AGENCY })
-            })
-            .catch(err => {
-                alert(err)
-            })
+            createAgency(formData, config)
         }
         
     }
