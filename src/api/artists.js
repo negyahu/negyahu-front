@@ -273,17 +273,13 @@ export const getManagers = async (agencyId) => {
 }
 
 // 사진 업로드
-export const uploadFiles = async (files) => {
-    const response = await axios({
-        url: `${api}/api/artists/upload`,
-        method: 'post',
-        params: {
-            files: files
-        },
-        headers: { "Content-Type": "multipart/form-data", Authorization: "여기에 토큰 넣기" }
-    }).then(res => {
-        const token = jwt(res.data.token);
-        return token
+export const agencyUploadFiles = async (file) => {
+    const config = {
+        headers: { "Content-Type": "multipart/form-data" }
+    }
+    const response = await axios.post(`${api}/api/licenses`, file, config)
+    .then(res => {
+        return res.data.id
     }).catch(err => {
         return err
     })
@@ -304,21 +300,19 @@ export const uploadFiles = async (files) => {
 
 
 // 소속사 등록하기
-export const createAgency = async (formData, config) => {
-    const response = await axios.post(`${api}/api/`, formData, config);
+export const createAgency = async (agency) => {
+    const response = await axios.post(`${api}/api/agencies/`, agency).then(res => {
+        return res.data
+    }).catch(err => {
+        return err
+    })
     return response;
 }
 
 // 매니저 등록하기
 export const createManager = async (agencyId, manager) => {
-    try {
-        const response = await axios.post(`${api}/api/agencies/${agencyId}/`, manager)
-        return response.data
-    } catch (e) {
-        alert(e)
-        console.log(e)
-        return e
-    }
+    const response = await axios.post(`${api}/api/agencies/${agencyId}/`, manager)
+    return response.data
 }
 // 매니저 삭제하기
 export const deleteManager = async (agencyId, managerId) => {

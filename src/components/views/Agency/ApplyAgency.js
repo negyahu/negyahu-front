@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { OPEN_APPLY_AGENCY } from '../../../_actions/openModules';
 import { createAgencyValidation, checkBusinessNumber, onEmailCheckHandler } from '../../../utils/functionUtils';
 import { useRef } from 'react';
-import { createAgency } from '../../../api/artists';
+import { agencyUploadFiles, createAgency } from '../../../api/artists';
 
 
 function ApplyAgency() {
@@ -62,34 +62,57 @@ function ApplyAgency() {
 
     const onChangeFiles = (e) => {
         let files = e.target.files;
+        console.log(files[0])
         if (files.length === 0) {
             setFileName('')
         } else {
             setFileName(files[0].name)
-            setFiles(files)
+            setFiles(files[0])
         }
     }
 
-    const onSubmitHandler = () => {
+    const uploadFile = async () => {
+        // 데이터 전송
+        const formData = new FormData();
+        formData.append( "file", Files );
+        for (let key of formData.keys()) {
+            console.log(key);
+        }
+        for (let value of formData.values()) {
+            console.log(value);
+        }
+        console.log(formData)
+        return await agencyUploadFiles(formData)
+    }
+
+    const onSubmitHandler = async () => {
+        // const id = uploadFile()
+        //     console.log("id : ", id)
         // 유효성 검사 후 진행
+        
+
         if (createAgencyValidation({AgencyName, BusinessNumber, BoseName, Email, Files})) {
             if (checkBusinessNumberButton.current.textContent === '확인') {
                 return alert('사업자번호를 확인하세요')
             } else if (checkEmailButton.current.textContent === '확인') {
                 return alert('이메일 중복 확인하세요')
             }
-            // 데이터 전송
-            const formData = new FormData();
-            formData.append(
-                "file",
-                Files,
-            );
-            const config = {
-                headers: {
-                    "content-type": "multipart/form-data"
-                }
+            
+            const id = await uploadFile()
+            console.log("id : ", id)
+
+            const agency = {
+                bossName: BoseName,
+                businessNumber: BusinessNumber,
+                email: Email,
+                fileId: 7,
+                mobile: Mobile,
+                nameEN: AgencyName,
+                nameKR: AgencyName
             }
-            createAgency(formData, config)
+            
+            alert(createAgency(agency))
+            
         }
         
     }
