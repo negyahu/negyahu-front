@@ -279,3 +279,22 @@ export const postApplyAgency = async (formData, config) => {
     return response;
 }
 
+// 매니저 등록하기
+export const createManager = async (agencyId, manager) => {
+    try {
+        const response = await axios.post(`${api}/api/agency/${agencyId}/`, manager)
+        return response.data
+    } catch (e) {
+        alert(e)
+    }
+}
+
+// 매니저 삭제하기
+export const deleteManager = async (agencyId, managerId) => {
+    try {
+        const response = await axios.delete(`${api}/api/agency/${agencyId}/`, managerId)
+        return response.data
+    } catch (e) {
+        alert(e)
+    }
+}

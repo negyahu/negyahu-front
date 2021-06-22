@@ -250,6 +250,23 @@ export const IconContainer = styled.div`
     align-items: center;
     ${props => props.position && css`position: absolute; left: 0; top: 50%; transform: translateY(-50%);`}
     cursor: pointer;
+    /* transition: all 0.3s linear; */
+    &:hover {
+        ${props => props.hover && css `
+            animation-name: rotation;
+            animation-duration: 1s;
+            animation-iteration-count: infinite;
+            animation-direction: alternate;
+        `}
+    }
+    @keyframes rotation {
+        0% {
+            transform: rotate(45deg);
+        }
+        100% {
+            transform: rotate(-45deg);
+        }
+    }
 `;
 
 export const CheckBoxContainer = styled.label`

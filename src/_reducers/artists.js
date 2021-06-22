@@ -19,6 +19,11 @@ export const getArtistsBySearchData = createPromiseThunk(actions.GET_ARTISTS_SEA
 export const getMembersByArtist = createPromiseThunk(actions.GET_MEMBERS, artistsAPI.getMembersByArtist);
 // 소속사 내 아티스트 멤버 ID로 불러오기
 export const getMemberById = createPromiseThunk(actions.GET_MEMBER, artistsAPI.getMemberById)
+// 매니저 추가하기
+export const createManager = createPromiseThunk(actions.CREATE_MANAGER, artistsAPI.createManager)
+// 매니저 삭제하기
+export const deleteManager = createPromiseThunk(actions.DELETE_MANAGER, artistsAPI.deleteManager)
+
 
 
 // 초기 값
@@ -49,6 +54,8 @@ const getArtistsBySearchDataReducer = handleAsyncActions(actions.GET_ARTISTS_SEA
 const getMembersByArtistReducer = handleAsyncActions(actions.GET_MEMBERS, 'members')
 // 소속사 내 아티스트 멤버 ID로 불러오기
 const getMemberByIdReducer = handleAsyncActions(actions.GET_MEMBER, 'member')
+// 소속사 내 매니저 추가하기
+const createManagerReducer = handleAsyncActions(actions.CREATE_MANAGER, 'managers')
 
 
 export default function artists(state = initialState, action) {
@@ -93,6 +100,18 @@ export default function artists(state = initialState, action) {
                     data: state.managers.data.concat(action.manager)
                 }
             }
+        case actions.DELETE_MANAGER_TR:
+            return {
+                ...state,
+                managers: {
+                    ...state.managers,
+                    data: state.managers.data.slice(0, action.index)
+                }
+            }
+        case actions.DELETE_MANAGER:
+        case actions.DELETE_MANAGER_SUCCESS:
+        case actions.DELETE_MANAGER_ERROR:
+            return createManagerReducer(state, action)
         case actions.INITIAL_ARTIST:
             return {
                 ...state,

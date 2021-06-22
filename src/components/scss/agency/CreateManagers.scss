@@ -13,7 +13,7 @@
     h2 {
         width: 100%;
         min-width: 500px;
-        margin: 30px auto 20px;
+        margin: 30px auto 0;
         border-bottom: 1px solid white;
         font-family: Wemakeprice;
         font-style: normal;
@@ -21,6 +21,18 @@
         font-size: 30px;
         line-height: 70px;
         color: white;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .addManagerRowContainer {
+        width: 100%;
+        height: auto;
+        margin: 5px auto;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
     }
     .tableHeader {
         width: 1000px;
@@ -93,10 +105,10 @@
                         font-family: Roboto;
                         font-style: normal;
                         font-weight: normal;
-                        font-size: 15px;
+                        font-size: 12px;
     
                         &::placeholder {
-                            font-size: 14px;
+                            font-size: 12px;
                             color: lightgray;
                         }
                     }
@@ -113,11 +125,14 @@
                     font-family: Roboto;
                     font-style: normal;
                     font-weight: normal;
-                    font-size: 15px;
+                    font-size: 14px;
                     // border: 1px solid red;
                     &::placeholder {
                         font-size: 14px;
                         color: lightgray;
+                    }
+                    &:last-of-type {
+                        font-size: 12px;
                     }
                 }
                 button {
@@ -127,7 +142,7 @@
                     font-family: Yoon Minguk;
                     font-style: normal;
                     font-weight: normal;
-                    font-size: 18px;
+                    font-size: 15px;
                     text-align: center;
                     color: #5C5F78;
                     border: 1px solid #F4D4D4;

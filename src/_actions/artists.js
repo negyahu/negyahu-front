@@ -34,5 +34,14 @@ export const GET_MEMBER_ERROR = 'artists/GET_MEMBER_ERROR';
 // 등록 취소시 데이터 정보 지우기
 export const INITIAL_ARTIST = 'artists/INITIAL_ARTIST';
 
-// 매니저 껍데기 추가
+// 매니저 row 추가 / 삭제
 export const CREATE_MANAGER_TR = 'artists/CREATE_MANAGER_TR';
+export const DELETE_MANAGER_TR = 'artists/DELETE_MANAGER_TR';
+// 매니저 추가
+export const CREATE_MANAGER = 'artists/CREATE_MANAGER';
+export const CREATE_MANAGER_SUCCESS = 'artists/CREATE_MANAGER_SUCCESS';
+export const CREATE_MANAGER_ERROR = 'artists/CREATE_MANAGER_ERROR';
+// 매니저 삭제
+export const DELETE_MANAGER = 'artists/DELETE_MANAGER';
+export const DELETE_MANAGER_SUCCESS = 'artists/DELETE_MANAGER_SUCCESS';
+export const DELETE_MANAGER_ERROR = 'artists/DELETE_MANAGER_ERROR';
