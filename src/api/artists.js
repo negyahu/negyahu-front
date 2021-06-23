@@ -6,6 +6,11 @@ const agencies = [
     {
         id: 1,
         agencyName: '빅히트 엔터테인먼트',
+        businessNumber: 1112233333,
+        bossName: '방시혁',
+        mobile: '070-1234-1234',
+        adminEmail: 'bts_manager@gmail.com',
+        imageURL: '',
         artists: [
             {
                 id: 1,  // 보내지말고
@@ -140,6 +145,11 @@ const agencies = [
     {
         id: 2,
         agencyName: '이담 엔터테인먼트',
+        businessNumber: 1112233333,
+        bossName: '아이유',
+        mobile: '070-1234-1234',
+        adminEmail: 'edam@gmail.com',
+        imageURL: '',
         artists: [
             {
                 id: 3,
@@ -169,6 +179,11 @@ const agencies = [
     {
         id: 3,
         agencyName: '숲 엔터테인먼트',
+        businessNumber: 1112233333,
+        bossName: '김대표',
+        mobile: '070-1234-1234',
+        adminEmail: 'forest@gmail.com',
+        imageURL: '',
         artists: [
             {
                 id: 4,
@@ -222,7 +237,14 @@ const agencies = [
 // 데이터 불러오기
 // 전체 소속사 불러오기
 export const getAgencies = async () => {
-    return agencies;
+    const response = await axios.get(`${api}/api/admin/agencies`)
+    .then(res => {
+        return res.data
+    }).catch(err => {
+        alert('에러 발생')
+        return agencies;
+    })
+    return response;
 }
 
 // id 값으로 소속사 불러오기 (소속사 아티스트들과 매니저 포함)
