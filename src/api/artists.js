@@ -236,13 +236,30 @@ const agencies = [
 
 // 데이터 불러오기
 // 전체 소속사 불러오기
-export const getAgencies = async () => {
-    const response = await axios.get(`${api}/api/admin/agencies`)
+export const getAgencies = async (token) => {
+    console.log(token)
+    const config = {
+        headers: { "Authorization": token, "Content-Type": "multipart/form-data" },
+    }
+    const response = await axios.get(`${api}/api/admin/agencies`, config)
     .then(res => {
         return res.data
     }).catch(err => {
         alert('에러 발생')
         return agencies;
+    })
+    return response;
+}
+
+// 소속사 로그인시 소속사 정보 불러오기
+export const getAgency = async (token) => {
+    const response = await axios.get(`${api}/api/agencies/me`, token)
+    .then(res => {
+        return res.data
+    })
+    .catch(err => {
+        alert('통신 오류!!')
+        return agencies
     })
     return response;
 }
@@ -307,19 +324,6 @@ export const agencyUploadFiles = async (file) => {
     })
     return response
 }
-// some logic
-// axios.post(`${axios.defaults.baseURL}/auth`, { email, password })
-//     .then(res => {
-//       const token = res.data.token;
-//       const user = jwt(token); // decode your token here
-//       localStorage.setItem('token', token);
-//       dispatch(actions.authSuccess(token, user));
-//     })
-//     .catch(err => {
-//       dispatch(actions.loginUserFail());
-//   });
-// }
-
 
 // 소속사 등록하기
 export const createAgency = async (agency) => {

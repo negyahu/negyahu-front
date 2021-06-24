@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router';
+import jwt from 'jwt-decode';
 
 import FindUserEmail from './FindUserEmail';
 import FindUserPassword from './FindUserPassword';
@@ -9,6 +10,9 @@ import FoundAccount from './FoundAccount';
 import '../../scss/Login.scss';
 import { OPEN_FIND_EMAIL, OPEN_FIND_PASSWORD } from '../../../_actions/openModules';
 import { setLogin } from '../../../_reducers/sign';
+import { useEffect } from 'react';
+import { getCookieValue, setCookie } from '../../../utils/cookies';
+import { KEEP_USER_INFO } from '../../../_actions/keepInformation';
 
 
 function Login({ history }) {
@@ -19,6 +23,34 @@ function Login({ history }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+
+    useEffect(() => {
+        if (data) {
+            if (data.auth === "error") {
+                setEmail("")
+                setPassword("")
+                return alert("로그인 정보가 존재하지 않습니다")
+            }
+            setCookie("user", data)
+            dispatch({ type: KEEP_USER_INFO, data: jwt(getCookieValue("user")) })
+            switch (jwt(data).auth) {
+                case 'USER':
+                    history.push({ pathname: '/' })
+                    break
+                case 'AGENCY':
+                    history.push({ pathname: "/agency" })
+                    break
+                case 'ADMIN':
+                    history.push({ pathname: "/admin" })
+                    break
+                default:
+                    return
+            }
+            alert(`${jwt(data).aud}님 환영합니다`)
+        }
+    }, [data, history, dispatch])
+
+
     const onEmailHandler = (e) => {
         setEmail(e.currentTarget.value)
     }
@@ -27,7 +59,7 @@ function Login({ history }) {
         setPassword(e.currentTarget.value)
     }
 
-    const onSubmitHandler = (e) => {
+    const onSubmitHandler = async (e) => {
         e.preventDefault()
         let userInfo = {
             email: email,
@@ -35,8 +67,6 @@ function Login({ history }) {
         }
         dispatch(setLogin(userInfo))
     }
-
-    
 
     return (
         <form className="loginFormContainer" onSubmit={ onSubmitHandler }>

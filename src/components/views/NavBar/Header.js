@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import '../../scss/Header.scss';
 
@@ -12,6 +12,8 @@ import Notifications from './Notifications';
 import Mails from './Mails';
 import Mail from '../Common/Mail';
 import MoreMenus from './MoreMenus';
+import { useEffect } from 'react';
+import { getCookie, getCookieValue } from '../../../utils/cookies';
 
 const NavbarContainer = styled.header`
     width: 100%;
@@ -33,8 +35,12 @@ const Navbar = styled.nav`
 
 
 function Header({ history }) {
+    const userData = useSelector(state => state.keepInformation.user)
     const { data } = useSelector(state => state.sign.login)
     const openModule = useSelector(state => state.openModules.header)
+    const dispatch = useDispatch();
+
+    // if (!userData)
 
     return (
         <NavbarContainer>
@@ -50,7 +56,7 @@ function Header({ history }) {
                 }}>FANTIMATE</p>
                 <div className="menuContainer">
                     {
-                        data 
+                        userData
                         ? <LoginMenuIcons />
                         : <NoneLoginMenuIcons />
                     }

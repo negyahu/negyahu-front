@@ -7,6 +7,7 @@ import { createPromiseThunk, handleAsyncActions, reducerUtils } from '../utils/a
 export const getAgencies = createPromiseThunk(actions.GET_AGENCIES, artistsAPI.getAgencies);
 // ID 값으로 특정 소속사 불러오기
 export const getAgencyById = createPromiseThunk(actions.GET_AGENCY, artistsAPI.getAgencyById);
+export const getAgency = createPromiseThunk(actions.GET_AGENCY, artistsAPI.getAgency);
 // 소속사 내 아티스트들 불러오기
 export const getArtists = createPromiseThunk(actions.GET_ARTISTS, artistsAPI.getArtists);
 // 소속사 내 아티스트 id로 불러오기
@@ -42,6 +43,7 @@ const initialState = {
 const getAgenciesReducer = handleAsyncActions(actions.GET_AGENCIES, 'agencies')
 // ID 값으로 특정 소속사 불러오기
 const getAgencyByIdReducer = handleAsyncActions(actions.GET_AGENCY, 'agency')
+const getAgencyReducer = handleAsyncActions(actions.GET_AGENCY, 'agency')
 // 소속사 내 아티스트들 불러오기
 const getArtistsReducer = handleAsyncActions(actions.GET_ARTISTS, 'artists')
 // 소속사 내 아티스트 id로 불러오기
@@ -67,6 +69,10 @@ export default function artists(state = initialState, action) {
         case actions.GET_AGENCY:
         case actions.GET_AGENCY_SUCCESS:
         case actions.GET_AGENCY_ERROR:
+            return getAgencyReducer(state, action)
+        case actions.GET_AGENCY_ID:
+        case actions.GET_AGENCY_ID_SUCCESS:
+        case actions.GET_AGENCY_ID_ERROR:
             return getAgencyByIdReducer(state, action)
         case actions.GET_ARTISTS:
         case actions.GET_ARTISTS_SUCCESS:

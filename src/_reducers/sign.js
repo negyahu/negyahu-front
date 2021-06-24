@@ -21,6 +21,11 @@ export default function sign(state = initialState, action) {
         case sign_action.SET_LOGIN_SUCCESS:
         case sign_action.SET_LOGIN_ERROR:
             return setLoginReducer(state, action)
+        case sign_action.SET_LOGOUT:
+            return {
+                ...state,
+                login: reducerUtils.initial()
+            }
         case sign_action.SIGN_UP:
         case sign_action.SIGN_UP_SUCCESS:
         case sign_action.SIGN_UP_ERROR:

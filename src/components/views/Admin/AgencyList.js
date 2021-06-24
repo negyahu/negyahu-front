@@ -5,6 +5,7 @@ import { FiSearch } from 'react-icons/fi';
 import { MdFiberNew } from 'react-icons/md';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+import { getCookie, getCookieValue } from '../../../utils/cookies';
 import { getAgencies } from '../../../_reducers/artists';
 import '../../scss/admin/AgencyList.scss';
 import { IconContainer } from '../Common/Components';
@@ -15,7 +16,8 @@ function AgencyList() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getAgencies());
+        const token = getCookieValue("user")
+        dispatch(getAgencies(token));
     }, [dispatch])
 
     if (loading || !data) return <Loading />
@@ -99,7 +101,7 @@ function AgencyList() {
                         data && 
                         data.map(agency => {
                             return (
-                                <tr>
+                                <tr key={agency.id}>
                                     <td>
                                         <div className="div">
                                             <IconContainer size="32px" color="#ff6b6b" style={{ cursor: 'default' }}>

@@ -6,11 +6,15 @@ const api = process.env.REACT_APP_API_SERVER
 export const setLogin = async (userInfo) => {
     const response = await axios.post(`${api}/api/login`, userInfo)
     .then(res => {
-        const token = jwt(res.data.token);
+        const token = res.data.token;
         return token
     })
     .catch(err => {
-        return err
+        const array = err.message.split(" ")
+        const errCode = array[array.length - 1]
+        if (errCode === '401') {
+            return { auth: "error" }
+        } 
     })
     return response;
 }

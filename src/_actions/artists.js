@@ -3,6 +3,10 @@ export const GET_AGENCIES = 'artists/GET_AGENCIES';
 export const GET_AGENCIES_SUCCESS = 'artists/GET_AGENCIES_SUCCESS';
 export const GET_AGENCIES_ERROR = 'artists/GET_AGENCIES_ERROR';
 // ID 값으로 특정 소속사 불러오기
+export const GET_AGENCY_ID = 'artists/GET_AGENCY_ID';
+export const GET_AGENCY_ID_SUCCESS = 'artists/GET_AGENCY_ID_SUCCESS';
+export const GET_AGENCY_ID_ERROR = 'artists/GET_AGENCY_ID_ERROR';
+
 export const GET_AGENCY = 'artists/GET_AGENCY';
 export const GET_AGENCY_SUCCESS = 'artists/GET_AGENCY_SUCCESS';
 export const GET_AGENCY_ERROR = 'artists/GET_AGENCY_ERROR';
