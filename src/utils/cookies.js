@@ -3,7 +3,7 @@ const cookie = document.cookie
 // 쿠키 키값 가져오기
 export function getCookie(key) {
     let matches = cookie.match(new RegExp(
-        "(?:^|; )" + key.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+        "(?:^|; )" + key.replace(/([.$?*|{}()[]\\\/\+^])/g, '\\$1') + "=([^;]*)"
     ));
     return matches ? decodeURIComponent(matches[1]) : undefined;
 }

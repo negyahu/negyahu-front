@@ -119,23 +119,22 @@ function CreateManagers({ match }) {
         onValidation(i) 
         && dispatch({ type: CREATE_MANAGER, data: {agencyId: agencyId, manager: manager} })
     }
-
     
 
     return (
         <BackgroundBlur>
             <div className="artistManagerContainer">
                 <h2>
-                    CREATE MANAGER
+                    <div className="div">
+                        CREATE MANAGER
+                        <IconContainer size="40px" color="#F4D4D4" style={{ margin: "0px 15px"}}>
+                            <BsPersonPlusFill onClick={(e) => {onCreateManager(e, data.length - 1)}}/>
+                        </IconContainer>
+                    </div>
                     <IconContainer size="60px" color="white" hover style={{ transform: "rotate(45deg)" }}>
                         <TiArrowBack onClick={onBackHistory}/>
                     </IconContainer>
                 </h2>
-                <aside className="addManagerRowContainer">
-                    <IconContainer size="40px" color="#F4D4D4">
-                        <BsPersonPlusFill onClick={(e) => {onCreateManager(e, data.length - 1)}}/>
-                    </IconContainer>
-                </aside>
                 <div className="tableHeader">
                     <table className="table">
                         <colgroup>

@@ -13,26 +13,24 @@
     h2 {
         width: 100%;
         min-width: 500px;
-        margin: 30px auto 0;
+        margin: 20px auto;
         border-bottom: 1px solid white;
-        font-family: Wemakeprice;
+        font-family: Yoon Minguk;
         font-style: normal;
-        font-weight: bold;
-        font-size: 30px;
+        font-weight: normal;
+        font-size: 40px;
         line-height: 70px;
         color: white;
 
         display: flex;
         justify-content: space-between;
         align-items: center;
-    }
-    .addManagerRowContainer {
-        width: 100%;
-        height: auto;
-        margin: 5px auto;
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
+        .div {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            // border: 1px solid red;
+        }
     }
     .tableHeader {
         width: 1000px;

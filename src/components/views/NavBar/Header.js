@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,8 +12,6 @@ import Notifications from './Notifications';
 import Mails from './Mails';
 import Mail from '../Common/Mail';
 import MoreMenus from './MoreMenus';
-import { useEffect } from 'react';
-import { getCookie, getCookieValue } from '../../../utils/cookies';
 
 const NavbarContainer = styled.header`
     width: 100%;
@@ -36,11 +34,24 @@ const Navbar = styled.nav`
 
 function Header({ history }) {
     const userData = useSelector(state => state.keepInformation.user)
-    const { data } = useSelector(state => state.sign.login)
     const openModule = useSelector(state => state.openModules.header)
-    const dispatch = useDispatch();
 
-    // if (!userData)
+    const onMoveMainPage = () => {
+        if (userData) {
+            switch (userData.auth) {
+                case 'USER':
+                    return history.push({ pathname: "/" })
+                case 'AGENCY':
+                    return history.push({ pathname: "/agency" })
+                case 'ADMIN':
+                    return history.push({ pathname: "/admin" })
+                default:
+                    return history.push({ pathname: "/" })
+            }
+        } else {
+            history.push({ pathname: "/" })
+        }
+    }
 
     return (
         <NavbarContainer>
@@ -51,9 +62,7 @@ function Header({ history }) {
                 openModule.mailForm && <MailForm />
             }
             <Navbar>
-                <p className="logo" onClick={() => {
-                    history.push({ pathname: "/" })
-                }}>FANTIMATE</p>
+                <p className="logo" onClick={onMoveMainPage}>FANTIMATE</p>
                 <div className="menuContainer">
                     {
                         userData
