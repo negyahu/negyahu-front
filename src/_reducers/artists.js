@@ -5,8 +5,7 @@ import { createPromiseThunk, handleAsyncActions, reducerUtils } from '../utils/a
 // 액션 생성함수 생성
 // 전체 소속사 불러오기
 export const getAgencies = createPromiseThunk(actions.GET_AGENCIES, artistsAPI.getAgencies);
-// ID 값으로 특정 소속사 불러오기
-export const getAgencyById = createPromiseThunk(actions.GET_AGENCY, artistsAPI.getAgencyById);
+// 소속사 및 아티스트 리스트 불러오기
 export const getAgency = createPromiseThunk(actions.GET_AGENCY, artistsAPI.getAgency);
 // 소속사 내 아티스트들 불러오기
 export const getArtists = createPromiseThunk(actions.GET_ARTISTS, artistsAPI.getArtists);

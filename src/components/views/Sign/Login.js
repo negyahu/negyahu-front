@@ -37,6 +37,9 @@ function Login({ history }) {
                 case 'USER':
                     history.push({ pathname: '/' })
                     break
+                case 'ARTIST':
+                    history.push({ pathname: '/' })
+                    break
                 case 'AGENCY':
                     history.push({ pathname: "/agency" })
                     break
@@ -113,7 +116,7 @@ function Login({ history }) {
                 <img src="/resources/images/account/naver.png" alt="네이버" />
             </div>
             <p className="subTitle">아직 계정이 없다면 ?</p>
-            <p className="linkToJoinBtn">Fantimate 계정으로 가입하기</p>
+            <p className="linkToJoinBtn" onClick={() => { history.push("/join") }}>Fantimate 계정으로 가입하기</p>
         </form>
     );
 }

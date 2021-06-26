@@ -1,6 +1,6 @@
-import React, { useEffect }from 'react';
+import React, { useEffect, useState }from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import { getArtists } from '../../../_reducers/artists';
 import '../../scss/ArtistList.scss';
@@ -47,8 +47,9 @@ const ArtistImage = styled.div`
     }
 `;
 
-function ArtistList() {
+function ArtistList({ history }) {
     const { data, loading, error } = useSelector(state => state.artists.artists);
+    const user = useSelector(state => state.keepInformation.user)
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -58,6 +59,22 @@ function ArtistList() {
     if (loading) return <Loading />
     if (error) return alert('잠시 후 다시 접속해주세요')
     if (!data) return <div></div>
+
+    const onMoveFeedPage = (agencyId, artistId) => {
+        if (user) {
+            if (user.auth === 'USER' || user.auth === 'ARTIST') {
+                let isSubscribe = 'N'   // 유저 구독 정보 임의로 기재
+                isSubscribe === 'Y'
+                ? history.push(`/feed/agency/${agencyId}/artist/${artistId}`)
+                : history.push(`/subscribe/agency/${agencyId}/artist/${artistId}`)
+            } else {
+                return alert('유저 및 아티스트만 이용가능합니다')
+            }
+        } else {
+            alert('로그인을 해주세요')
+            return history.push('/login')
+        }
+    }
     
     return (
         <section className="mainContainer">
@@ -66,11 +83,13 @@ function ArtistList() {
                     data.map(agency => 
                         agency.artists.map(artist => {
                             return (
-                                <Link to={`/feed/agency/${agency.id}/artist/${artist.id}`} key={artist.id}>
-                                    <ArtistImage name={artist.nameEN}>
-                                        <img src={`${artist.imageURL}`} alt="연예인"/>
-                                    </ArtistImage>
-                                </Link>
+                                <ArtistImage
+                                    name={artist.nameEN}
+                                    key={artist.id}
+                                    onClick={() => {onMoveFeedPage(agency.id, artist.id)}}
+                                >
+                                    <img src={`${artist.imageURL}`} alt="연예인"/>
+                                </ArtistImage>
                             )
                         })
                     )
@@ -80,4 +99,4 @@ function ArtistList() {
     );
 }
 
-export default ArtistList;
+export default withRouter(ArtistList);

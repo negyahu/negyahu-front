@@ -4,7 +4,7 @@ import jwt from 'jwt-decode';
 const api = process.env.REACT_APP_API_SERVER
 const agencies = [
     {
-        id: 1,
+        id: 4,
         agencyName: '빅히트 엔터테인먼트',
         businessNumber: 1112233333,
         bossName: '방시혁',
@@ -245,28 +245,24 @@ export const getAgencies = async (token) => {
     .then(res => {
         return res.data
     }).catch(err => {
-        alert('에러 발생')
-        return agencies;
+        return alert(`소속사 정보를 불러오지 못했습니다\n${err}`);
     })
     return response;
 }
 
-// 소속사 로그인시 소속사 정보 불러오기
+// 소속사 로그인시 소속사 및 아티스트 리스트 정보 불러오기
 export const getAgency = async (token) => {
-    const response = await axios.get(`${api}/api/agencies/me`, token)
+    const config = {
+        headers: { "Authorization": token, "Content-Type": "multipart/form-data" },
+    }
+    const response = await axios.get(`${api}/api/agencies/me`, config)
     .then(res => {
         return res.data
     })
     .catch(err => {
-        alert('통신 오류!!')
-        return agencies
+        return alert(`아티스트 정보를 불러오지 못했습니다:\n${err}`)
     })
     return response;
-}
-
-// id 값으로 소속사 불러오기 (소속사 아티스트들과 매니저 포함)
-export const getAgencyById = async id => {
-    return agencies.find(agency => agency.id === id)
 }
 
 // 소속사 내 아티스트들 불러오기
@@ -277,9 +273,18 @@ export const getArtists = async agencyId => {
 }
 
 // 소속사 내 아티스트 ID로 불러오기
-export const getArtistById = async (agencyId, artistId) => {
-    return agencies.find(agency => agency.id === agencyId)
-    .artists.find(artist => artist.id === artistId)
+export const getArtistById = async (agencyId, artistId, token) => {
+    const config = {
+        headers: { "Authorization": token, "Content-Type": "multipart/form-data" },
+    }
+    const response = await axios.get(`${api}/api/agencies/${agencyId}/artists/`, config)
+    .then(res => {
+        return res.data
+    })
+    .catch(err => {
+        return alert(`아티스트를 불러올 수 없습니다:\n${err}`)
+    })
+    return response
 }
 
 // 소속사 내 아티스트 검색해오기

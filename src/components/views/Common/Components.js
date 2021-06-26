@@ -141,6 +141,7 @@ export const ArtistImageDiv = styled.div`
         width: 100%;
         height: 100%;
         object-fit: cover;
+        object-position: top;
     }
     div {
         font-size: 30px;
@@ -164,7 +165,7 @@ export const ArtistImageDiv = styled.div`
         top: 0;
         background: rgba(92, 95, 120, 0.6);
         color: white;
-        font-size: 25px;
+        font-size: 0px;
         font-style: normal;
         font-weight: 500;
         z-index: 1;
@@ -175,6 +176,7 @@ export const ArtistImageDiv = styled.div`
         &::before {
             width: 100%;
             opacity: 1;
+            font-size: 25px;
         }
         div {
             opacity: 1;
@@ -276,10 +278,10 @@ export const IconContainer = styled.div`
     }
     @keyframes rotation {
         0% {
-            transform: rotate(45deg);
+            transform: rotate(30deg);
         }
         100% {
-            transform: rotate(-45deg);
+            transform: rotate(-30deg);
         }
     }
 `;

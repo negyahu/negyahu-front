@@ -1,16 +1,22 @@
 import * as keepInfoAPI from '../_actions/keepInformation';
 
 const initialState = {
-    artist: null,
+    members: [],
+    member: null,
     user: null,
 }
 
 export default function keepInfoReducer(state = initialState, action) {
     switch (action.type) {
+        case keepInfoAPI.KEEP_ARTIST_MEMBERS:
+            return {
+                ...state,
+                members: [...state.members, action.payload]
+            }
         case keepInfoAPI.KEEP_ARTIST_MEMBER:
             return {
                 ...state,
-                artist: action.payload
+                member: action.payload
             }
         case keepInfoAPI.KEEP_USER_INFO:
             return {

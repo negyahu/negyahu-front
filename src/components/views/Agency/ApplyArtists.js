@@ -4,7 +4,7 @@ import { FiSearch } from 'react-icons/fi';
 import { TiPlus } from 'react-icons/ti';
 import { FcManager } from 'react-icons/fc';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAgencyById, getArtists, getArtistsBySearchData } from '../../../_reducers/artists';
+import { getAgency, getAgencyById, getArtists, getArtistsBySearchData } from '../../../_reducers/artists';
 import { OPEN_CHOOSEMENU, OPEN_MANAGERS } from '../../../_actions/openModules';
 
 import '../../scss/agency/ApplyArtists.scss';
@@ -12,41 +12,38 @@ import { IconContainer, PhotoContianer } from '../Common/Components';
 import ChooseMenu from './ChooseMenu';
 import CreateManagers from './CreateManagers';
 import Loading from '../Common/Loading';
+import { getCookieValue } from '../../../utils/cookies';
+import { withRouter } from 'react-router-dom';
 
 
-function ApplyArtists({ history, match }) {
-    const agency = useSelector(state => state.artists.agency.data)
-    const { data, loading, error } = useSelector(state => state.artists.artists)
+function ApplyArtists({ history }) {
+    const { data, loading, error } = useSelector(state => state.artists.agency)
     const openModule = useSelector(state => state.openModules);
     const dispatch = useDispatch();
-
-    const agencyId = parseInt(match.params.agencyId, 10);
 
     const [searchArtist, setSearchArtist] = useState('');
     const artistContainer = useRef();
     const deleteButton = useRef(new Array());
-    
-    useEffect(() => {
-        dispatch(getAgencyById(agencyId))
-        dispatch(getArtists(agencyId))
-    },[dispatch, agencyId])
+
 
     if (loading || !data) return <Loading />
     if (error) return <div>에러발생!</div>
 
+
+    // 아티스트 등록
     const onCreateArtist = (e, i) => {
         /* eslint-disable-next-line */
         if (confirm('소속 아티스트를 등록하시겠습니까?')) {
-            history.push({ pathname: `/agency/${agencyId}/artist/`, state: { agency: agencyId } })
+            history.push({ pathname: `/agency/${data.id}/artist/`, state: { agency: data.id } })
         }
     }
-
+    // 아티스트 수정
     const onModifyArtist = (e, artist, i) => {
         if (!deleteButton.current[i].contains(e.target)) {
             dispatch({ type: OPEN_CHOOSEMENU, data: artist })
         }
     }
-
+    // 아티스트 삭제
     const onDeleteArtist = (e, artist, i) => {
         if (deleteButton.current[i].contains(e.target)) {
             /* eslint-disable-next-line */
@@ -70,10 +67,11 @@ function ApplyArtists({ history, match }) {
         if (searchArtist === '') {
             return alert('검색할 아티스트를 입력하세요')
         } 
-        dispatch(getArtistsBySearchData(agencyId, searchArtist.toUpperCase()))
+        dispatch(getArtistsBySearchData(data.id, searchArtist.toUpperCase()))
         setSearchArtist('')
     }
 
+    // 매니저 정보 불러오기
     const onGetManagers = () => {
         dispatch({ type: OPEN_MANAGERS, data: data })
     }
@@ -89,7 +87,7 @@ function ApplyArtists({ history, match }) {
         <section className="registerArtistsContainer">
             <div className="headerContainer">
                 <h2>
-                    {agency.agencyName}
+                    {data.nameKR}
                     <IconContainer 
                         size="50px" 
                         onClick={onGetManagers}
@@ -113,16 +111,17 @@ function ApplyArtists({ history, match }) {
             <div className="artistsContainer">
                 <button onClick={onCreateArtist}>CREATE</button>
                 {
-                    data
+                    data.artists
                     ?
-                    data.map((artist, i) => {
+                    data.artists.map((artist, i) => {
                         return (
                             <PhotoContianer 
                                 name={artist.nameEN}
-                                onClick={(e) => {onModifyArtist(e, artist, i)}} key={artist.imageId}
+                                onClick={(e) => {onModifyArtist(e, artist, i)}}
+                                key={artist.id}
                                 ref={artistContainer}
                             >
-                                <img src={artist.imageURL} alt="아티스트"/>
+                                <img src={artist.profileImage ? artist.profileImage : '/resources/images/account/profile.png'} alt="아티스트"/>
                                 <div 
                                     ref={(e) => {deleteButton.current[i] = e}}
                                     onClick={(e) => {onDeleteArtist(e, artist, i)}}
@@ -140,4 +139,4 @@ function ApplyArtists({ history, match }) {
     );
 }
 
-export default ApplyArtists;
+export default withRouter(ApplyArtists);

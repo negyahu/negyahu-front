@@ -6,19 +6,23 @@ import '../../scss/agency/CreateMember.scss';
 import { OPEN_CREATE_MEMBER } from '../../../_actions/openModules'
 import { onChangeProfilePhoto, onEmailCheckHandler } from '../../../utils/functionUtils';
 import { useEffect } from 'react';
-import { KEEP_ARTIST_MEMBER } from '../../../_actions/keepInformation';
+import { KEEP_ARTIST_MEMBER, KEEP_ARTIST_MEMBERS } from '../../../_actions/keepInformation';
 
 function CreateMember() {
-    const member = useSelector(state => state.keepInformation.artist)
+    const member = useSelector(state => state.keepInformation.member)
+    const members = useSelector(state => state.keepInformation.members)
     const dispatch = useDispatch();
+    
     const [Email, setEmail] = useState('');
     const [NameEN, setNameEN] = useState('');
     const [NameKR, setNameKR] = useState('');
     const [Instargram, setInstargram] = useState('');
     const [EtcUrl, setEtcUrl] = useState('');
     const [ImageURL, setImageURL] = useState('');
+
     const checkEmailButton = useRef();
     const inputFiles = useRef();
+    const imageFile = useRef();
 
     useEffect(() => {
         if (member) {
@@ -46,6 +50,47 @@ function CreateMember() {
         checkEmailButton.current.disabled = false
     }
 
+    const onCheckEmail = () => {
+        let flag = false
+        members.map(member => {
+            if (member.email === Email) {
+                flag = true
+                return alert('이미 입력한 이메일이 존재합니다')
+            }
+        })
+        !flag &&
+        onEmailCheckHandler(Email, checkEmailButton.current, setEmail)
+    }
+
+    const onValidation = () => {
+        // 유효성 검사 시작
+        const regName = /^(?=.*?[가-힣a-zA-Z]).{2,}$/
+        if (!regName.test(NameEN) || !regName.test(NameKR)) {
+            return alert('이름을 정확히 입력해주세요')
+        } else if (checkEmailButton.current.textContent !== '확인완료') {
+            return alert('이메일을 확인해주세요')
+        } else {
+            return true
+        }
+    }
+
+    const onAppendMember = () => {
+        const memberInfo = {
+            email: Email,
+            nameEN: NameEN,
+            nameKR: NameKR,
+            instargram: Instargram,
+            etc: EtcUrl,
+            imageURL: ImageURL
+        }
+
+        if (onValidation()) {
+            dispatch({ type: KEEP_ARTIST_MEMBERS, payload: memberInfo })
+            dispatch({ type: KEEP_ARTIST_MEMBER, action: null })
+            dispatch({ type: OPEN_CREATE_MEMBER })
+        }
+    }
+
     return (
         <BackgroundBlur>
             <div className="createMemberContainer">
@@ -60,7 +105,7 @@ function CreateMember() {
                     <tbody>
                         <tr>
                             <td rowSpan="4">
-                                <img src={ImageURL} alt="프로필" />
+                                <img ref={imageFile} src={ImageURL} alt="프로필" />
                             </td>
                             <th>EMAIL *</th>
                             <td>
@@ -75,7 +120,7 @@ function CreateMember() {
                             <td>
                                 <button 
                                     ref={checkEmailButton}
-                                    onClick={() => {onEmailCheckHandler(Email, checkEmailButton.current, setEmail)}}
+                                    onClick={onCheckEmail}
                                     disabled={member ? true : false}
                                     style={member && {backgroundColor: 'white'}}
                                 >{member ? '확인완료' : '확인'}</button>
@@ -122,7 +167,7 @@ function CreateMember() {
                                 <input 
                                     type="file"
                                     style={{ display: "none" }}
-                                    onChange={(e) => {onChangeProfilePhoto(e)}}
+                                    onChange={(e) => {onChangeProfilePhoto(e, imageFile, setImageURL)}}
                                     ref={inputFiles}
                                 />
                             </td>
@@ -139,7 +184,7 @@ function CreateMember() {
                     </tbody>
                 </table>
                 <div className="createMemberButtonContainer">
-                    <button>{member ? '수정하기' : '등록하기'}</button>
+                    <button onClick={onAppendMember}>{member ? '수정하기' : '생성하기'}</button>
                     <button onClick={onBackHistory}>취소하기</button>
                 </div>
             </div>

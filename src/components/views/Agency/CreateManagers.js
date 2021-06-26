@@ -33,8 +33,8 @@ function CreateManagers({ match }) {
 
 
     useEffect(() => {
-        dispatch(getManagers(agencyId))
-    }, [dispatch, getManagers, agencyId])
+        dispatch(getManagers(4))
+    }, [dispatch, agencyId])
 
     if (loading || !data) return <Loading />
     if (error) return <div>에러</div>
@@ -131,7 +131,7 @@ function CreateManagers({ match }) {
                             <BsPersonPlusFill onClick={(e) => {onCreateManager(e, data.length - 1)}}/>
                         </IconContainer>
                     </div>
-                    <IconContainer size="60px" color="white" hover style={{ transform: "rotate(45deg)" }}>
+                    <IconContainer size="60px" color="white" hover style={{ transform: "rotate(30deg)" }}>
                         <TiArrowBack onClick={onBackHistory}/>
                     </IconContainer>
                 </h2>
@@ -198,7 +198,7 @@ function CreateManagers({ match }) {
                                     <td>
                                         <select onChange={(e) => {setManage(e.currentTarget.value)}}>
                                             <option value="all" selected={manager.artistId === 0 ? true : false}>전체</option>
-                                            {
+                                            {/* {
                                                 artists.map(artist => {
                                                     return (
                                                         <option
@@ -208,7 +208,7 @@ function CreateManagers({ match }) {
                                                         >{artist.nameKR}</option>
                                                     )
                                                 })
-                                            }
+                                            } */}
                                             <option value="none" selected={manager.artistId === 999 ? true : false}>비할당</option>
                                         </select>
                                     </td>

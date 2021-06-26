@@ -54,4 +54,3 @@ export const DELETE_MANAGER_ERROR = 'artists/DELETE_MANAGER_ERROR';
 export const CREATE_ARTIST = 'artists/CREATE_ARTIST';
 export const CREATE_ARTIST_SUCCESS = 'artists/CREATE_ARTIST_SUCCESS';
 export const CREATE_ARTIST_ERROR = 'artists/CREATE_ARTIST_ERROR';
-

@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useEffect } from 'react';
 import { FiSearch } from 'react-icons/fi';
 
 import { MdFiberNew } from 'react-icons/md';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { getCookie, getCookieValue } from '../../../utils/cookies';
+import { approveAgency, getAgencyAttachment } from '../../../api/agencies';
+import { getCookieValue } from '../../../utils/cookies';
 import { getAgencies } from '../../../_reducers/artists';
 import '../../scss/admin/AgencyList.scss';
 import { IconContainer } from '../Common/Components';
@@ -15,6 +16,8 @@ function AgencyList() {
     const { data, loading, error } = useSelector(state => state.artists.agencies)
     const dispatch = useDispatch();
 
+    const checkApproveButton = useRef(new Array());
+
     useEffect(() => {
         const token = getCookieValue("user")
         dispatch(getAgencies(token));
@@ -23,8 +26,12 @@ function AgencyList() {
     if (loading || !data) return <Loading />
     if (error) return alert('잠시 후 다시 접속해주세요')
 
-    const onOpenAttachment = (e) => {
-
+    const onOpenAttachment = (agencyId) => {
+        const sendData = {
+            id: agencyId,
+            token: getCookieValue("user")
+        }
+        getAgencyAttachment(sendData)
     }
 
     const onChangeSelectList = (e) => {
@@ -40,8 +47,24 @@ function AgencyList() {
         }
     }
 
-    const onApprove = () => {
-        
+    const onApprove = async (e, button, i) => {
+        if (e.target.textContent === '승인') {
+            /* eslint-disable-next-line */
+            if (confirm('승인하시겠습니까?')) {
+                const sendData = {
+                    id: data.content[i].id,
+                    token: getCookieValue('user')
+                }
+                const result = await approveAgency(sendData)
+                if (result === '완료') {
+                    alert('승인되었습니다')
+                    button.style.backgroundColor = "#fbf6f6"
+                    button.style.borderColor = "#fbf6f6"
+                    button.innerHTML = "완료"
+                    button.disabled = 'disabled'
+                }
+            }
+        }
     }
 
     return (
@@ -98,8 +121,8 @@ function AgencyList() {
                 </colgroup>
                 <tbody>
                     {
-                        data && 
-                        data.map(agency => {
+                        data.content && 
+                        data.content.map((agency, i) => {
                             return (
                                 <tr key={agency.id}>
                                     <td>
@@ -107,18 +130,28 @@ function AgencyList() {
                                             <IconContainer size="32px" color="#ff6b6b" style={{ cursor: 'default' }}>
                                                 <MdFiberNew />
                                             </IconContainer>
-                                            <p>{agency.agencyName}</p>
+                                            <p>{agency.nameKR}</p>
                                         </div>
                                     </td>
                                     <td>{agency.businessNumber}</td>
                                     <td>{agency.bossName}</td>
                                     <td>{agency.mobile}</td>
-                                    <td>{agency.adminEmail}</td>
+                                    <td>{agency.email}</td>
                                     <td>
-                                        <button onClick={onOpenAttachment}>보기</button>
+                                        <button onClick={() => {onOpenAttachment(agency.id)}}>보기</button>
                                     </td>
                                     <td>
-                                        <button>승인</button>
+                                        <button
+                                            ref={e => checkApproveButton.current[i] = e}
+                                            onClick={(e) => {onApprove(e, checkApproveButton.current[i], i)}}
+                                            style={
+                                                agency.state === 'ACTIVE' 
+                                                ? {backgroundColor: '#fbf6f6', borderColor: '#fbf6f6'} 
+                                                : {backgroundColor: '#f4d4d4', borderColor: '#f4d4d4'}
+                                            }
+                                        >
+                                            {agency.state === 'WAIT' ? '승인' : '완료'}
+                                        </button>
                                     </td>
                                 </tr>
                             )

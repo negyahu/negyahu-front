@@ -9,11 +9,12 @@ import { onChangeProfilePhoto } from '../../../utils/functionUtils';
 import { KEEP_ARTIST_MEMBER } from '../../../_actions/keepInformation';
 import { INITIAL_ARTIST } from '../../../_actions/artists';
 import Loading from '../Common/Loading';
-import { getAgencyById, getArtistById, getMembersByArtist } from '../../../_reducers/artists';
+import { getAgency, getArtistById, getMembersByArtist } from '../../../_reducers/artists';
+import { getCookieValue } from '../../../utils/cookies';
 
 function ApplyArtist({ history, match, location }) {
     const {data, loading, error} = useSelector(state => state.artists.agency)
-    const artist = useSelector(state => state.artists.artist.data)
+    const createMembers = useSelector(state => state.keepInformation.members)
     const members = useSelector(state => state.artists.members.data)
     const openModule = useSelector(state => state.openModules);
     const dispatch = useDispatch();
@@ -27,62 +28,49 @@ function ApplyArtist({ history, match, location }) {
     const [File, setFile] = useState('')
     
     const inputFiles = useRef();
+    const imageFiles = useRef();
     const clickMemberButton = useRef(new Array());
 
     useEffect(() => {
+        const token = getCookieValue("user")
         // create / modify 구분
         if (!Object.keys(location.state).includes('data')) {
+            console.log('데이터 업음')
             // data 가 존재하지 않는 경우 create 
-            dispatch(getAgencyById(agencyId))
+            dispatch(getAgency(token))
             setArtistImageURL('/resources/images/account/profile.png')
-            console.log('create')
         } else {
+            console.log('데이터 있음')
             // data 가 존재하는 경우 modify
             const artistId = parseInt(match.params.artistId, 10)
-            dispatch(getAgencyById(agencyId))
-            dispatch(getArtistById(agencyId, artistId))
+            dispatch(getAgency(token))
+            dispatch(getArtistById(agencyId, artistId, token))
             dispatch(getMembersByArtist(agencyId, artistId))
             setArtistImageURL(location.state.data.imageURL)
             setArtistNameKR(location.state.data.nameKR)
             setArtistNameEN(location.state.data.nameEN)
-            console.log('modify')
-
         }
-        console.log("data : ", data, artist, members)
-        console.log("location : ", location)
-    }, [dispatch, getAgencyById, getAgencyById, getMembersByArtist])
+    }, 
+    [
+        dispatch,
+        setArtistImageURL,
+        setArtistNameKR,
+        setArtistNameEN,
+        agencyId,
+        location.state,
+        match.params.artistId
+    ])
 
     if (loading || !data) return <Loading />
     if (error) return <div>에러발생</div>
 
-    // 이미지 미리보기 코드
-    // function readImage(input) {
-    //     // 인풋 태그에 파일이 있는 경우
-    //     if(input.files && input.files[0]) {
-    //         // 이미지 파일인지 검사 (생략)
-    //         // FileReader 인스턴스 생성
-    //         const reader = new FileReader()
-    //         // 이미지가 로드가 된 경우
-    //         reader.onload = e => {
-    //             const previewImage = document.getElementById("preview-image")
-    //             previewImage.src = e.target.result
-    //         }
-    //         // reader가 이미지 읽도록 하기
-    //         reader.readAsDataURL(input.files[0])
-    //     }
-    // }
-    // // input file에 change 이벤트 부여
-    // const inputImage = document.getElementById("input-image")
-    // inputImage.addEventListener("change", e => {
-    //     readImage(e.target)
-    // })
 
     const onBackHistory = () => {
         /* eslint-disable-next-line */
         if (confirm('등록을 취소하시겠습니까?')) {
             openModule.common.chooseMenu.open && dispatch({ type: OPEN_CHOOSEMENU })
             dispatch({ type: INITIAL_ARTIST })
-            history.push({ pathname: `/agency/${agencyId}/artists`})
+            history.push({ pathname: `/agency`})
         }
     }
 
@@ -99,11 +87,12 @@ function ApplyArtist({ history, match, location }) {
     const onDeleteArtistProfile = (e, member, i) => {
         if (clickMemberButton.current[i].contains(e.target)) {
             /* eslint-disable-next-line */
-            if (confirm(`${member.nameEN}을 삭제하시겠습니까? 삭제시 관련 모든 정보가 삭제됩니다`)) {
+            if (confirm(`${member.nameEN}을 삭제하시겠습니까? 삭제시 관련 정보가 삭제됩니다`)) {
                 alert('삭제했다고 치자')
             }
         }
     }
+
 
     return (
         <>
@@ -118,11 +107,11 @@ function ApplyArtist({ history, match, location }) {
                         <tbody>
                             <tr>
                                 <td rowSpan="3">
-                                    <img src={ArtistImageURL} alt="대표사진" />
+                                    <img ref={imageFiles} src={ArtistImageURL} alt="대표사진" />
                                     <input 
                                         type="file"
                                         style={{ display: "none" }}
-                                        onChange={onChangeProfilePhoto}
+                                        onChange={(e) => {onChangeProfilePhoto(e, imageFiles, setArtistImageURL)}}
                                         ref={inputFiles}
                                     />
                                 </td>
@@ -206,8 +195,25 @@ function ApplyArtist({ history, match, location }) {
                                 </ArtistImageDiv>
                             )
                         })
-                        :
-                        <div>CREATE를 클릭하여 멤버를 추가해보세요!</div>
+                        : createMembers.length > 0
+                        ? createMembers.map((member, i) => {
+                            return (
+                                <ArtistImageDiv
+                                    name={member.nameEN}
+                                    onClick={(e) => {onModifyArtistProfile(e, member, i)}}
+                                    key={i}
+                                >
+                                    <img src={member.imageURL} alt="아티스트"/>
+                                    <div
+                                        onClick={(e) => {onDeleteArtistProfile(e, member, i)}}
+                                        ref={(e) => {clickMemberButton.current[i] = e}}
+                                    >
+                                        <TiPlus />
+                                    </div>
+                                </ArtistImageDiv>
+                            )
+                        })
+                        : <div>CREATE를 클릭하여 멤버를 추가해보세요!</div>
                     }
                     
                 </div>

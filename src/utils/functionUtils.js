@@ -78,14 +78,21 @@ export const onEmailCheckHandler = (email, button, initialInput) => {
 
 
 // 사진 등록
-export const onChangeProfilePhoto = (e) => {
+export const onChangeProfilePhoto = (e, imageFile, onChangeImage) => {
     const file = e.target.files[0]
-    const formData = new FormData();
-    formData.append('file', file)
-    // 사진데이터를 보낸다
-    // 사진 url을 받는다
-    // 리턴한다
-    return 
+    if (file) {
+        const reader = new FileReader()
+        reader.onload = event => {
+            const previewImage = imageFile.current
+            previewImage.src = event.target.result
+            onChangeImage(event.target.result)
+        }
+        return reader.readAsDataURL(file)
+    } else {
+        const previewImage = imageFile.current
+        previewImage.src = '/resources/images/account/profile.png'
+        return
+    }
 }
 
 // 숫자 3자리 단위 , 찍기

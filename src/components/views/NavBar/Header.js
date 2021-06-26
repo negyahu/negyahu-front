@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import '../../scss/Header.scss';
 
@@ -40,6 +40,8 @@ function Header({ history }) {
         if (userData) {
             switch (userData.auth) {
                 case 'USER':
+                    return history.push({ pathname: "/" })
+                case 'ARTIST':
                     return history.push({ pathname: "/" })
                 case 'AGENCY':
                     return history.push({ pathname: "/agency" })

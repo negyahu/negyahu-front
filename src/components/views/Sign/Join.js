@@ -79,7 +79,9 @@ function Join(props) {
     const onBackStepHandler = () => {
         switch (step) {
             case 1:
-                return setStep(1);
+                setStep(1)
+                props.history.goBack()
+                return ;
             case 2:
                 return setStep(step - 1);
             case 3:

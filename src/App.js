@@ -18,6 +18,7 @@ import { getCookie, getCookieValue } from './utils/cookies';
 import { useDispatch } from 'react-redux';
 import { KEEP_USER_INFO } from './_actions/keepInformation';
 import Payment from './components/views/Landing/Payment';
+import Subscribe from './components/views/Common/Subscribe';
 
 console.log(`api server : ${process.env.REACT_APP_API_SERVER}`);
 
@@ -38,10 +39,12 @@ function App() {
       <Route path="/login" exact component={Login} />
       <Route path="/join" component={Join} />
       <Route path="/agency" exact component={AgencyLanding} />
-      <Route path="/agency/:agencyId/artists" component={ApplyArtists}/>
+      
       <Route path="/agency/:agencyId/artist/" exact component={ApplyArtist}/>
       <Route path="/agency/:agencyId/artist/:artistId" component={ApplyArtist}/>
+
       <Route path="/feed/agency/:agencyId/artist/:artistId" component={Artist} exact />
+      <Route path="/subscribe/agency/:agencyId/artist/:artistId" component={Subscribe}/>
       <Route path="/admin" component={Landing}/>
       <Route path="/payment" component={Payment}/>
       <Footer />
