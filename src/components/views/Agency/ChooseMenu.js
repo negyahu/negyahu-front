@@ -15,7 +15,7 @@ function ChooseMenu({ history, match }) {
     const onMoveMenu = () => {
         const selectMenu = document.getElementById('selectMenu')
         if (selectMenu.value === 'official') {
-            history.push({ pathname: `/agency/:agencyId/artist/:artistId/official` })
+            history.push({ pathname: `/agency/official` })
         } else if (selectMenu.value === 'update') {
             history.push({ pathname: `/agency/${agencyId}/artist/${data.id}`, state: {data: data} })
         } else {
